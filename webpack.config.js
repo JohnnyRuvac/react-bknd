@@ -3,7 +3,7 @@ const webpack = require('webpack');
 const isProduction = process.argv.indexOf('-p') !== -1;
 
 module.exports = {
-  context: path.resolve(__dirname, './src'),
+  context: path.resolve(__dirname, './client'),
   
   entry: {
     app: './app.js',
