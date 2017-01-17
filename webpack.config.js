@@ -5,6 +5,7 @@ const isProduction = process.argv.indexOf('-p') !== -1;
 module.exports = {
   context: path.resolve(__dirname, './client'),
   
+  devtool: 'source-map',
   entry: {
     app: './app.js',
   },
@@ -27,7 +28,7 @@ module.exports = {
         test: /\.js$/,
         use: [{
           loader: 'babel-loader',
-          options: { presets: ['react', 'es2015'] }
+          options: { presets: ['react', 'es2015', 'babel-preset-stage-0'] }
         }],
       },
       {

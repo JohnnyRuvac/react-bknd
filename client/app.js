@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Admin from './components/admin';
+import { Router, browserHistory } from 'react-router';
+import routes from './routes';
 
 
 ReactDOM.render(
-  <Admin />,
+  <Router routes={routes()} history={browserHistory} />,
   document.getElementById('app-container')
 );
