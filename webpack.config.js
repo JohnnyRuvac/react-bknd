@@ -1,6 +1,9 @@
-const path = require('path');
-const webpack = require('webpack');
+import path from 'path';
+import webpack from 'webpack';
+import envHelper from './utils/envHelper';
 const isProduction = process.argv.indexOf('-p') !== -1;
+const parsedEnvs = envHelper('./.env');
+
 
 module.exports = {
   context: path.resolve(__dirname, './client'),
@@ -41,7 +44,8 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': (isProduction) ? '"production"' : '""'
+        'NODE_ENV': (isProduction) ? '"production"' : '""',
+        ...parsedEnvs
       }
     })
   ]

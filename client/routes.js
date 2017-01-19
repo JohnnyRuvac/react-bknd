@@ -6,7 +6,10 @@ import Home from './components/Home';
 import Login from './components/Login';
 
 
-const auth = new AuthService('clientID', 'domain');
+const auth = new AuthService(
+  process.env.AUTH0_CLIENT_ID,
+  process.env.AUTH0_DOMAIN
+);
 
 // validate authenticatino for private routes
 const requireAuth = (nextState, replace) => {
