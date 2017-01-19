@@ -4,6 +4,8 @@ import AuthService from './utils/AuthService';
 import Container from './components/Container';
 import Home from './components/Home';
 import Login from './components/Login';
+import Admin from './components/Admin';
+import StaticPages from './components/StaticPages';
 
 
 const auth = new AuthService(
@@ -22,7 +24,7 @@ const requireAuth = (nextState, replace) => {
 const parseAuthHash = (nextState, replace) => {
   if (nextState.location.hash) {
     const result = auth.parseHash(nextState.location.hash);
-    replace({ pathname: '/' });
+    replace({ pathname: '/admin' });
   }
 }
 
@@ -30,8 +32,12 @@ const makeMainRoutes = () => {
   return (
     <Route path="/" component={Container} auth={auth}>
       <IndexRedirect to="/home" />
-      <Route path="home" component={Home} onEnter={requireAuth} />
-      <Route path="login" component={Login} onEnter={parseAuthHash} />
+      <Route path="/home" component={Home} onEnter={requireAuth} />
+      <Route path="/login" component={Login} onEnter={parseAuthHash} />
+      
+      <Route path="/admin" component={Admin} onEnter={requireAuth}>
+        <Route path="/admin/pages" component={StaticPages}></Route>
+      </Route>
     </Route>
   );
 }

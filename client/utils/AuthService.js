@@ -26,8 +26,6 @@ export default class AuthService {
   parseHash(hash) {
     // uses auth0 parseHash method to extract data from url hash
     const authResult = this.auth0.parseHash(hash);
-    console.log('authResult');
-    console.log(authResult);
     if (authResult && authResult.idToken) {
       this.setToken(authResult.idToken);
       this.auth0.getProfile(authResult.idToken, (error, profile) => {
