@@ -28,7 +28,7 @@
   },
   "scripts": {
     "server": "nodemon server.js",
-    "dev": "babel webpack.config.js -o webpack.config.compiled.js && webpack-dev-server --config webpack.config.compiled.js",
+    "dev": "babel webpack.config.js -o webpack.config.compiled.js && webpack-dev-server --config webpack.config.compiled.js --history-api-fallback",
     "build": "NODE_ENV=\"production\" webpack -p"
   },
   "devDependencies": {
