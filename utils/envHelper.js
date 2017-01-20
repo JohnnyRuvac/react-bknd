@@ -1,4 +1,5 @@
 var fs = require('fs');
+var path = require('path');
 var dotenv = require('dotenv-safe');
 
 
@@ -11,7 +12,7 @@ module.exports = function(envPath) {
     return false;
   }
 
-  var envs = dotenv.parse(fs.readFileSync('./.env'));
+  var envs = dotenv.parse(fs.readFileSync(envPath));
   var parsedEnvs = {};
 
   for (var key in envs) {
