@@ -2,6 +2,15 @@ const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const dotenv = require('dotenv-safe');
+const path = require('path');
+
+
+// load ENV from file
+dotenv.load({
+  path: path.resolve(__dirname, '../.env'),
+  sample: path.resolve(__dirname, '../.env.sample')
+});
 
 
 const app = express();
