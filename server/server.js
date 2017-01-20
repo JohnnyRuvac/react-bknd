@@ -18,7 +18,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-const mongourl = '';
+
+const mongourl = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@' + process.env.DB_URL;
 var db;
 
 MongoClient.connect(mongourl, (err, database) => {
