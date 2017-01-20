@@ -1,9 +1,9 @@
-const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const dotenv = require('dotenv-safe');
-const path = require('path');
+import express from 'express';
+import { MongoClient } from 'mongodb';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import dotenv from 'dotenv-safe';
+import path from 'path';
 
 
 // load ENV from file
