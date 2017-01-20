@@ -33,7 +33,10 @@
   },
   "devDependencies": {
     "auth0-js": "^7.6.1",
+    "body-parser": "^1.16.0",
+    "cors": "^2.8.1",
     "dotenv-safe": "^4.0.3",
-    "jwt-decode": "^2.1.0"
+    "jwt-decode": "^2.1.0",
+    "mongodb": "^2.2.21"
   }
 }
