@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import AuthService from '../utils/AuthService';
+import getSlug from 'speakingurl';
 
 
 export default class StaticPage extends React.Component {
@@ -9,6 +10,8 @@ export default class StaticPage extends React.Component {
     this.state = {
       title: '',
       content: '',
+      slug: '',
+      slugOverridden: false
     }
   }
 
@@ -21,6 +24,12 @@ export default class StaticPage extends React.Component {
           placeholder="Title"
           value={this.state.title}
           onChange={this.handleChange.bind(this)}
+        />
+        <input type="text" 
+          name="slug"
+          placeholder="slug"
+          value={this.state.slug}
+          onChange={this.handleSlugChange.bind(this)}
         />
         <textarea
           name="content" 
@@ -37,7 +46,24 @@ export default class StaticPage extends React.Component {
     const name = e.target.name;
     const newState = {};
     newState[name] = e.target.value;
+
+    // update slug after title change
+    if ( name === 'title' && !this.state.slugOverridden ) {
+      newState.slug = getSlug(e.target.value);
+    }
+
     this.setState(newState);
+  }
+
+  handleSlugChange(e) {
+    const val = e.target.value;
+    const slugNotEmpty = val !== '';
+    const differentThanTitle = val !== this.state.title;
+    
+    this.setState({
+      slug: val,
+      slugOverridden: ( slugNotEmpty && differentThanTitle )
+    });
   }
 
   save() {
@@ -47,6 +73,7 @@ export default class StaticPage extends React.Component {
     axios.post(url, 
       {
         title: this.state.title,
+        slug: this.state.slug || getSlug(this.state.title),
         content: this.state.content
       },
       {

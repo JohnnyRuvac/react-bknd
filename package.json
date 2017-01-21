@@ -39,6 +39,7 @@
     "dotenv-safe": "^4.0.3",
     "express-jwt": "^5.1.0",
     "jwt-decode": "^2.1.0",
-    "mongodb": "^2.2.21"
+    "mongodb": "^2.2.21",
+    "speakingurl": "^11.0.0"
   }
 }
