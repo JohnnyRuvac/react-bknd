@@ -4,12 +4,19 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv-safe';
 import path from 'path';
+import jwt from 'express-jwt';
 
 
-// load ENV from file
+// load ENVs from file
 dotenv.load({
   path: path.resolve(__dirname, '../.env'),
   sample: path.resolve(__dirname, '../.env.sample')
+});
+
+// secure some paths with jwt auth
+const jwtCheck = jwt({
+  secret: process.env.AUTH0_SECRET,
+  audience: process.env.AUTH0_CLIENT_ID
 });
 
 
@@ -49,7 +56,10 @@ app.get('/pages', (req, res) => {
   });
 });
 
-app.post('/pages/new', (req,res) => {
+const newPageUrl = '/pages/new'; 
+app.use(newPageUrl, jwtCheck);
+
+app.post(newPageUrl, (req,res) => {
   db.collection('pages').save(req.body, (err, result) => {
     if (err) return console.log(err);
     console.log('page saved');
