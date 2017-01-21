@@ -18,7 +18,9 @@ export default class StaticPages extends React.Component {
         <Link to="/admin/pages/add">Add</Link>
         <ul>
           {this.state.pages.map(p => 
-            <li key={p._id}>{p.title}: {p.content}</li>
+            <li key={p._id}>
+              <Link to={'/admin/pages/edit/' + p.slug}>{p.title}: {p.content}</Link>
+            </li>
           )}
         </ul>
       </div>

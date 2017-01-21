@@ -37,9 +37,9 @@ const makeMainRoutes = () => {
       <Route path="/login" component={Login} onEnter={parseAuthHash} />
       
       <Route path="/admin" component={Admin} onEnter={requireAuth}>
-        <Route path="/admin/pages" component={StaticPages}>
-        </Route>
+        <Route path="/admin/pages" component={StaticPages} />
         <Route path="/admin/pages/add" component={StaticPage} />
+        <Route path="/admin/pages/edit/:slug" component={StaticPage} />
       </Route>
     </Route>
   );

@@ -66,3 +66,14 @@ app.post(newPageUrl, (req,res) => {
     res.send('page saved');
   });
 });
+
+app.get('/pages/:slug', (req, res) => {
+  const cursor = db.collection('pages').find({slug: req.params.slug}).toArray( (err, result) => {
+    if (err) return console.log(err);
+    res.json(result[0]);
+  });
+});
+
+app.post('/pages/:slug', (req, res) => {
+  const cursor = db.collection('pages').update({slug: req.params.slug}, {$set: req.body});
+});

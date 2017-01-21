@@ -42,6 +42,24 @@ export default class StaticPage extends React.Component {
     );
   }
 
+  componentDidMount() {
+    const isEditPage = this.props.params.slug;
+    if (isEditPage) {
+      this.getPageData();
+    }
+  }
+
+  getPageData() {
+    axios.get( process.env.SERVER_URL + '/pages/' + this.props.params.slug )
+      .then(res => {
+        this.setState({
+          title: res.data.title,
+          slug: res.data.slug,
+          content: res.data.content
+        });
+      })
+  }
+
   handleChange(e) {
     const name = e.target.name;
     const newState = {};
@@ -68,7 +86,9 @@ export default class StaticPage extends React.Component {
 
   save() {
     console.log('saving');
-    const url = process.env.SERVER_URL + '/pages/new';
+    var url = process.env.SERVER_URL;
+    const slug = this.props.params.slug;
+    url += (slug) ? '/pages/' + slug : '/pages/new';
     
     axios.post(url, 
       {
