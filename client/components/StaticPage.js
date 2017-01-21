@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import AuthService from '../utils/AuthService';
 
 
 export default class StaticPage extends React.Component {
@@ -42,10 +43,18 @@ export default class StaticPage extends React.Component {
   save() {
     console.log('saving');
     const url = process.env.SERVER_URL + '/pages/new';
-    axios.post(url, {
-      title: this.state.title,
-      content: this.state.content
-    })
+    
+    axios.post(url, 
+      {
+        title: this.state.title,
+        content: this.state.content
+      },
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('id_token')
+        },
+      }
+    )
     .then(response => {
       console.log(response.data);
     })
