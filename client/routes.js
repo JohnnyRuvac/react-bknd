@@ -5,8 +5,9 @@ import Container from './components/Container';
 import Home from './components/Home';
 import Login from './components/Login';
 import Admin from './components/Admin';
-import StaticPages from './components/StaticPages';
+import ListItems from './components/ListItems';
 import StaticPage from './components/StaticPage';
+import Category from './components/Category';
 
 
 const auth = new AuthService(
@@ -37,9 +38,15 @@ const makeMainRoutes = () => {
       <Route path="/login" component={Login} onEnter={parseAuthHash} />
       
       <Route path="/admin" component={Admin} onEnter={requireAuth}>
-        <Route path="/admin/pages" component={StaticPages} />
+        
+        <Route path="/admin/pages" component={ListItems} title="Pages" />
         <Route path="/admin/pages/add" component={StaticPage} />
         <Route path="/admin/pages/edit/:slug" component={StaticPage} />
+
+        <Route path="/admin/categories" component={ListItems} title="Categories" />
+        <Route path="/admin/categories/add" component={Category} />
+        <Route path="/admin/categories/edit/:slug" component={Category} />        
+
       </Route>
     </Route>
   );

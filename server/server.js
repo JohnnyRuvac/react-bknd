@@ -98,3 +98,55 @@ app.delete(deletePageUrl, (req, res) => {
       res.send(err);
     });
 });
+
+
+
+// Categories CRUD
+app.get('/categories', (req, res) => {
+  var cursor = db.collection('categories').find().toArray( (err, results) => {
+    res.json(results);
+  });
+});
+
+// Create
+const newUrl = '/categories/new'; 
+app.use(newUrl, jwtCheck);
+
+app.post(newUrl, (req,res) => {
+  db.collection('categories').save(req.body, (err, result) => {
+    if (err) return console.log(err);
+    console.log('categories saved');
+    res.send('categories saved');
+  });
+});
+
+// Get
+app.get('/categories/:slug', (req, res) => {
+  const cursor = db.collection('categories').find({slug: req.params.slug}).toArray( (err, result) => {
+    if (err) return console.log(err);
+    res.json(result[0]);
+  });
+});
+
+// Edit page
+const editUrl = '/categories/:slug'; 
+app.use(editUrl, jwtCheck);
+
+app.post(editUrl, (req, res) => {
+  db.collection('categories').update({slug: req.params.slug}, {$set: req.body});
+});
+
+// Delete page
+const deleteUrl = '/categories/delete/:slug';
+app.use(deleteUrl, jwtCheck);
+
+app.delete(deleteUrl, (req, res) => {
+  db.collection('categories').remove({slug: req.params.slug}, {justOne: true})
+    .then(result => {
+      res.send({});
+    })
+    .catch(err => {
+      console.log(err);
+      res.send(err);
+    });
+});
