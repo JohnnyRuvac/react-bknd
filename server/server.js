@@ -56,6 +56,7 @@ app.get('/pages', (req, res) => {
   });
 });
 
+// Create
 const newPageUrl = '/pages/new'; 
 app.use(newPageUrl, jwtCheck);
 
@@ -67,6 +68,7 @@ app.post(newPageUrl, (req,res) => {
   });
 });
 
+// Get
 app.get('/pages/:slug', (req, res) => {
   const cursor = db.collection('pages').find({slug: req.params.slug}).toArray( (err, result) => {
     if (err) return console.log(err);
@@ -74,6 +76,25 @@ app.get('/pages/:slug', (req, res) => {
   });
 });
 
-app.post('/pages/:slug', (req, res) => {
-  const cursor = db.collection('pages').update({slug: req.params.slug}, {$set: req.body});
+// Edit page
+const editPageUrl = '/pages/:slug'; 
+app.use(editPageUrl, jwtCheck);
+
+app.post(editPageUrl, (req, res) => {
+  db.collection('pages').update({slug: req.params.slug}, {$set: req.body});
+});
+
+// Delete page
+const deletePageUrl = '/pages/delete/:slug';
+app.use(deletePageUrl, jwtCheck);
+
+app.delete(deletePageUrl, (req, res) => {
+  db.collection('pages').remove({slug: req.params.slug}, {justOne: true})
+    .then(result => {
+      res.send({});
+    })
+    .catch(err => {
+      console.log(err);
+      res.send(err);
+    });
 });

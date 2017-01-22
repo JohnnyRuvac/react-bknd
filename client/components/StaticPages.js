@@ -20,11 +20,26 @@ export default class StaticPages extends React.Component {
           {this.state.pages.map(p => 
             <li key={p._id}>
               <Link to={'/admin/pages/edit/' + p.slug}>{p.title}: {p.content}</Link>
+              <a href="" onClick={e => this.deletePage(e, p.slug)}>Delete</a>
             </li>
           )}
         </ul>
       </div>
     );
+  }
+
+  deletePage(e, slug) {
+    e.preventDefault();
+    axios.delete( process.env.SERVER_URL + '/pages/delete/' + slug,
+      { headers: { Authorization: 'Bearer ' + localStorage.getItem('id_token') } })
+      .then(res => {
+        const updated = this.state.pages.filter(p => p.slug !== slug);
+        this.setState({pages: updated});
+      })
+      .catch(err => {
+        console.log('page delete error: ');
+        console.log(err);
+      });
   }
   
   componentWillMount() {
@@ -33,7 +48,7 @@ export default class StaticPages extends React.Component {
         this.setState({
           pages: res.data
         });
-      })
+      });
   }
 
 }
