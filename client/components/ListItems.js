@@ -41,7 +41,7 @@ export default class ListItems extends React.Component {
       });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.fetchItems();
   }
 
