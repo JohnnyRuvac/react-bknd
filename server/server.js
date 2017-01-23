@@ -49,99 +49,47 @@ app.get('/assets/app.bundle.js', (req, res) => {
 });
 
 
-// Pages CRUD
-app.get('/pages', (req, res) => {
-  var cursor = db.collection('pages').find().toArray( (err, results) => {
+// ContentTypes CRUD
+app.get('/types/:type', (req, res) => {
+  var cursor = db.collection(req.params.type).find().toArray( (err, results) => {
     res.json(results);
   });
 });
 
 // Create
-const newPageUrl = '/pages/new'; 
-app.use(newPageUrl, jwtCheck);
+const newTypeUrl = '/types/:type/new';
+app.use(newTypeUrl, jwtCheck);
 
-app.post(newPageUrl, (req,res) => {
-  db.collection('pages').save(req.body, (err, result) => {
+app.post(newTypeUrl, (req,res) => {
+  db.collection(req.params.type).save(req.body, (err, result) => {
     if (err) return console.log(err);
-    console.log('page saved');
-    res.send('page saved');
+    console.log(req.params.type + ' saved');
+    res.send(req.params.type + ' saved');
   });
 });
 
 // Get
-app.get('/pages/:slug', (req, res) => {
-  const cursor = db.collection('pages').find({slug: req.params.slug}).toArray( (err, result) => {
+app.get('/types/:type/:slug', (req, res) => {
+  const cursor = db.collection(req.params.type).find({slug: req.params.slug}).toArray( (err, result) => {
     if (err) return console.log(err);
     res.json(result[0]);
   });
 });
 
 // Edit page
-const editPageUrl = '/pages/:slug'; 
-app.use(editPageUrl, jwtCheck);
+const editTypeUrl = '/types/:type/:slug'; 
+app.use(editTypeUrl, jwtCheck);
 
-app.post(editPageUrl, (req, res) => {
-  db.collection('pages').update({slug: req.params.slug}, {$set: req.body});
+app.post(editTypeUrl, (req, res) => {
+  db.collection(req.params.type).update({slug: req.params.slug}, {$set: req.body});
 });
 
 // Delete page
-const deletePageUrl = '/pages/delete/:slug';
-app.use(deletePageUrl, jwtCheck);
+const deleteTypeUrl = '/types/:type/delete/:slug';
+app.use(deleteTypeUrl, jwtCheck);
 
-app.delete(deletePageUrl, (req, res) => {
-  db.collection('pages').remove({slug: req.params.slug}, {justOne: true})
-    .then(result => {
-      res.send({});
-    })
-    .catch(err => {
-      console.log(err);
-      res.send(err);
-    });
-});
-
-
-
-// Categories CRUD
-app.get('/categories', (req, res) => {
-  var cursor = db.collection('categories').find().toArray( (err, results) => {
-    res.json(results);
-  });
-});
-
-// Create
-const newUrl = '/categories/new'; 
-app.use(newUrl, jwtCheck);
-
-app.post(newUrl, (req,res) => {
-  db.collection('categories').save(req.body, (err, result) => {
-    if (err) return console.log(err);
-    console.log('categories saved');
-    res.send('categories saved');
-  });
-});
-
-// Get
-app.get('/categories/:slug', (req, res) => {
-  const cursor = db.collection('categories').find({slug: req.params.slug}).toArray( (err, result) => {
-    if (err) return console.log(err);
-    res.json(result[0]);
-  });
-});
-
-// Edit page
-const editUrl = '/categories/:slug'; 
-app.use(editUrl, jwtCheck);
-
-app.post(editUrl, (req, res) => {
-  db.collection('categories').update({slug: req.params.slug}, {$set: req.body});
-});
-
-// Delete page
-const deleteUrl = '/categories/delete/:slug';
-app.use(deleteUrl, jwtCheck);
-
-app.delete(deleteUrl, (req, res) => {
-  db.collection('categories').remove({slug: req.params.slug}, {justOne: true})
+app.delete(deleteTypeUrl, (req, res) => {
+  db.collection(req.params.type).remove({slug: req.params.slug}, {justOne: true})
     .then(result => {
       res.send({});
     })
