@@ -37,18 +37,25 @@ export default class ContentType extends React.Component {
       });
   }
 
+  updateContentDataState(changedData) {
+    const contentData = Object.assign({}, this.state.contentData);
+    for (const key in changedData) {
+      contentData[key] = changedData[key];
+    }
+    this.setState({contentData: contentData});
+  }
+
   handleChange(e) {
     const name = e.target.name;
-    const newData = this.state.contentData;
+    const changedData = {};
+    changedData[name] = e.target.value;
 
     // update slug after title change
     if ( name === 'title' && !this.state.slugOverridden ) {
-      newData.slug = getSlug(e.target.value);
+      changedData.slug = getSlug(e.target.value);
     }
 
-    newData[name] = e.target.value;
-
-    this.setState({contentData: newData});
+    this.updateContentDataState(changedData);
   }
 
   handleSlugChange(e) {
