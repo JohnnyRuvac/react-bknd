@@ -8,6 +8,7 @@ import Admin from './components/Admin';
 import ListItems from './components/ListItems';
 import StaticPage from './components/StaticPage';
 import Category from './components/Category';
+import ImageTest from './components/ImageTest';
 
 
 const auth = new AuthService(
@@ -45,7 +46,11 @@ const makeMainRoutes = () => {
 
         <Route path="/admin/categories" component={ListItems} title="Categories" />
         <Route path="/admin/categories/add" component={Category} />
-        <Route path="/admin/categories/edit/:slug" component={Category} />        
+        <Route path="/admin/categories/edit/:slug" component={Category} />
+
+        <Route path="/admin/image-tests" component={ListItems} title="Image Test" />
+        <Route path="/admin/image-tests/add" component={ImageTest} />
+        <Route path="/admin/image-tests/edit/:slug" component={ImageTest} />
 
       </Route>
     </Route>

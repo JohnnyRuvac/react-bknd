@@ -10,6 +10,7 @@ export default class Admin extends React.Component {
         <Link to="/home">Home</Link>
         <Link to="/admin/pages">Pages</Link>
         <Link to="/admin/categories">Categories</Link>
+        <Link to="/admin/image-tests">Image Tests</Link>
         {this.props.children}
       </div>
     );
