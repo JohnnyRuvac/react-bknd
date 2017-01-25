@@ -8,7 +8,7 @@ const parsedEnvs = envHelper('./.env');
 module.exports = {
   context: path.resolve(__dirname, './client'),
   
-  devtool: 'source-map',
+  devtool: (isProduction) ? '' : 'source-map',
   entry: {
     app: './app.js',
   },
