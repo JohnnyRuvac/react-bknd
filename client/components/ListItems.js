@@ -31,7 +31,7 @@ export default class ListItems extends React.Component {
   }
   
   fetchItems() {
-    const url = process.env.SERVER_URL + '/types/' + this.slug;
+    const url = process.env.SERVER_URL + '/api/' + this.slug;
 
     axios.get(url)
       .then(res => {
@@ -55,7 +55,7 @@ export default class ListItems extends React.Component {
 
   deleteItem(e, slug) {
     e.preventDefault();
-    axios.delete( process.env.SERVER_URL + '/types/' + this.slug + '/delete/' + slug,
+    axios.delete( process.env.SERVER_URL + '/api/' + this.slug + '/delete/' + slug,
       { headers: { Authorization: 'Bearer ' + localStorage.getItem('id_token') } })
       .then(res => {
         const updated = this.state.items.filter(p => p.slug !== slug);

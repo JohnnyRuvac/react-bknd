@@ -51,14 +51,14 @@ app.get('*', (req, res) => {
 
 
 // ContentTypes CRUD
-app.get('/types/:type', (req, res) => {
+app.get('/api/:type', (req, res) => {
   var cursor = db.collection(req.params.type).find().toArray( (err, results) => {
     res.json(results);
   });
 });
 
 // Create
-const newTypeUrl = '/types/:type/new';
+const newTypeUrl = '/api/:type/new';
 app.use(newTypeUrl, jwtCheck);
 
 app.post(newTypeUrl, (req,res) => {
@@ -70,7 +70,7 @@ app.post(newTypeUrl, (req,res) => {
 });
 
 // Get
-app.get('/types/:type/:slug', (req, res) => {
+app.get('/api/:type/:slug', (req, res) => {
   const cursor = db.collection(req.params.type).find({slug: req.params.slug}).toArray( (err, result) => {
     if (err) return console.log(err);
     res.json(result[0]);
@@ -78,7 +78,7 @@ app.get('/types/:type/:slug', (req, res) => {
 });
 
 // Edit page
-const editTypeUrl = '/types/:type/:slug'; 
+const editTypeUrl = '/api/:type/:slug'; 
 app.use(editTypeUrl, jwtCheck);
 
 app.post(editTypeUrl, (req, res) => {
@@ -86,7 +86,7 @@ app.post(editTypeUrl, (req, res) => {
 });
 
 // Delete page
-const deleteTypeUrl = '/types/:type/delete/:slug';
+const deleteTypeUrl = '/api/:type/delete/:slug';
 app.use(deleteTypeUrl, jwtCheck);
 
 app.delete(deleteTypeUrl, (req, res) => {

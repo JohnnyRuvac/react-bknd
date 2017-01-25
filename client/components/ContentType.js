@@ -27,7 +27,7 @@ export default class ContentType extends React.Component {
   }
 
   fechItemData() {
-    const url = process.env.SERVER_URL + '/types/' + this._getContentTypeSlug() + '/' + this.props.params.slug;
+    const url = process.env.SERVER_URL + '/api/' + this._getContentTypeSlug() + '/' + this.props.params.slug;
     
     axios.get(url)
       .then(res => {
@@ -72,7 +72,7 @@ export default class ContentType extends React.Component {
   }
 
   _getSaveUrl() {
-    var url = process.env.SERVER_URL + '/types/' + this._getContentTypeSlug() + '/';
+    var url = process.env.SERVER_URL + '/api/' + this._getContentTypeSlug() + '/';
     const slug = this.props.params.slug;
     url += (slug) ? slug : 'new';
     return url;
