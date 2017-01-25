@@ -43,11 +43,13 @@ MongoClient.connect(mongourl, (err, database) => {
 
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/dist/index.html');
+  const filePath = path.resolve(__dirname, '../dist/index.html');
+  res.sendFile(filePath);
 });
 
 app.get('/assets/app.bundle.js', (req, res) => {
-  res.sendFile(__dirname + '/dist/assets/app.bundle.js');
+  const filePath = path.resolve(__dirname, '../dist/assets/app.bundle.js');
+  res.sendFile(filePath);
 });
 
 
