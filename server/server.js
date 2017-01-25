@@ -41,14 +41,11 @@ MongoClient.connect(mongourl, (err, database) => {
 
 });
 
+const staticPath = path.resolve(__dirname, '../dist');
+app.use(express.static( staticPath ));
 
-app.get('/', (req, res) => {
+app.get('*', (req, res) => {
   const filePath = path.resolve(__dirname, '../dist/index.html');
-  res.sendFile(filePath);
-});
-
-app.get('/assets/app.bundle.js', (req, res) => {
-  const filePath = path.resolve(__dirname, '../dist/assets/app.bundle.js');
   res.sendFile(filePath);
 });
 
