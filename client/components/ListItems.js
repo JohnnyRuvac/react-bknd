@@ -8,7 +8,7 @@ export default class ListItems extends React.Component {
   constructor(props) {
     super(props);
     this.slug = Helpers.slugFromRoute(this.props.route);
-    this.serverUrl = process.env.SERVER_URL + ':' + process.env.SERVER_PORT;
+    this.serverUrl = Helpers.getServerUrl();
     this.state = {
       items: []
     }

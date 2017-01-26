@@ -2,12 +2,13 @@ import React from 'react';
 import axios from 'axios';
 import AuthService from '../utils/AuthService';
 import getSlug from 'speakingurl';
+import Helpers from '../utils/Helpers';
 
 
 export default class ContentType extends React.Component {
   constructor(props) {
     super(props);
-    this.serverUrl = process.env.SERVER_URL + ':' + process.env.SERVER_PORT;
+    this.serverUrl = Helpers.getServerUrl();
     this.state = {
       contentData: {},
       slugOverridden: false,
@@ -25,7 +26,7 @@ export default class ContentType extends React.Component {
     if (isEditing) {
       this.fechItemData();
     }
-  }
+  } 
 
   fechItemData() {
     const url = this.serverUrl + '/api/' + this._getContentTypeSlug() + '/' + this.props.params.slug;
