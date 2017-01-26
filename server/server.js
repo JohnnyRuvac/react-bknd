@@ -3,10 +3,11 @@ import { MongoClient } from 'mongodb';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import dotenv from 'dotenv-safe';
-import fs from 'fs';
 import path from 'path';
 import jwt from 'express-jwt';
-import multer from 'multer';
+import uploadRoute from './routes/uploadRoute';
+import apiRoute from './routes/apiRoute';
+
 
 
 // load ENVs from file
@@ -22,131 +23,43 @@ const jwtCheck = jwt({
 });
 
 
-const app = express();
-app.use(cors());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+const initApp = (db) => {
+
+  // init app
+  const app = express();
+  app.use(cors());
+  app.use(bodyParser.urlencoded({extended: true}));
+  app.use(bodyParser.json());
+
+  // serve static files
+  const staticPath = path.resolve(__dirname, '../dist');
+  app.use(express.static( staticPath ));
+
+  // routes
+  app.use('/api', apiRoute(jwtCheck, db));
+  app.use('/', uploadRoute(jwtCheck));
+
+  // redirect all requests except api to index.html for client side routing
+  app.get('*', (req, res) => {
+    const filePath = path.resolve(__dirname, '../dist/index.html');
+    res.sendFile(filePath);
+  });
+
+  // and listen
+  const port = process.env.SERVER_PORT;
+  
+  app.listen(port, function(){
+    console.log('listening on ' + port);
+  });
+
+}
 
 
-const mongourl = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@' + process.env.DB_URL;
-var db;
 
-MongoClient.connect(mongourl, (err, database) => {
+// init db and start listening when ready
+const mongoUrl = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@' + process.env.DB_URL;
+
+MongoClient.connect(mongoUrl, (err, database) => {
   if (err) return console.log(err);
-
-  db = database;
-  app.listen(3000, function(){
-    console.log('listening on 3000');
-  });
-
-});
-
-const staticPath = path.resolve(__dirname, '../dist');
-app.use(express.static( staticPath ));
-
-app.get('*', (req, res) => {
-  const filePath = path.resolve(__dirname, '../dist/index.html');
-  res.sendFile(filePath);
-});
-
-
-// ContentTypes CRUD
-app.get('/api/:type', (req, res) => {
-  var cursor = db.collection(req.params.type).find().toArray( (err, results) => {
-    res.json(results);
-  });
-});
-
-// Create
-const newTypeUrl = '/api/:type/new';
-app.use(newTypeUrl, jwtCheck);
-
-app.post(newTypeUrl, (req,res) => {
-  db.collection(req.params.type).save(req.body, (err, result) => {
-    if (err) return console.log(err);
-    console.log(req.params.type + ' saved');
-    res.send(req.params.type + ' saved');
-  });
-});
-
-// Get
-app.get('/api/:type/:slug', (req, res) => {
-  const cursor = db.collection(req.params.type).find({slug: req.params.slug}).toArray( (err, result) => {
-    if (err) return console.log(err);
-    res.json(result[0]);
-  });
-});
-
-// Edit page
-const editTypeUrl = '/api/:type/:slug'; 
-app.use(editTypeUrl, jwtCheck);
-
-app.post(editTypeUrl, (req, res) => {
-  db.collection(req.params.type).update({slug: req.params.slug}, {$set: req.body});
-});
-
-// Delete page
-const deleteTypeUrl = '/api/:type/delete/:slug';
-app.use(deleteTypeUrl, jwtCheck);
-
-app.delete(deleteTypeUrl, (req, res) => {
-  db.collection(req.params.type).remove({slug: req.params.slug}, {justOne: true})
-    .then(result => {
-      res.send({});
-    })
-    .catch(err => {
-      console.log(err);
-      res.send(err);
-    });
-});
-
-
-// Image upload
-const uploadUrl = '/upload';
-
-app.use(uploadUrl, jwtCheck);
-
-// make sure that upload folder exists
-const uploadPath = path.resolve(__dirname, '../dist/uploads');
-fs.stat(uploadPath, (err, stats) => {
-  if (err) {
-    if (err.code === 'ENOENT') {
-      fs.mkdir(uploadPath);
-    } else {
-      console.log('error:');
-      console.log(err);
-    }
-  }
-});
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    const split = file.originalname.split('.');
-    const extension = split.pop();
-    const filename = split.join('.').replace(/\W+/g, '-').toLowerCase() + '-' + Date.now() + '.' + extension;
-    cb(null, filename);
-  }
-});
-
-const upload = multer({
-  storage: storage,
-  limits: {
-    files: 1,
-    fileSize: 2 * 1024 * 1024
-  }
-}).single('photo');
-
-
-app.post(uploadUrl, (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      res.statusCode = 400;
-      return res.json({errors: ['File failed to upload']});
-    }
-    console.log(req.file.filename);
-    res.send(req.file.filename);
-  });
+  initApp(database);
 });

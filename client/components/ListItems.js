@@ -8,6 +8,7 @@ export default class ListItems extends React.Component {
   constructor(props) {
     super(props);
     this.slug = Helpers.slugFromRoute(this.props.route);
+    this.serverUrl = process.env.SERVER_URL + ':' + process.env.SERVER_PORT;
     this.state = {
       items: []
     }
@@ -31,7 +32,7 @@ export default class ListItems extends React.Component {
   }
   
   fetchItems() {
-    const url = process.env.SERVER_URL + '/api/' + this.slug;
+    const url = this.serverUrl + '/api/' + this.slug;
 
     axios.get(url)
       .then(res => {
@@ -55,7 +56,7 @@ export default class ListItems extends React.Component {
 
   deleteItem(e, slug) {
     e.preventDefault();
-    axios.delete( process.env.SERVER_URL + '/api/' + this.slug + '/delete/' + slug,
+    axios.delete( this.serverUrl + '/api/' + this.slug + '/' + slug,
       { headers: { Authorization: 'Bearer ' + localStorage.getItem('id_token') } })
       .then(res => {
         const updated = this.state.items.filter(p => p.slug !== slug);

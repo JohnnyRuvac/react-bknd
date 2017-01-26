@@ -40,7 +40,7 @@ export default class ImageTest extends ContentType {
   uploadPhoto(e) {
     e.preventDefault();
     const data = new FormData(e.target);
-    const url = process.env.SERVER_URL + '/upload'
+    const url = this.serverUrl + '/upload'
     axios.post(url, data, {
         headers: {
           "Authorization": "Bearer " + localStorage.getItem('id_token')

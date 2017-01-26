@@ -7,6 +7,7 @@ import getSlug from 'speakingurl';
 export default class ContentType extends React.Component {
   constructor(props) {
     super(props);
+    this.serverUrl = process.env.SERVER_URL + ':' + process.env.SERVER_PORT;
     this.state = {
       contentData: {},
       slugOverridden: false,
@@ -27,7 +28,7 @@ export default class ContentType extends React.Component {
   }
 
   fechItemData() {
-    const url = process.env.SERVER_URL + '/api/' + this._getContentTypeSlug() + '/' + this.props.params.slug;
+    const url = this.serverUrl + '/api/' + this._getContentTypeSlug() + '/' + this.props.params.slug;
     
     axios.get(url)
       .then(res => {
@@ -71,13 +72,6 @@ export default class ContentType extends React.Component {
     });
   }
 
-  _getSaveUrl() {
-    var url = process.env.SERVER_URL + '/api/' + this._getContentTypeSlug() + '/';
-    const slug = this.props.params.slug;
-    url += (slug) ? slug : 'new';
-    return url;
-  }
-
   _getContentTypeSlug() {
     const path = this.props.route.path;
     const segments = path.split('/');
@@ -93,7 +87,8 @@ export default class ContentType extends React.Component {
 
   save() {
     console.log('saving');
-    const url = this._getSaveUrl();
+    const slug = this.state.contentData.slug
+    const url = this.serverUrl + '/api/' + this._getContentTypeSlug() + '/' + slug;
     const data = this._removeIdFromContentData( this.state.contentData );
     
     axios.post(url, data,
