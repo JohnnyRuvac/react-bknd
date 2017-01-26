@@ -19,21 +19,28 @@ const apiRoute = (jwtCheck, db) => {
       });
     });
 
-  // but post&delete do
+  // but post, patch & delete do
   router
-    .route('/:type/:slug', jwtCheck)
-    // create&update
-    .post((req, res) => {
+    .route('/:type/:slug')
+    // create
+    .post(jwtCheck, (req, res) => {
       
+      db.collection(req.params.type).save(
+        req.body
+      );
+
+    })
+    // update
+    .patch(jwtCheck, (req, res) => {
+
       db.collection(req.params.type).update(
-        {slug: req.params.slug}, 
-        {$set: req.body},
-        {upsert: true}
+        {slug: req.params.slug},
+        {$set: req.body}
       );
 
     })
     // delete
-    .delete((req, res) => {
+    .delete(jwtCheck, (req, res) => {
       
       db.collection(req.params.type).remove({slug: req.params.slug}, {justOne: true})
         .then(result => {

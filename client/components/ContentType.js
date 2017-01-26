@@ -32,6 +32,7 @@ export default class ContentType extends React.Component {
     
     axios.get(url)
       .then(res => {
+        this.originalSlug = res.data.slug;
         this.setState({
           contentData: res.data
         });
@@ -87,11 +88,15 @@ export default class ContentType extends React.Component {
 
   save() {
     console.log('saving');
-    const slug = this.state.contentData.slug
+    const isEditing = !!this.props.router.params.slug;
+    // patch if item already exists, post if doesn't
+    const method = ( isEditing ) ? 'patch' : 'post';
+    // if updating use original slug
+    const slug = ( isEditing ) ? this.originalSlug : this.state.contentData.slug
     const url = this.serverUrl + '/api/' + this._getContentTypeSlug() + '/' + slug;
     const data = this._removeIdFromContentData( this.state.contentData );
     
-    axios.post(url, data,
+    axios[method](url, data,
       {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('id_token')

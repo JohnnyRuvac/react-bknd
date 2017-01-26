@@ -45,8 +45,8 @@ const uploadRoute = (jwtCheck) => {
   const router = express.Router();
 
   router
-    .route('/upload', jwtCheck)
-    .post((req, res) => {
+    .route('/')
+    .post(jwtCheck, (req, res) => {
       upload(req, res, (err) => {
         if (err) {
           res.statusCode = 400;

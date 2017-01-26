@@ -37,7 +37,7 @@ const initApp = (db) => {
 
   // routes
   app.use('/api', apiRoute(jwtCheck, db));
-  app.use('/', uploadRoute(jwtCheck));
+  app.use('/upload', uploadRoute(jwtCheck));
 
   // redirect all requests except api to index.html for client side routing
   app.get('*', (req, res) => {
