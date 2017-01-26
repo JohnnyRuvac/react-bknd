@@ -14,8 +14,11 @@ module.exports = function(envPath) {
 
   var envs = dotenv.parse(fs.readFileSync(envPath));
   var parsedEnvs = {};
+  const ignoredKeys = ['AUTH0_SECRET', 'DB_URL', 'DB_USER', 'DB_PASS'];
+  const isProduction = process.env.NODE_ENV === 'production';
 
   for (var key in envs) {
+    if ( ignoredKeys.indexOf(key) >= 0  && isProduction) continue;
     parsedEnvs[key] = JSON.stringify(envs[key]);
   }
 
