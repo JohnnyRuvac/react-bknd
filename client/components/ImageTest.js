@@ -33,6 +33,7 @@ export default class ImageTest extends ContentType {
           <input type="submit" />
         </form>
         <img src={this.state.contentData.imageUrl} alt=""/>
+        <button onClick={this.save.bind(this)}>Save</button>
       </div>
     );
   }
