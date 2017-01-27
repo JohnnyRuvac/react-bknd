@@ -17,12 +17,15 @@
     "react-dom": "^15.4.2"
   },
   "scripts": {
-    "start": "nodemon ./server/server.js --exec babel-node --presets react,es2015,stage-2",
-    "startprod": "NODE_ENV=production node ./server/server.compiled.js",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "npm run cleanDist && npm run compileConfig && NODE_ENV=\"production\" webpack -p --config webpack.config.compiled.js",
+    "build:server": "babel server --out-dir .tmpdeploy/server --presets react,es2015,stage-2",
     "compileConfig": "babel webpack.config.js -o webpack.config.compiled.js",
-    "dev": "npm run compileConfig && webpack-dev-server --config webpack.config.compiled.js --history-api-fallback",
     "cleanDist": "rm -rf dist/assets",
-    "build": "npm run cleanDist && npm run compileConfig && NODE_ENV=\"production\" webpack -p --config webpack.config.compiled.js"
+    "dev": "npm run compileConfig && webpack-dev-server --config webpack.config.compiled.js --history-api-fallback",
+    "deploy": "npm run build && bash .deploy/deploy.sh",
+    "start": "nodemon ./server/server.js --exec babel-node --presets react,es2015,stage-2",
+    "startprod": "NODE_ENV=production node ./server/server.js"
   },
   "devDependencies": {
     "auth0-js": "^7.6.1",

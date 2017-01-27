@@ -13,7 +13,6 @@ export default class Container extends React.Component {
     
     return (
       <div>
-        <p>container</p>
         {children}
       </div>
     );
