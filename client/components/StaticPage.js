@@ -1,5 +1,7 @@
 import React from 'react';
 import ContentType from './ContentType';
+import { Button } from 'react-bootstrap';
+import { bootstrap, admin } from '../styles/styles';
 
 
 export default class StaticPage extends ContentType {
@@ -14,7 +16,7 @@ export default class StaticPage extends ContentType {
   
   render() {
     return (
-      <div>
+      <div className="static-page">
         <h3>New page</h3>
         <input type="text" 
           name="title"
@@ -34,7 +36,10 @@ export default class StaticPage extends ContentType {
           value={this.state.contentData.content}
           onChange={this.handleChange.bind(this)}
         ></textarea>
-        <button onClick={this.save.bind(this)}>Save</button>
+        <Button bsStyle="success" bsSize="small" onClick={this.save.bind(this)}>
+          Save
+        </Button>
+
       </div>
     );
   }
