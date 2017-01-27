@@ -28,6 +28,7 @@ const apiRoute = (jwtCheck, db) => {
       db.collection(req.params.type).save(
         req.body
       );
+      res.send('saved');
 
     })
     // update
@@ -37,6 +38,7 @@ const apiRoute = (jwtCheck, db) => {
         {slug: req.params.slug},
         {$set: req.body}
       );
+      res.send('saved');
 
     })
     // delete
@@ -44,7 +46,7 @@ const apiRoute = (jwtCheck, db) => {
       
       db.collection(req.params.type).remove({slug: req.params.slug}, {justOne: true})
         .then(result => {
-          res.send({});
+          res.send('saved');
         })
         .catch(err => {
           console.log(err);

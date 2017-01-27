@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import axios from 'axios';
 import AuthService from '../utils/AuthService';
 import getSlug from 'speakingurl';
@@ -105,7 +106,8 @@ export default class ContentType extends React.Component {
       }
     )
     .then(response => {
-      console.log(response.data);
+      const path = '/admin/' + this._getContentTypeSlug();
+      browserHistory.push(path);
     })
     .catch(error => {
       console.log('page save error');
