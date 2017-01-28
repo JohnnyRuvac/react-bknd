@@ -3,7 +3,7 @@ import { Route, IndexRedirect } from 'react-router';
 import AuthService from './utils/AuthService';
 import Container from './components/Container';
 import Home from './components/Home';
-import Login from './components/Login';
+import Login from './components/Login/Login';
 import Admin from './components/Admin';
 import ListItems from './components/ListItems';
 import StaticPage from './components/StaticPage';
