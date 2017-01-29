@@ -17,6 +17,13 @@ module.exports = {
     path: path.resolve(__dirname, './dist/assets'),
     publicPath: '/assets',
   },
+
+  resolve: {
+    alias: {
+      Utils: path.resolve(__dirname, 'client/utils/'),
+      Styles: path.resolve(__dirname, 'client/styles/')
+    }
+  },
   
   devServer: {
     contentBase: path.resolve(__dirname, './dist'),

@@ -1,7 +1,7 @@
 import React from 'react';
-import ContentType from './ContentType';
+import ContentType from '../ContentType/ContentType';
 import { Button } from 'react-bootstrap';
-import { bootstrap, admin } from '../styles/styles';
+import { bootstrap } from 'Styles/_custom_bootstrap.scss';
 
 
 export default class StaticPage extends ContentType {

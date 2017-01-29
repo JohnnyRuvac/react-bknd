@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router';
-import Helpers from '../utils/Helpers';
+import Helpers from 'Utils/Helpers';
 
 
 export default class ListItems extends React.Component {

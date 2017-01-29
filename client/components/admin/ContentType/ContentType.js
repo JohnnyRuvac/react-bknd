@@ -1,9 +1,9 @@
 import React from 'react';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
-import AuthService from '../utils/AuthService';
+import AuthService from 'Utils/AuthService';
 import getSlug from 'speakingurl';
-import Helpers from '../utils/Helpers';
+import Helpers from 'Utils/Helpers';
 
 
 export default class ContentType extends React.Component {

@@ -3,12 +3,7 @@ import { Route, IndexRedirect } from 'react-router';
 import AuthService from './utils/AuthService';
 import Container from './components/Container';
 import Home from './components/Home';
-import Login from './components/Login/Login';
-import Admin from './components/Admin';
-import ListItems from './components/ListItems';
-import StaticPage from './components/StaticPage';
-import Category from './components/Category';
-import ImageTest from './components/ImageTest';
+import { Login, AdminLayout, ListItems, StaticPage, Category, ImageTest } from './components/Admin/AdminComponents';
 
 
 const auth = new AuthService(
@@ -38,7 +33,7 @@ const makeMainRoutes = () => {
       <Route path="/home" component={Home} onEnter={requireAuth} />
       <Route path="/login" component={Login} onEnter={parseAuthHash} />
       
-      <Route path="/admin" component={Admin} onEnter={requireAuth}>
+      <Route path="/admin" component={AdminLayout} onEnter={requireAuth}>
         
         <Route path="/admin/pages" component={ListItems} title="Pages" />
         <Route path="/admin/pages/add" component={StaticPage} />

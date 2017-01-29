@@ -1,5 +1,5 @@
 import React from 'react';
-import ContentType from './ContentType';
+import ContentType from '../ContentType/ContentType';
 import axios from 'axios';
 
 
