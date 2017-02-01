@@ -5,16 +5,14 @@ import { Link } from 'react-router';
 
 export default class Layout extends React.Component {
   render() {
+    const naviItems = [
+      { href: '/p1', text: 'p!' },
+      { href: '/admin', text: 'Admin' },
+    ];
+
     return (
       <div>
-        <Header title="React App" linkTo="/" navi=
-          {<nav className="main-menu col-xs-2 col-sm-9">
-            <ul>
-              <li><Link to="/p1">p!</Link></li>
-              <li><Link to="/admin">Admin</Link></li>
-            </ul>
-          </nav>}
-        />
+        <Header title="React App" linkTo="/" naviItems={naviItems} />
         {this.props.children}
       </div>
     );

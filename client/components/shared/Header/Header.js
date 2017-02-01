@@ -16,7 +16,17 @@ export default class Header extends React.Component {
             <a href="" className="hamburger" onClick={this._toggleMenu.bind(this)}>
               <span className="icon"></span>
             </a>
-            {this.props.navi}
+            <nav className="main-menu col-xs-2 col-sm-9">
+              <ul>
+                {this.props.naviItems.map((item, index) => {
+                  return (
+                    <li key={index}>
+                      <Link to={item.href} onClick={this._closeMenu}>{item.text}</Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
             <div className="content-cover" ref="contentCover"></div>
           </Row>
         </Grid>
@@ -25,15 +35,22 @@ export default class Header extends React.Component {
   }
 
   componentDidMount() {
-    this.refs.contentCover.addEventListener('touchstart', this._toggleMenu.bind(this));
-    // window.onscroll = () => {
+    this.refs.contentCover.addEventListener('touchstart', this._closeMenu.bind(this));
+    window.addEventListener('scroll', this._closeMenu.bind(this));
+  }
 
-    // }
+  componentWillUnmount() {
+    this.refs.contentCover.removeEventListener('touchstart', this._closeMenu.bind(this));
+    window.removeEventListener('scroll', this._closeMenu.bind(this)); 
   }
 
   _toggleMenu(e) {
     e.preventDefault();
     document.body.classList.toggle('menu-opened');
+  }
+
+  _closeMenu(e) {
+    document.body.classList.remove('menu-opened'); 
   }
 
 }
