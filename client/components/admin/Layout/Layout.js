@@ -8,7 +8,7 @@ export default class Admin extends React.Component {
     return (
       <div>
         <Header title="Admin" navi=
-          {<nav className="col-xs-2 col-sm-9">
+          {<nav className="main-menu col-xs-2 col-sm-9">
             <ul>
               <li><Link to="/home">Home</Link></li>
               <li><Link to="/admin/pages">Pages</Link></li>

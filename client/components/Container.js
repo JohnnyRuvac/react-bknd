@@ -1,4 +1,5 @@
 import React from 'react';
+import bootstrap from 'Styles/_custom_bootstrap.scss';
 
 
 export default class Container extends React.Component {

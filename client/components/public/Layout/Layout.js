@@ -8,7 +8,7 @@ export default class Layout extends React.Component {
     return (
       <div>
         <Header title="React App" linkTo="/" navi=
-          {<nav className="col-xs-2 col-sm-9">
+          {<nav className="main-menu col-xs-2 col-sm-9">
             <ul>
               <li><Link to="/p1">p!</Link></li>
               <li><Link to="/admin">Admin</Link></li>

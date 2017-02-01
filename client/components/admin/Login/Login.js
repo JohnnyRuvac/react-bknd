@@ -2,7 +2,6 @@ import React, { PropTypes as T } from 'react';
 import ReactDOM from 'react-dom';
 import AuthService from 'Utils/AuthService';
 import { Grid, Row, Col, Button, FormControl } from 'react-bootstrap';
-import bootstrap from 'Styles/_custom_bootstrap.scss';
 import styles from './Login.sass';
 
 
