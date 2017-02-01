@@ -1,4 +1,5 @@
 import React from 'react';
+import Header from '../../shared/Header/Header';
 import { Link } from 'react-router';
 
 
@@ -6,12 +7,19 @@ export default class Admin extends React.Component {
   render() {
     return (
       <div>
-        <h2>Admin</h2>
-        <Link to="/home">Home</Link>
-        <Link to="/admin/pages">Pages</Link>
-        <Link to="/admin/categories">Categories</Link>
-        <Link to="/admin/image-tests">Image Tests</Link>
-        {this.props.children}
+        <Header title="Admin" navi=
+          {<nav className="col-xs-2 col-sm-9">
+            <ul>
+              <li><Link to="/home">Home</Link></li>
+              <li><Link to="/admin/pages">Pages</Link></li>
+              <li><Link to="/admin/categories">Categories</Link></li>
+              <li><Link to="/admin/image-tests">Image Tests</Link></li>
+            </ul>
+          </nav>}
+        />
+        <div className="main-container">
+          {this.props.children}
+        </div>
       </div>
     );
   }

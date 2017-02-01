@@ -1,5 +1,6 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
+import { Grid, Row, Col, Button } from 'react-bootstrap';
 
 
 export default class Category extends ContentType {
@@ -13,22 +14,37 @@ export default class Category extends ContentType {
 
   render() {
     return (
-      <div>
-        <h3>New category</h3>
-        <input type="text" 
-          name="title"
-          placeholder="Title"
-          value={this.state.contentData.title}
-          onChange={this.handleChange.bind(this)}
-        />
-        <input type="text" 
-          name="slug"
-          placeholder="slug"
-          value={this.state.contentData.slug}
-          onChange={this.handleSlugChange.bind(this)}
-        />
-        <button onClick={this.save.bind(this)}>Save</button>
-      </div>
+      <Grid>
+        <Row>
+          <h3 className="col-xs-12">New category</h3>
+        </Row>
+        <Row>
+          <input type="text" 
+            className="col-xs-12"
+            name="title"
+            placeholder="Title"
+            value={this.state.contentData.title}
+            onChange={this.handleChange.bind(this)}
+          />
+        </Row>
+        <Row>
+          <input type="text"
+            className="col-xs-12"
+            name="slug"
+            placeholder="slug"
+            value={this.state.contentData.slug}
+            onChange={this.handleSlugChange.bind(this)}
+          />
+        </Row>
+        <Row>
+          <Button onClick={this.save.bind(this)}
+            bsStyle="success" 
+            bsSize="small" 
+            type="submit">
+            Save
+          </Button>
+        </Row>
+      </Grid>
     );
   }
 }

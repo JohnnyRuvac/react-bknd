@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router';
 import Helpers from 'Utils/Helpers';
+import { Grid, Row, Col } from 'react-bootstrap';
 
 
 export default class ListItems extends React.Component {
@@ -16,18 +17,24 @@ export default class ListItems extends React.Component {
   
   render() {
     return (
-      <div>
-        <h2>{this.props.route.title}</h2>
-        <Link to={'/admin/' + this.slug + '/add'}>Add</Link>
-        <ul>
-          {this.state.items.map(i => 
-            <li key={i._id}>
-              <Link to={'/admin/' + this.slug + '/edit/' + i.slug}>{i.title}</Link>
-              <a href="" onClick={e => this.deleteItem(e, i.slug)}>Delete</a>
-            </li>
-          )}
-        </ul>
-      </div>
+      <Grid>
+        <Row>
+          <h2 className="col-xs-10">{this.props.route.title}</h2>
+          <Col xs={2}>
+            <Link to={'/admin/' + this.slug + '/add'}>Add</Link>
+          </Col>
+        </Row>
+        <Row>
+          <ul className="col-sm-8 col-sm-offset-2">
+            {this.state.items.map(i => 
+              <li key={i._id}>
+                <Link to={'/admin/' + this.slug + '/edit/' + i.slug}>{i.title}</Link>
+                <a href="" onClick={e => this.deleteItem(e, i.slug)}>Delete</a>
+              </li>
+            )}
+          </ul>
+        </Row>
+      </Grid>
     );
   }
   

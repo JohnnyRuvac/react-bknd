@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
 import AuthService from './utils/AuthService';
 import Container from './components/Container';
-import Home from './components/Home';
+import { Home, Layout } from './components/public/PublicComponents';
 import { Login, AdminLayout, ListItems, StaticPage, Category, ImageTest } from './components/Admin/AdminComponents';
 
 
@@ -30,7 +30,7 @@ const makeMainRoutes = () => {
   return (
     <Route path="/" component={Container} auth={auth}>
       <IndexRedirect to="/home" />
-      <Route path="/home" component={Home} onEnter={requireAuth} />
+      <Route path="/home" component={Layout} />
       <Route path="/login" component={Login} onEnter={parseAuthHash} />
       
       <Route path="/admin" component={AdminLayout} onEnter={requireAuth}>
