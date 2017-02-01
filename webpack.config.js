@@ -20,6 +20,7 @@ module.exports = {
 
   resolve: {
     alias: {
+      node_modules: path.resolve(__dirname, 'node_modules'),
       Utils: path.resolve(__dirname, 'client/utils/'),
       Styles: path.resolve(__dirname, 'client/styles/')
     }

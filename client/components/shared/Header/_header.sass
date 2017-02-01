@@ -1,13 +1,20 @@
-@import "_burger";
+@import "~node_modules/sass-burger/_burger"
+@import "~Styles/_colors"
+
 
 header
-  background-color: #eaeaea
+  background-color: $lightGrey
   
   .logo
     margin: 0
     padding-top: 10px
     padding-bottom: 10px
-    background-color: #eaeaea
+    background-color: $lightGrey
+    a
+      &, &:hover, &:active, &:focus
+        color: $darkGrey
+        text-decoration: none
+
   .logo, .hamburger
     position: relative
     z-index: 3
@@ -26,7 +33,7 @@ header
       right: 0
       padding: 21px 20px
       .icon
-        +burger(20px, 2px, 3px, #f00)
+        +burger(20px, 2px, 3px, $darkGrey)
 
     // menu
     .main-menu
@@ -39,7 +46,7 @@ header
       transition: transform 0.3s ease-in
       clear: both
       padding: 1px 20px 20px 20px
-      background-color: #eaeaea
+      background-color: $lightGrey
 
       a
         font-size: 16px
@@ -49,7 +56,7 @@ header
         border-bottom: 2px solid transparent
 
         &, &:hover, &:active, &:focus
-          color: black
+          color: $darkGrey
           text-decoration: none
 
     // cover content while menu is opened
