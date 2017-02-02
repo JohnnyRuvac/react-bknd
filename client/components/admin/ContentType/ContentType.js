@@ -50,12 +50,12 @@ export default class ContentType extends React.Component {
   }
 
   handleChange(e) {
-    const name = e.target.name;
+    const id = e.target.id;
     const changedData = {};
-    changedData[name] = e.target.value;
+    changedData[id] = e.target.value;
 
     // update slug after title change
-    if ( name === 'title' && !this.state.slugOverridden ) {
+    if ( id === 'title' && !this.state.slugOverridden ) {
       changedData.slug = getSlug(e.target.value);
     }
 

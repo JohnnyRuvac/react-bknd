@@ -1,6 +1,7 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
-import { Grid, Row, Col, Button } from 'react-bootstrap';
+import { Link } from 'react-router';
+import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
 
 export default class Category extends ContentType {
@@ -14,37 +15,70 @@ export default class Category extends ContentType {
 
   render() {
     return (
-      <Grid>
+      <Grid className="static-page">
         <Row>
-          <h3 className="col-xs-12">New category</h3>
+          <h2 className="col-xs-9">New category</h2>
+          <Col xs={3}>
+            <Link to={'/admin/' + this.slug + '/add'}>
+              <Button className="add" bsStyle="success" bsSize="small">Add</Button>
+            </Link>
+          </Col>
         </Row>
+        
         <Row>
-          <input type="text" 
-            className="col-xs-12"
-            name="title"
-            placeholder="Title"
-            value={this.state.contentData.title}
-            onChange={this.handleChange.bind(this)}
-          />
+          <Col xs={12}>
+            <FormGroup
+              controlId="title"
+              validationState={this.getValidationState()}
+            >
+              <ControlLabel>Title</ControlLabel>
+              <FormControl
+                type="text"
+                placeholder="Title"
+                value={this.state.contentData.title}
+                onChange={this.handleChange.bind(this)}
+              />
+              <FormControl.Feedback />
+              <HelpBlock>Validation is based on string length.</HelpBlock>
+            </FormGroup>
+          </Col>
         </Row>
+
         <Row>
-          <input type="text"
-            className="col-xs-12"
-            name="slug"
-            placeholder="slug"
-            value={this.state.contentData.slug}
-            onChange={this.handleSlugChange.bind(this)}
-          />
+          <Col xs={12}>
+            <FormGroup
+              controlId="slug"
+              validationState={this.getValidationState()}
+            >
+              <ControlLabel>{window.location.origin}/{this.state.contentData.slug}/</ControlLabel>
+              <FormControl
+                type="text"
+                placeholder="some-name"
+                value={this.state.contentData.slug}
+                onChange={this.handleSlugChange.bind(this)}
+              />
+              <FormControl.Feedback />
+              <HelpBlock>Validation is based on string length.</HelpBlock>
+            </FormGroup>
+          </Col>
         </Row>
+
         <Row>
-          <Button onClick={this.save.bind(this)}
-            bsStyle="success" 
-            bsSize="small" 
-            type="submit">
-            Save
-          </Button>
+          <Col xs={12}>
+            <Button bsStyle="success" 
+              bsSize="small" 
+              type="submit"
+              onClick={this.save.bind(this)}
+            >
+              Save
+            </Button>
+          </Col>
         </Row>
       </Grid>
     );
+  }
+
+  getValidationState() {
+    return null;
   }
 }

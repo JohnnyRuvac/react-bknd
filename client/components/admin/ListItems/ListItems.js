@@ -2,7 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router';
 import Helpers from 'Utils/Helpers';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import styles from './ListItems.sass'
 
 
 export default class ListItems extends React.Component {
@@ -17,19 +18,38 @@ export default class ListItems extends React.Component {
   
   render() {
     return (
-      <Grid>
+      <Grid className="static-page">
         <Row>
-          <h2 className="col-xs-10">{this.props.route.title}</h2>
-          <Col xs={2}>
-            <Link to={'/admin/' + this.slug + '/add'}>Add</Link>
+          <h2 className="col-xs-9">{this.props.route.title}</h2>
+          <Col xs={3}>
+            <Link to={'/admin/' + this.slug + '/add'}>
+              <Button className="add" bsStyle="success" bsSize="small">Add</Button>
+            </Link>
           </Col>
         </Row>
+        
         <Row>
-          <ul className="col-sm-8 col-sm-offset-2">
+          <ul className="items col-sm-8 col-sm-offset-2">
             {this.state.items.map(i => 
               <li key={i._id}>
-                <Link to={'/admin/' + this.slug + '/edit/' + i.slug}>{i.title}</Link>
-                <a href="" onClick={e => this.deleteItem(e, i.slug)}>Delete</a>
+                <Row>
+                  <Link 
+                    to={'/admin/' + this.slug + '/edit/' + i.slug}
+                    className="page-title col-xs-9"
+                  >
+                    {i.title}
+                  </Link>
+                  <Col xs={3}>
+                    <Button 
+                      onClick={e => this.deleteItem(e, i.slug)}
+                      className="delete"
+                      bsStyle="warning"
+                      bsSize="small" 
+                    >
+                      Delete
+                    </Button>
+                  </Col>
+                </Row>
               </li>
             )}
           </ul>
