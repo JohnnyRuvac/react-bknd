@@ -6,15 +6,25 @@ const parsedEnvs = envHelper('./.env');
 
 
 module.exports = {
-  context: path.resolve(__dirname, './client'),
+  context: path.resolve(__dirname, 'client'),
   
   devtool: (isProduction) ? '' : 'source-map',
-  entry: {
-    app: './app.js',
-  },
+  entry: [
+    'react-hot-loader/patch',
+    // activate HMR for React
+
+    'webpack-dev-server/client?http://localhost:8080',
+    // bundle the client for webpack-dev-server
+    // and connect to the provided endpoint
+
+    'webpack/hot/only-dev-server',
+    // bundle the client for hot reloading
+    // only- means to only hot reload for successful updates
+    './index.js',
+  ],
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, './dist/assets'),
+    path: path.resolve(__dirname, 'dist/assets'),
     publicPath: '/assets',
   },
 
@@ -27,7 +37,10 @@ module.exports = {
   },
   
   devServer: {
-    contentBase: path.resolve(__dirname, './dist'),
+    contentBase: path.resolve(__dirname, 'dist'),
+    publicPath: '/assets',
+    hot: true,
+    historyApiFallback: true
   },
   performance: {
     hints: false,
@@ -37,9 +50,9 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: [{
           loader: 'babel-loader',
-          options: { presets: ['react', 'es2015', 'babel-preset-stage-0'] }
         }],
       },
       {
@@ -59,7 +72,13 @@ module.exports = {
         'NODE_ENV': (isProduction) ? '"production"' : '""',
         ...parsedEnvs
       }
-    })
-  ]
+    }),
+
+    new webpack.HotModuleReplacementPlugin(),
+    // enable HMR globally
+
+    new webpack.NamedModulesPlugin(),
+    // prints more readable module names in the browser console on HMR updates
+  ],
 
 };

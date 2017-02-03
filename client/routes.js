@@ -3,7 +3,7 @@ import { Route, IndexRedirect } from 'react-router';
 import AuthService from './utils/AuthService';
 import Container from './components/Container';
 import { Home, Layout } from './components/public/PublicComponents';
-import { Login, AdminLayout, ListItems, StaticPage, Category, ImageTest } from './components/Admin/AdminComponents';
+import { Login, AdminLayout, ListItems, StaticPage, Category, ImageTest } from './components/admin/AdminComponents';
 
 
 const auth = new AuthService(
