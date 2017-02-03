@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 export default class Admin extends React.Component {
   render() {
     const naviItems = [
-      { href: '/home', text: 'Home' },
+      { href: '/', text: 'Home' },
       { href: '/admin/pages', text: 'Pages' },
       { href: '/admin/categories', text: 'Categories' },
       { href: '/admin/image-tests', text: 'Image Tests' },
@@ -14,7 +14,7 @@ export default class Admin extends React.Component {
 
     return (
       <div>
-        <Header title="Admin" naviItems={naviItems} />
+        <Header title="Admin" linkTo="/admin" naviItems={naviItems} />
         <div className="main-container">
           {this.props.children}
         </div>

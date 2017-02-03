@@ -27,13 +27,13 @@ const parseAuthHash = (nextState, replace) => {
 }
 
 const makeMainRoutes = (
-  <Route path="/" component={Container} auth={auth}>
-    <IndexRedirect to="/home" />
-    <Route path="/home" component={Layout} />
-    <Route path="/login" component={Login} onEnter={parseAuthHash} />
-    
-    <Route path="/admin" component={AdminLayout} onEnter={requireAuth}>
+  <Route component={Container} auth={auth}>
+    <Route component={Layout}>
+      <Route path="/" component={Home} />
+      <Route path="/login" component={Login} onEnter={parseAuthHash} />
+    </Route>
       
+    <Route path="/admin" component={AdminLayout} onEnter={requireAuth}>
       <Route path="/admin/pages" component={ListItems} title="Pages" />
       <Route path="/admin/pages/add" component={StaticPage} />
       <Route path="/admin/pages/edit/:slug" component={StaticPage} />
@@ -45,7 +45,6 @@ const makeMainRoutes = (
       <Route path="/admin/image-tests" component={ListItems} title="Image Test" />
       <Route path="/admin/image-tests/add" component={ImageTest} />
       <Route path="/admin/image-tests/edit/:slug" component={ImageTest} />
-
     </Route>
   </Route>
 );
