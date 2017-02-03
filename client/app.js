@@ -4,7 +4,7 @@ import routes from './routes';
 
 
 const App = () => (
-  <Router routes={routes()} history={browserHistory} />
+  <Router key={Math.random()} routes={routes} history={browserHistory} />
 );
 
 export default App;

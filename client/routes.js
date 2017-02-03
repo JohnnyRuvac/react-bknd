@@ -26,30 +26,28 @@ const parseAuthHash = (nextState, replace) => {
   }
 }
 
-const makeMainRoutes = () => {
-  return (
-    <Route path="/" component={Container} auth={auth}>
-      <IndexRedirect to="/home" />
-      <Route path="/home" component={Layout} />
-      <Route path="/login" component={Login} onEnter={parseAuthHash} />
+const makeMainRoutes = (
+  <Route path="/" component={Container} auth={auth}>
+    <IndexRedirect to="/home" />
+    <Route path="/home" component={Layout} />
+    <Route path="/login" component={Login} onEnter={parseAuthHash} />
+    
+    <Route path="/admin" component={AdminLayout} onEnter={requireAuth}>
       
-      <Route path="/admin" component={AdminLayout} onEnter={requireAuth}>
-        
-        <Route path="/admin/pages" component={ListItems} title="Pages" />
-        <Route path="/admin/pages/add" component={StaticPage} />
-        <Route path="/admin/pages/edit/:slug" component={StaticPage} />
+      <Route path="/admin/pages" component={ListItems} title="Pages" />
+      <Route path="/admin/pages/add" component={StaticPage} />
+      <Route path="/admin/pages/edit/:slug" component={StaticPage} />
 
-        <Route path="/admin/categories" component={ListItems} title="Categories" />
-        <Route path="/admin/categories/add" component={Category} />
-        <Route path="/admin/categories/edit/:slug" component={Category} />
+      <Route path="/admin/categories" component={ListItems} title="Categories" />
+      <Route path="/admin/categories/add" component={Category} />
+      <Route path="/admin/categories/edit/:slug" component={Category} />
 
-        <Route path="/admin/image-tests" component={ListItems} title="Image Test" />
-        <Route path="/admin/image-tests/add" component={ImageTest} />
-        <Route path="/admin/image-tests/edit/:slug" component={ImageTest} />
+      <Route path="/admin/image-tests" component={ListItems} title="Image Test" />
+      <Route path="/admin/image-tests/add" component={ImageTest} />
+      <Route path="/admin/image-tests/edit/:slug" component={ImageTest} />
 
-      </Route>
     </Route>
-  );
-}
+  </Route>
+);
 
 export default makeMainRoutes
