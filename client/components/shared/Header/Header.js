@@ -11,7 +11,7 @@ export default class Header extends React.Component {
         <Grid>
           <Row>
             <h2 className="logo col-xs-12 col-sm-3">
-              <Link to={this.props.linkTo}>{this.props.title}</Link>
+              <Link to={this.props.linkTo} onClick={this._closeMenu}>{this.props.title}</Link>
             </h2>
             <a href="" className="hamburger" onClick={this._toggleMenu.bind(this)}>
               <span className="icon"></span>
