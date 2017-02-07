@@ -1,12 +1,18 @@
+@import "~Styles/_colors"
+
+
 @media (min-width: 768px)
   header
     .hamburger
       display: none
 
-      li
+    li
+      display: inline-block
+      padding: 15px
+      a
         display: inline-block
-        a
-          display: inline-block
-          padding: 10px 15px
-          line-height: 33px
+        padding: 0
+        line-height: 21px
+        &:hover, &:active, &:focus
+          border-bottom: 2px solid $darkGrey
       

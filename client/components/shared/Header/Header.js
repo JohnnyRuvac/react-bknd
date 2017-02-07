@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { Grid, Row, Col } from 'react-bootstrap';
-import styles from './_header.sass'
+import styles from './_header.sass';
+import tablet from './_header-tablet.sass';
 
 
 export default class Header extends React.Component {
