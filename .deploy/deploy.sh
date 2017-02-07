@@ -16,4 +16,4 @@ scp .tmpdeploy.tar.gz $username'@'$serverIp':'$appDirectory
 rm .tmpdeploy.tar.gz
 
 # unpack, cleanup, install dependencies
-ssh -t $username'@'$serverIp "cd $appDirectory && tar -zxvf .tmpdeploy.tar.gz && rm .tmpdeploy.tar.gz && rsync -a .tmpdeploy/* . && rm -rf .tmpdeploy && npm install --production && pm2 reload server"
+ssh -t $username'@'$serverIp "cd $appDirectory && tar -zxvf .tmpdeploy.tar.gz && rm .tmpdeploy.tar.gz && rsync -a .tmpdeploy/* . && rm -rf .tmpdeploy && npm install --production && pm2 reload $appName"
