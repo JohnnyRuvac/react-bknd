@@ -83,7 +83,12 @@ module.exports = {
       },
       {
         test: /\.(sass|scss)$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [
+          'style-loader',
+          'css-loader?importLoaders=1',
+          'postcss-loader',
+          'sass-loader'
+        ],
       },
       {
         test: /\.(css)$/,
