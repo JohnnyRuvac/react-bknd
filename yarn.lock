@@ -2181,6 +2181,12 @@ figures@^1.3.5:
     escape-string-regexp "^1.0.5"
     object-assign "^4.1.0"
 
+file-loader@0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-0.10.0.tgz#bbe6db7474ac92c7f54fdc197cf547e98b6b8e12"
+  dependencies:
+    loader-utils "~0.2.5"
+
 file-loader@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/file-loader/-/file-loader-0.9.0.tgz#1d2daddd424ce6d1b07cfe3f79731bed3617ab42"
@@ -3262,7 +3268,7 @@ loader-runner@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.3.0.tgz#f482aea82d543e07921700d5a46ef26fdac6b8a2"
 
-loader-utils@^0.2.11, loader-utils@^0.2.15, loader-utils@^0.2.16, loader-utils@^0.2.7, loader-utils@~0.2.2, loader-utils@~0.2.5:
+loader-utils@0.2.16, loader-utils@^0.2.11, loader-utils@^0.2.15, loader-utils@^0.2.16, loader-utils@^0.2.7, loader-utils@~0.2.2, loader-utils@~0.2.5:
   version "0.2.16"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-0.2.16.tgz#f08632066ed8282835dff88dfb52704765adee6d"
   dependencies:
@@ -5252,6 +5258,13 @@ supports-color@^3.1.0, supports-color@^3.1.1, supports-color@^3.2.3:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
     has-flag "^1.0.0"
+
+svg-url-loader@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/svg-url-loader/-/svg-url-loader-2.0.1.tgz#b8edb3d117649e0f6fa2246867352093cc1dbd96"
+  dependencies:
+    file-loader "0.10.0"
+    loader-utils "0.2.16"
 
 svgo@^0.7.0:
   version "0.7.2"

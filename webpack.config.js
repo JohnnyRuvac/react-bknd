@@ -95,7 +95,7 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
+        test: /\.(jpe?g|png|gif)$/i,
         loaders: ['file-loader?context=src/images&name=images/[path][name].[ext]', {
           loader: 'image-webpack-loader',
           query: {
@@ -117,6 +117,10 @@ module.exports = {
         exclude: /node_modules/,
         include: __dirname,
       },
+      {
+        test: /\.(svg)$/,
+        use: ['svg-url-loader'],
+      }
     ],
   },
 
