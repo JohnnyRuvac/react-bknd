@@ -22,7 +22,7 @@
     "build:server": "babel server --out-dir .tmpdeploy/server --no-babel-rc --presets react,es2015,stage-2",
     "compileConfig": "babel webpack.config.js -o webpack.config.compiled.js --no-babelrc --presets=es2015,stage-0",
     "cleanDist": "rm -rf dist/assets",
-    "dev": "npm run compileConfig && webpack-dev-server --config webpack.config.compiled.js",
+    "dev": "npm run compileConfig && webpack-dev-server --config webpack.config.compiled.js --host 0.0.0.0",
     "deploy": "npm run build && bash .deploy/deploy.sh",
     "start": "nodemon server/server.js --exec babel-node --presets react,es2015,stage-2 --watch server",
     "startprod": "NODE_ENV=production node ./server/server.js"
