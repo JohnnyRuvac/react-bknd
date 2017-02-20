@@ -13,7 +13,8 @@ import apiRoute from './routes/apiRoute';
 // load ENVs from file
 dotenv.load({
   path: path.resolve(__dirname, '../.env'),
-  sample: path.resolve(__dirname, '../.env.sample')
+  sample: path.resolve(__dirname, '../.env.sample'),
+  allowEmptyValues: true
 });
 
 // secure some paths with jwt auth
@@ -57,7 +58,12 @@ const initApp = (db) => {
 
 
 // init db and start listening when ready
-const mongoUrl = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@' + process.env.DB_URL;
+if (process.env.DB_USER) {
+  var mongoUrl = 'mongodb://' + process.env.DB_USER + ':' + process.env.DB_PASS + '@' + process.env.DB_URL;
+} else {
+  var mongoUrl = 'mongodb://' + process.env.DB_URL;
+}
+
 
 MongoClient.connect(mongoUrl, (err, database) => {
   if (err) return console.log(err);
