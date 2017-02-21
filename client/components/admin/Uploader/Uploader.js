@@ -7,17 +7,29 @@ import styles from '../Uploader/Uploader.sass';
 
 export default class Uploader extends React.Component {
   serverUrl = Helpers.getServerUrl();
-  state = {
-    uploadedFileName: ''
-  };
 
   render() {
     Dropzone.autoDiscover = false;
 
     return (
-      <form action="/file-upload"
-        className="dropzone uploader">
-      </form>
+      <div className="uploaderWrapper">
+        
+        {this.props.images.map((src, index) =>
+          <div className="image-wrap" key={index}>
+            <a href="" 
+              className="remove"
+              data-src={src}
+              onClick={this.handleRemove.bind(this)}
+            >Remove</a>
+            <img src={this.serverUrl + '/uploads/' + src} alt=""/>
+          </div>
+        )}
+
+        <form ref="uploadForm" action="/file-upload"
+          className="dropzone uploader">
+        </form>
+
+      </div>
     );
   }
 
@@ -33,14 +45,19 @@ export default class Uploader extends React.Component {
     });
 
     uploader.on('success', (file, response) => {
-      this.setState({
-        uploadedFileName: response,
-      });
       this.props.onSuccess(response);
     });
 
-    uploader.on('removedfile', (file) => {
-      this.props.onRemovedFile( this.state.uploadedFileName );
+    uploader.on('queuecomplete', () => {
+      const form = this.refs.uploadForm;
+      form.classList.remove('dz-started');
     });
   }
+
+  handleRemove(e) {
+    e.preventDefault();
+    const name = e.target.getAttribute('data-src');
+    this.props.onRemovedFile(name);
+  }
+
 }

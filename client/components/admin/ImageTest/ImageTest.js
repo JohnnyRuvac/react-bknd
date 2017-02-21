@@ -12,7 +12,7 @@ export default class ImageTest extends ContentType {
     contentData: {
       title: '',
       slug: '',
-      imageUrl: '',
+      imageUrls: [],
     }
   };
   serverUrl = Helpers.getServerUrl();
@@ -70,6 +70,7 @@ export default class ImageTest extends ContentType {
             <Uploader 
               onSuccess={this.onSuccess.bind(this)}
               onRemovedFile={this.onRemovedFile.bind(this)}
+              images={this.state.contentData.imageUrls}
             />
           </Col>
         </Row>
@@ -89,8 +90,11 @@ export default class ImageTest extends ContentType {
   }
 
   onSuccess(file) {
+    const imageUrls = this.state.contentData.imageUrls;
+    imageUrls.push(file);
+
     this.updateContentDataState({
-      imageUrl: '/uploads/' + file,
+      imageUrls: imageUrls,
     });
   }
 
@@ -103,8 +107,12 @@ export default class ImageTest extends ContentType {
         },
       })
       .then(response => {
+        const imageUrls = this.state.contentData.imageUrls;
+        const index = imageUrls.indexOf(response);
+        imageUrls.splice(index, 1);
+
         this.updateContentDataState({
-          imageUrl: '',
+          imageUrl: imageUrls,
         });
       })
       .catch(err => {
