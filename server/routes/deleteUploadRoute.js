@@ -11,7 +11,13 @@ const deleteUploadRoute = (jwtCheck) => {
     .route('/:file')
     .delete(jwtCheck, (req, res) => {
       const url = path.resolve(process.cwd(), 'dist', 'uploads', req.params.file);
-      fs.unlink(url);
+
+      fs.stat(url, (err, stat) => {
+        if (!err) {
+          fs.unlink(url);
+        }
+      });
+      
       res.json({});
     });
 
