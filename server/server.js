@@ -6,6 +6,7 @@ import dotenv from 'dotenv-safe';
 import path from 'path';
 import jwt from 'express-jwt';
 import uploadRoute from './routes/uploadRoute';
+import deleteUploadRoute from './routes/deleteUploadRoute';
 import apiRoute from './routes/apiRoute';
 
 
@@ -39,6 +40,7 @@ const initApp = (db) => {
   // routes
   app.use('/api', apiRoute(jwtCheck, db));
   app.use('/upload', uploadRoute(jwtCheck));
+  app.use('/upload/delete', deleteUploadRoute(jwtCheck));
 
   // redirect all requests except api to index.html for client side routing
   app.get('*', (req, res) => {
