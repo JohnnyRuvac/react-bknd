@@ -1,19 +1,22 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import axios from 'axios';
+import Helpers from 'Utils/Helpers';
 import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import Uploader from '../Uploader/Uploader';
 import styles from './ImageTest.sass';
 
 
 export default class ImageTest extends ContentType {
-  constructor(props) {
-    super(props);
-    this.state.contentData = {
+  state = {
+    contentData: {
       title: '',
       slug: '',
       imageUrl: '',
-    };
-  }
+    }
+  };
+  serverUrl = Helpers.getServerUrl();
+  
 
   render() {
     return (
@@ -23,8 +26,6 @@ export default class ImageTest extends ContentType {
             <h3>New Image Test</h3>
           </Col>
         </Row>
-
-        <img src={this.state.contentData.imageUrl} alt=""/>
 
         <Row>
           <Col xs={12}>
@@ -66,10 +67,10 @@ export default class ImageTest extends ContentType {
 
         <Row>
           <Col xs={12}>
-            <form encType="multipart/form-data" onSubmit={this.uploadPhoto.bind(this)}>
-              <input type="file" name="photo" accept="image/*" />
-              <input type="submit" />
-            </form>
+            <Uploader 
+              onSuccess={this.onSuccess.bind(this)}
+              onRemovedFile={this.onRemovedFile.bind(this)}
+            />
           </Col>
         </Row>
         
@@ -87,24 +88,30 @@ export default class ImageTest extends ContentType {
     );
   }
 
-  uploadPhoto(e) {
-    e.preventDefault();
-    const data = new FormData(e.target);
-    const url = this.serverUrl + '/upload'
-    axios.post(url, data, {
+  onSuccess(file) {
+    this.updateContentDataState({
+      imageUrl: '/uploads/' + file,
+    });
+  }
+
+  onRemovedFile(file) {
+    const url = this.serverUrl + '/upload/delete/' + file;
+    axios.delete(url, 
+      {
         headers: {
           "Authorization": "Bearer " + localStorage.getItem('id_token')
         },
       })
       .then(response => {
         this.updateContentDataState({
-          imageUrl: '/uploads/' + response.data
+          imageUrl: '',
         });
       })
       .catch(err => {
-        console.log('error :/');
+        console.log('error deleting :/');
         console.log(err);
       });
+
   }
 
   getValidationState() {
