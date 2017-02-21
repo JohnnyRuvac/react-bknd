@@ -18,16 +18,34 @@ fs.stat(uploadPath, (err, stats) => {
   }
 });
 
+const getUniqueFilename = (originalName, tryName, attemptIndex, cb) => {
+  const url = path.resolve(uploadPath, tryName);
+  fs.stat(url, (err, stats) => {
+    if (err && err.code === 'ENOENT') {
+      // console.log('got unique: ' + tryName);
+      cb(null, tryName);
+    } else {
+
+      const split = originalName.split('.');
+      const extension = split.pop();
+      const testName = split.join('.') + '_' + attemptIndex + '.' + extension;
+
+      // console.log('trying alternative: ' + testName);
+      getUniqueFilename(originalName, testName, ++attemptIndex, cb);
+
+    }
+  });
+  
+};
+
 // define storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, uploadPath);
   },
   filename: (req, file, cb) => {
-    const split = file.originalname.split('.');
-    const extension = split.pop();
-    const filename = split.join('.').replace(/\W+/g, '-').toLowerCase() + '-' + Date.now() + '.' + extension;
-    cb(null, filename);
+    // get unique and call back
+    getUniqueFilename(file.originalname, file.originalname, 1, cb);
   }
 });
 
@@ -52,7 +70,7 @@ const uploadRoute = (jwtCheck) => {
           res.statusCode = 400;
           return res.json({errors: ['File failed to upload']});
         }
-        console.log(req.file.filename);
+        // console.log(req.file.filename);
         res.send(req.file.filename);
       });
     });
