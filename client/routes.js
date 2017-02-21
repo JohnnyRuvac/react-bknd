@@ -28,9 +28,10 @@ const parseAuthHash = (nextState, replace) => {
 
 const makeMainRoutes = (
   <Route component={Container} auth={auth}>
+    <Route path="/login" component={Login} onEnter={parseAuthHash} />
+
     <Route component={Layout}>
       <Route path="/" component={Home} />
-      <Route path="/login" component={Login} onEnter={parseAuthHash} />
     </Route>
       
     <Route component={AdminLayout} onEnter={requireAuth}>
