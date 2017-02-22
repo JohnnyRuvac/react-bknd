@@ -1,2 +1,69 @@
-.uploader
+@import "~Styles/_colors.sass";
+
+
+.uploader-wrapper
+  padding-top: 20px
+
+.images-headline
+  display: inline-block
+  margin-top: 0
+
+.mobile-upload
+  position: relative
+  overflow: hidden
+  float: right
+  form
+    position: absolute;
+    top: 0
+    right: 0
+    min-width: 100%
+    min-height: 100%
+    font-size: 100px
+    text-align: right
+    opacity: 0
+    outline: none
+    background: white
+    cursor: inherit
+    display: block
+
+.images-list
+  padding: 0
+  list-style: none
+  
+  li
+    position: relative
+    height: 100px
+    border-bottom: 1px solid $lightGrey
+    padding: 10px 0 10px 50px
+    &:first-child
+      border-top: 1px solid $lightGrey
+
+    .handle
+      display: block
+      width: 40px
+      height: 40px
+      position: absolute
+      top: 50%
+      left: 0
+      transform: translate(0, -50%)
+      background: url('move-icon.svg') no-repeat 50% 50%
+
+    img
+      height: 100%
+
+    .delete
+      position: absolute
+      top: 50%
+      right: 0
+      transform: translate(0, -50%)
+
+.desktop-uploader
   height: 200px
+  .dz-success
+    display: none !important
+
+
+// Mobile only
+@media (max-width: 768px)
+  .desktop-uploader
+    display: none

@@ -124,7 +124,6 @@ export default class ImageTest extends ContentType {
   }
 
   onReorderImages(fromIndex, toIndex) {
-    console.log('from: ' + fromIndex + ' to: ' + toIndex);
     const images = this.state.contentData.images;
     const reordered = Helpers.moveItemInArray(images, fromIndex, toIndex);
 
