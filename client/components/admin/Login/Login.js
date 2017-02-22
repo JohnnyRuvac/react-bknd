@@ -9,6 +9,9 @@ export default class Login extends React.Component {
   static propTypes = {
     auth: T.instanceOf(AuthService)
   };
+  state = {
+    errorMessage: '',
+  };
 
   getAuthParams() {
     return {
@@ -23,7 +26,13 @@ export default class Login extends React.Component {
     e.preventDefault();
     // on form submit sends the credentials to auth0 api
     this.props.auth.login(this.getAuthParams(), err => {
-      if (err) console.error('something went wrong during login: err.message');
+      if (err) {
+        console.error('something went wrong during login:');
+        console.log(err.message);
+        this.setState({
+          errorMessage: err.message,
+        });
+      }
     });
   }
 
@@ -50,6 +59,7 @@ export default class Login extends React.Component {
                 <Button bsStyle="success" bsSize="small" type="submit">
                   Log in
                 </Button>
+                {this.state.errorMessage}
               </form>
             </div>
           </Col>
