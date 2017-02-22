@@ -18,7 +18,7 @@ const deleteUploadRoute = (jwtCheck) => {
         }
       });
       
-      res.json({});
+      res.send(req.params.file);
     });
 
   return router;
