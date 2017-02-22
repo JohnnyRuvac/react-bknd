@@ -12,7 +12,7 @@ export default class ImageTest extends ContentType {
     contentData: {
       title: '',
       slug: '',
-      imageUrls: [],
+      images: [],
     }
   };
   serverUrl = Helpers.getServerUrl();
@@ -70,7 +70,8 @@ export default class ImageTest extends ContentType {
             <Uploader 
               onSuccess={this.onSuccess.bind(this)}
               onRemovedFile={this.onRemovedFile.bind(this)}
-              images={this.state.contentData.imageUrls}
+              onReorderImages={this.onReorderImages.bind(this)}
+              images={this.state.contentData.images}
             />
           </Col>
         </Row>
@@ -90,11 +91,11 @@ export default class ImageTest extends ContentType {
   }
 
   onSuccess(file) {
-    const imageUrls = this.state.contentData.imageUrls;
-    imageUrls.push(file);
+    const images = this.state.contentData.images;
+    images.push(file);
 
     this.updateContentDataState({
-      imageUrls: imageUrls,
+      images: images,
     });
   }
 
@@ -107,12 +108,12 @@ export default class ImageTest extends ContentType {
         },
       })
       .then(response => {
-        const imageUrls = this.state.contentData.imageUrls;
-        const index = imageUrls.indexOf(response);
-        imageUrls.splice(index, 1);
+        const images = this.state.contentData.images;
+        const index = images.indexOf(response.data);
+        images.splice(index, 1);
 
         this.updateContentDataState({
-          imageUrl: imageUrls,
+          images: images,
         });
       })
       .catch(err => {
@@ -120,6 +121,16 @@ export default class ImageTest extends ContentType {
         console.log(err);
       });
 
+  }
+
+  onReorderImages(fromIndex, toIndex) {
+    console.log('from: ' + fromIndex + ' to: ' + toIndex);
+    const images = this.state.contentData.images;
+    const reordered = Helpers.moveItemInArray(images, fromIndex, toIndex);
+
+    this.updateContentDataState({
+      images: reordered,
+    });
   }
 
   getValidationState() {
