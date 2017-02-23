@@ -1,17 +1,17 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import TextEditor from '../TextEditor/TextEditor';
 
 
 export default class StaticPage extends ContentType {
-  constructor(props) {
-    super(props);
-    this.state.contentData = {
+  state = {
+    contentData: {
       title: '',
       slug: '',
       content: ''
-    };
-  }
+    },
+  };
   
   render() {
     return (
@@ -64,11 +64,9 @@ export default class StaticPage extends ContentType {
           <Col xs={12}>
             <FormGroup controlId="content">
               <ControlLabel>Text</ControlLabel>
-              <FormControl 
-                componentClass="textarea"
-                placeholder="Text"
-                value={this.state.contentData.content}
-                onChange={this.handleChange.bind(this)}
+              <TextEditor
+                content={this.state.contentData.content}
+                receiver={this.getContent.bind(this)}
               />
             </FormGroup>
           </Col>
@@ -91,4 +89,9 @@ export default class StaticPage extends ContentType {
   getValidationState() {
     return null;
   }
+
+  getContent(content) {
+    this.state.contentData.content = content;
+  }
+
 }
