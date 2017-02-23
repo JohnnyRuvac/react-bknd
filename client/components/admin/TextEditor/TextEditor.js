@@ -4,8 +4,9 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
-import toolbar from './toolbar';
 import styles from './styles.sass';
+import axios from 'axios';
+import Helpers from 'Utils/Helpers';
 
 
 export default class TextEditor extends React.Component {
@@ -14,6 +15,14 @@ export default class TextEditor extends React.Component {
   };
 
   render() {
+    const toolbar = {
+      options: ['inline', 'blockType', 'list', 'link', 'embedded', 'emoji', 'image', 'history'],
+      image: {
+        uploadCallback: this.uploadImageCallBack,
+        alignmentEnabled: false
+      },
+    };
+
     return (
       <Editor
         editorState={this.state.editor}
@@ -42,8 +51,24 @@ export default class TextEditor extends React.Component {
     });
   }
 
-  uploadImageCallBack() {
-    console.log('uploadImageCallBack');
+  uploadImageCallBack(file) {
+    const form = new FormData();
+    form.append('photo', file);
+    const url = Helpers.getServerUrl() + '/upload';
+
+    return axios.post(url, form, {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('id_token'),
+        },
+      }
+    )
+    .then(response => {
+      return {
+        data: {
+          link: '/uploads/' + response.data
+        }
+      }
+    });
   }
 
   getHtml(editorState) {
