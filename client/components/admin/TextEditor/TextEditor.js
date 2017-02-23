@@ -4,6 +4,8 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import { EditorState, convertToRaw, ContentState } from 'draft-js';
+import toolbar from './toolbar';
+import styles from './styles.sass';
 
 
 export default class TextEditor extends React.Component {
@@ -17,6 +19,7 @@ export default class TextEditor extends React.Component {
         editorState={this.state.editor}
         onEditorStateChange={this.onEditorStateChange.bind(this)}
         uploadCallback={this.uploadImageCallBack.bind(this)}
+        toolbar={toolbar}
       />
     );
   }
