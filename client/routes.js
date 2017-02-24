@@ -37,19 +37,19 @@ const makeMainRoutes = (
     <Route component={AdminLayout} onEnter={requireAuth}>
       <Route path="/admin" component={AdminHome} />
       <Route path="/admin/pages" component={ListItems} title="Pages" />
-      <Route path="/admin/pages/add" component={StaticPage} />
-      <Route path="/admin/pages/edit/:slug" component={StaticPage} />
+      <Route path="/admin/pages/add" component={StaticPage} title="New page" />
+      <Route path="/admin/pages/edit/:slug" component={StaticPage} title="Edit page" />
 
       <Route path="/admin/categories" component={ListItems} title="Categories" />
-      <Route path="/admin/categories/add" component={Category} />
-      <Route path="/admin/categories/edit/:slug" component={Category} />
+      <Route path="/admin/categories/add" component={Category} title="New category" />
+      <Route path="/admin/categories/edit/:slug" component={Category} title="Edit category" />
 
       <Route path="/admin/items/add" component={Item} />
       <Route path="/admin/items/edit/:slug" component={Item} />
 
-      <Route path="/admin/image-tests" component={ListItems} title="Image Test" />
-      <Route path="/admin/image-tests/add" component={ImageTest} />
-      <Route path="/admin/image-tests/edit/:slug" component={ImageTest} />
+      <Route path="/admin/image-tests" component={ListItems} title="Image tests" />
+      <Route path="/admin/image-tests/add" component={ImageTest} title="New Image test" />
+      <Route path="/admin/image-tests/edit/:slug" component={ImageTest} title="Edit image test"/>
     </Route>
   </Route>
 );

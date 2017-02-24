@@ -18,7 +18,7 @@ export default class Category extends ContentType {
     return (
       <Grid className="static-page">
         <Row>
-          <h2 className="col-xs-9">New category</h2>
+          <h2 className="col-xs-9">{this.props.route.title}</h2>
           <Col xs={3}>
             <Button bsStyle="success" 
               bsSize="small" 

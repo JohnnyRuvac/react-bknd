@@ -18,7 +18,7 @@ export default class StaticPage extends ContentType {
       <Grid className="static-page">
         <Row>
           <Col xs={12}>
-            <h3>New Item</h3>
+            <h3>{this.props.route.title}</h3>
           </Col>
         </Row>
 
