@@ -9,6 +9,7 @@ import Helpers from 'Utils/Helpers';
 export default class ContentType extends React.Component {
   constructor(props) {
     super(props);
+    this.isEditing = !!this.props.params.slug;
     this.serverUrl = Helpers.getServerUrl();
     this.state = {
       contentData: {},
@@ -23,8 +24,7 @@ export default class ContentType extends React.Component {
   }
 
   componentDidMount() {
-    const isEditing = this.props.params.slug;
-    if (isEditing) {
+    if (this.isEditing) {
       this.fechItemData();
     }
   } 
@@ -90,11 +90,10 @@ export default class ContentType extends React.Component {
 
   save() {
     console.log('saving');
-    const isEditing = !!this.props.router.params.slug;
     // patch if item already exists, post if doesn't
-    const method = ( isEditing ) ? 'patch' : 'post';
+    const method = ( this.isEditing ) ? 'patch' : 'post';
     // if updating use original slug
-    const slug = ( isEditing ) ? this.originalSlug : this.state.contentData.slug
+    const slug = ( this.isEditing ) ? this.originalSlug : this.state.contentData.slug
     const url = this.serverUrl + '/api/' + this._getContentTypeSlug() + '/' + slug;
     const data = this._removeIdFromContentData( this.state.contentData );
     
