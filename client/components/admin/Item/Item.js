@@ -4,12 +4,13 @@ import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock
 import TextEditor from '../TextEditor/TextEditor';
 
 
-export default class StaticPage extends ContentType {
+export default class Item extends ContentType {
   state = {
     contentData: {
       title: '',
       slug: '',
-      content: ''
+      content: '',
+      categorySlug: (this.props.params.categorySlug) ? this.props.params.categorySlug : '',
     },
   };
   

@@ -8,15 +8,36 @@ const apiRoute = (jwtCheck, db) => {
   // read doesn't require auth
   router
     .get('/:type', (req, res) => {
-      var cursor = db.collection(req.params.type).find().sort({index: 1}).toArray( (err, results) => {
-        res.json(results);
-      });
+      db.collection(req.params.type)
+        .find()
+        .sort({index: 1})
+        .toArray( (err, results) => {
+          res.json(results);
+        });
     })
     .get('/:type/:slug', (req, res) => {
-      const cursor = db.collection(req.params.type).find({slug: req.params.slug}).toArray( (err, result) => {
-        if (err) return console.log(err);
-        res.json(result[0]);
-      });
+      // items slug is exception, it can return multiple results of items belonging to category,
+      // therefore we have to search for categorySlug instead of slug and we have to sort it by index
+      if (req.params.type === 'items') {
+        
+        db.collection(req.params.type)
+          .find({categorySlug: req.params.slug})
+          .sort({index: 1})
+          .toArray( (err, result) => {
+            if (err) return console.log(err);
+            res.json(result);
+          });
+
+      } else {
+
+        db.collection(req.params.type)
+          .find({slug: req.params.slug})
+          .toArray( (err, result) => {
+            if (err) return console.log(err);
+            res.json(result);
+          });        
+
+      }
     });
 
   // but post, patch & delete do

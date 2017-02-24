@@ -72,6 +72,8 @@ export default class Category extends ContentType {
           <Col xs={12}>
             <ListItems
               slug="items"
+              categorySlug={this.props.params.slug}
+              addLink={'/admin/items/' + this.state.contentData.slug + '/add'}
               title="Items in this category"
             />
           </Col>

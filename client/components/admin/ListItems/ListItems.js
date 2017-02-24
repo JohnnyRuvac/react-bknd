@@ -18,12 +18,17 @@ export default class ListItems extends React.Component {
   }
   
   render() {
+    const addLink = 
+      (this.props.addLink) ? 
+        this.props.addLink : 
+        ('/admin/' + this.state.slug + '/add');
+
     return (
       <Grid className="static-page">
         <Row>
           <Col sm={10} smOffset={1} className="head">
             <h3 className="title">{this.props.title || this.props.route.title}</h3>
-            <Link to={'/admin/' + this.state.slug + '/add'}>
+            <Link to={addLink}>
               <Button className="add" bsStyle="success" bsSize="small">Add</Button>
             </Link>
           </Col>
@@ -46,9 +51,15 @@ export default class ListItems extends React.Component {
   fetchItems(slug) {
     if (!slug) return;
 
-    const url = this.serverUrl + '/api/' + slug;
+    let url = this.serverUrl + '/api/' + slug;
 
-    axios.get(url)
+    // fetch items in this category
+    if (this.props.categorySlug) {
+      url += '/' + this.props.categorySlug;
+    }
+
+    axios
+      .get(url)
       .then(res => {
         this.setState({
           items: res.data
@@ -67,6 +78,11 @@ export default class ListItems extends React.Component {
         this.fetchItems(newSlug);
         nextState.slug = newSlug;
       }
+    }
+
+    // update after received categorySlug in props
+    if (nextProps.categorySlug !== this.props.categorySlug) {
+      this.fetchItems(this.state.slug);
     }
   }
 

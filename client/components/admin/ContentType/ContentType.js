@@ -36,7 +36,7 @@ export default class ContentType extends React.Component {
       .then(res => {
         this.originalSlug = res.data.slug;
         this.setState({
-          contentData: res.data
+          contentData: res.data[0]
         });
       });
   }
