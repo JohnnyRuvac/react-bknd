@@ -1,0 +1,46 @@
+@import "~Styles/_colors.sass"
+
+
+.add
+  float: right
+
+.add
+  margin-top: 20px
+
+.sortable-list
+  list-style: none
+  padding: 0
+  border-top: 1px solid $lightGrey
+  border-bottom: 1px solid $lightGrey
+
+  .list-item
+    position: relative
+    border-bottom: 1px solid $lightGrey
+    &:last-child
+      border-bottom: none
+
+    .title
+      display: block
+      padding: 10px 0 10px 50px
+      &, &:hover
+        color: $darkGrey
+      &:focus, &:active
+        text-decoration: none
+        color: $darkGrey
+
+  .handle
+    display: block
+    width: 40px
+    height: 40px
+    position: absolute
+    top: 50%
+    left: 0
+    transform: translate(0, -50%)
+    background: url('move-icon.svg') no-repeat 50% 50%
+
+  .delete
+    position: absolute
+    top: 50%
+    right: 0
+    transform: translate(0, -50%)
+

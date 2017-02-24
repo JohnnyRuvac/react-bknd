@@ -8,7 +8,7 @@ const apiRoute = (jwtCheck, db) => {
   // read doesn't require auth
   router
     .get('/:type', (req, res) => {
-      var cursor = db.collection(req.params.type).find().toArray( (err, results) => {
+      var cursor = db.collection(req.params.type).find().sort({index: 1}).toArray( (err, results) => {
         res.json(results);
       });
     })
@@ -25,11 +25,19 @@ const apiRoute = (jwtCheck, db) => {
     // create
     .post(jwtCheck, (req, res) => {
       
-      db.collection(req.params.type).save(
-        req.body
-      );
-      res.send('saved');
+      // get new item's index, it will be added as last item 
+      db.collection(req.params.type).find().toArray( (err, result) => {
+        
+        const index = result.length;
+        console.log('index: ' + index);
+        req.body.index = index;
+        console.log(req.body);
+        db.collection(req.params.type).save(
+          req.body
+        );
+        res.send('saved');
 
+      });
     })
     // update
     .patch(jwtCheck, (req, res) => {

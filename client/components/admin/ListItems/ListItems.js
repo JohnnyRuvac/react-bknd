@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import Helpers from 'Utils/Helpers';
 import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import styles from './ListItems.sass'
+import SortableList from '../SortableList/SortableList';
 
 
 export default class ListItems extends React.Component {
@@ -20,8 +21,8 @@ export default class ListItems extends React.Component {
     return (
       <Grid className="static-page">
         <Row>
-          <h2 className="col-xs-9">{this.props.route.title}</h2>
-          <Col xs={3}>
+          <Col sm={10} smOffset={1} className="head">
+            <h3 className="title">{this.props.route.title}</h3>
             <Link to={'/admin/' + this.slug + '/add'}>
               <Button className="add" bsStyle="success" bsSize="small">Add</Button>
             </Link>
@@ -29,6 +30,15 @@ export default class ListItems extends React.Component {
         </Row>
         
         <Row>
+          <Col sm={10} smOffset={1}>
+            <SortableList
+              items={this.state.items}
+              handleRemove={this.deleteItem.bind(this)}
+              onReorder={this.onReorder.bind(this)}
+              editUrlStart={'/admin/' + this.slug + '/edit/'}
+            />
+          </Col>
+        {/* 
           <ul className="items col-sm-8 col-sm-offset-2">
             {this.state.items.map(i => 
               <li key={i._id}>
@@ -53,6 +63,7 @@ export default class ListItems extends React.Component {
               </li>
             )}
           </ul>
+        */}
         </Row>
       </Grid>
     );
@@ -91,6 +102,37 @@ export default class ListItems extends React.Component {
       })
       .catch(err => {
         console.log(this.slug + ' delete error: ');
+        console.log(err);
+      });
+  }
+
+  onReorder(fromIndex, toIndex) {
+    let items = this.state.items;
+    items = Helpers.moveItemInArray(items, fromIndex, toIndex)
+    this.setState({
+      items: items,
+    });
+
+    items.map((item, index) => {
+      item.index = index;
+      this.saveItem(item);
+    });
+  }
+
+  saveItem(item) {
+    const url = this.serverUrl + '/api/' + this.slug + '/' + item.slug;
+    const opts = { 
+      headers: { 
+        Authorization: 'Bearer ' + localStorage.getItem('id_token')
+      }
+    };
+
+    delete item._id;
+
+    axios
+      .patch(url, item, opts)
+      .catch(err => {
+        console.log(item.slug + ' patch error: ');
         console.log(err);
       });
   }
