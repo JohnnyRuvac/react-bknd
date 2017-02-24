@@ -5,6 +5,7 @@ import ListItems from './ListItems/ListItems';
 import StaticPage from './StaticPage/StaticPage';
 import Category from './Category/Category';
 import ImageTest from './ImageTest/ImageTest';
+import Item from './Item/Item'
 
 
 export {
@@ -15,4 +16,5 @@ export {
   StaticPage,
   Category,
   ImageTest,
+  Item,
 };
