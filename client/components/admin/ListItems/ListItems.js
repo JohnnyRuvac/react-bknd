@@ -10,10 +10,10 @@ import SortableList from '../SortableList/SortableList';
 export default class ListItems extends React.Component {
   constructor(props) {
     super(props);
-    this.slug = Helpers.slugFromRoute(this.props.route);
     this.serverUrl = Helpers.getServerUrl();
     this.state = {
-      items: []
+      items: [],
+      slug: (props.route) ? Helpers.slugFromRoute(props.route) : props.slug,
     }
   }
   
@@ -22,8 +22,8 @@ export default class ListItems extends React.Component {
       <Grid className="static-page">
         <Row>
           <Col sm={10} smOffset={1} className="head">
-            <h3 className="title">{this.props.route.title}</h3>
-            <Link to={'/admin/' + this.slug + '/add'}>
+            <h3 className="title">{this.props.title || this.props.route.title}</h3>
+            <Link to={'/admin/' + this.state.slug + '/add'}>
               <Button className="add" bsStyle="success" bsSize="small">Add</Button>
             </Link>
           </Col>
@@ -35,42 +35,18 @@ export default class ListItems extends React.Component {
               items={this.state.items}
               handleRemove={this.deleteItem.bind(this)}
               onReorder={this.onReorder.bind(this)}
-              editUrlStart={'/admin/' + this.slug + '/edit/'}
+              editUrlStart={'/admin/' + this.state.slug + '/edit/'}
             />
           </Col>
-        {/* 
-          <ul className="items col-sm-8 col-sm-offset-2">
-            {this.state.items.map(i => 
-              <li key={i._id}>
-                <Row>
-                  <Link 
-                    to={'/admin/' + this.slug + '/edit/' + i.slug}
-                    className="page-title col-xs-9"
-                  >
-                    {i.title}
-                  </Link>
-                  <Col xs={3}>
-                    <Button 
-                      onClick={e => this.deleteItem(e, i.slug)}
-                      className="delete"
-                      bsStyle="warning"
-                      bsSize="small" 
-                    >
-                      Delete
-                    </Button>
-                  </Col>
-                </Row>
-              </li>
-            )}
-          </ul>
-        */}
         </Row>
       </Grid>
     );
   }
   
   fetchItems() {
-    const url = this.serverUrl + '/api/' + this.slug;
+    if (!this.state.slug) return;
+
+    const url = this.serverUrl + '/api/' + this.state.slug;
 
     axios.get(url)
       .then(res => {
@@ -85,23 +61,23 @@ export default class ListItems extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newSlug = Helpers.slugFromRoute(nextProps.route);
-    if (newSlug !== this.slug) {
-      this.slug = newSlug;
-      this.fetchItems();
+    if (nextProps.route) {
+      const newSlug = Helpers.slugFromRoute(nextProps.route);
+      if (newSlug !== this.state.slug) {
+        this.fetchItems();
+      }
     }
   }
 
-  deleteItem(e, slug) {
-    e.preventDefault();
-    axios.delete( this.serverUrl + '/api/' + this.slug + '/' + slug,
+  deleteItem(slug) {
+    axios.delete( this.serverUrl + '/api/' + this.state.slug + '/' + slug,
       { headers: { Authorization: 'Bearer ' + localStorage.getItem('id_token') } })
       .then(res => {
         const updated = this.state.items.filter(p => p.slug !== slug);
         this.setState({items: updated});
       })
       .catch(err => {
-        console.log(this.slug + ' delete error: ');
+        console.log(this.state.slug + ' delete error: ');
         console.log(err);
       });
   }
@@ -120,7 +96,7 @@ export default class ListItems extends React.Component {
   }
 
   saveItem(item) {
-    const url = this.serverUrl + '/api/' + this.slug + '/' + item.slug;
+    const url = this.serverUrl + '/api/' + this.state.slug + '/' + item.slug;
     const opts = { 
       headers: { 
         Authorization: 'Bearer ' + localStorage.getItem('id_token')

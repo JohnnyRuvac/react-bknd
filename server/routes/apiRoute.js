@@ -29,9 +29,7 @@ const apiRoute = (jwtCheck, db) => {
       db.collection(req.params.type).find().toArray( (err, result) => {
         
         const index = result.length;
-        console.log('index: ' + index);
         req.body.index = index;
-        console.log(req.body);
         db.collection(req.params.type).save(
           req.body
         );

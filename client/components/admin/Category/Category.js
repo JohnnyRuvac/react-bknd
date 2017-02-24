@@ -2,6 +2,7 @@ import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import { Link } from 'react-router';
 import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import ListItems from '../ListItems/ListItems';
 
 
 export default class Category extends ContentType {
@@ -19,9 +20,13 @@ export default class Category extends ContentType {
         <Row>
           <h2 className="col-xs-9">New category</h2>
           <Col xs={3}>
-            <Link to={'/admin/' + this.slug + '/add'}>
-              <Button className="add" bsStyle="success" bsSize="small">Add</Button>
-            </Link>
+            <Button bsStyle="success" 
+              bsSize="small" 
+              type="submit"
+              onClick={this.save.bind(this)}
+            >
+              Save
+            </Button>
           </Col>
         </Row>
         
@@ -65,13 +70,10 @@ export default class Category extends ContentType {
 
         <Row>
           <Col xs={12}>
-            <Button bsStyle="success" 
-              bsSize="small" 
-              type="submit"
-              onClick={this.save.bind(this)}
-            >
-              Save
-            </Button>
+            <ListItems
+              slug="items"
+              title="Items in this category"
+            />
           </Col>
         </Row>
       </Grid>

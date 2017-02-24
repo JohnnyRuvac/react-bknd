@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { Link } from 'react-router';
 import styles from './SortableList.sass';
 import Sortable from 'sortablejs';
+import SortableListItem from './SortableListItem';
 
 
 export default class SortableList extends React.Component {
@@ -13,22 +14,14 @@ export default class SortableList extends React.Component {
         ref="sortableList"
       >
         {this.props.items.map((item, index) =>
-          <li className="list-item"
+          <SortableListItem
             key={index}
-            data-id={index}
-          >
-            <a href="" className="handle"></a>
-            <Link to={this.props.editUrlStart + item.slug} 
-              className="title"
-            >{item.title}</Link>
-            <Button 
-              onClick={this.props.handleRemove.bind(this)}
-              className="delete"
-              bsStyle="danger"
-              bsSize="small" 
-            >Delete
-            </Button>
-          </li>
+            index={index}
+            slug={item.slug}
+            editUrl={this.props.editUrlStart + item.slug}
+            title={item.title}
+            handleRemove={this.props.handleRemove.bind(this)}
+          />
         )}
       </ul>
     );
@@ -49,4 +42,5 @@ export default class SortableList extends React.Component {
       }
     });
   }
+
 }
