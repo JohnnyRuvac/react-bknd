@@ -43,10 +43,10 @@ export default class ListItems extends React.Component {
     );
   }
   
-  fetchItems() {
-    if (!this.state.slug) return;
+  fetchItems(slug) {
+    if (!slug) return;
 
-    const url = this.serverUrl + '/api/' + this.state.slug;
+    const url = this.serverUrl + '/api/' + slug;
 
     axios.get(url)
       .then(res => {
@@ -57,14 +57,15 @@ export default class ListItems extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchItems();
+    this.fetchItems(this.state.slug);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillUpdate(nextProps, nextState) {
     if (nextProps.route) {
       const newSlug = Helpers.slugFromRoute(nextProps.route);
-      if (newSlug !== this.state.slug) {
-        this.fetchItems();
+      if (newSlug !== nextState.slug) {
+        this.fetchItems(newSlug);
+        nextState.slug = newSlug;
       }
     }
   }
