@@ -34,7 +34,7 @@ export default class ContentType extends React.Component {
     
     axios.get(url)
       .then(res => {
-        this.originalSlug = res.data.slug;
+        this.originalSlug = res.data[0].slug;
         this.setState({
           contentData: res.data[0]
         });
