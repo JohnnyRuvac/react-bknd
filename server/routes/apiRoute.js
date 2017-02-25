@@ -15,6 +15,15 @@ const apiRoute = (jwtCheck, db) => {
           res.json(results);
         });
     })
+    .get('/items/single/:slug', (req, res) => {
+      db
+        .collection('items')
+        .find({slug: req.params.slug})
+        .toArray( (err, result) => {
+          if (err) return console.log(err);
+          res.json(result);
+        })
+    })
     .get('/:type/:slug', (req, res) => {
       // items slug is exception, it can return multiple results of items belonging to category,
       // therefore we have to search for categorySlug instead of slug and we have to sort it by index

@@ -2,6 +2,7 @@ import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import TextEditor from '../TextEditor/TextEditor';
+import axios from 'axios';
 
 
 export default class Item extends ContentType {
@@ -85,6 +86,22 @@ export default class Item extends ContentType {
         </Row>
       </Grid>
     );
+  }
+
+  componentDidMount() {
+    this.fetchItemData();
+  }
+
+  fetchItemData() {
+    const url = this.serverUrl + '/api/items/single/' + this.props.params.slug;
+    
+    axios.get(url)
+      .then(res => {
+        this.originalSlug = res.data[0].slug;
+        this.setState({
+          contentData: res.data[0]
+        });
+      });
   }
 
   getValidationState() {
