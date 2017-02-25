@@ -1,12 +1,9 @@
 import React from 'react';
-import { Editor } from 'react-draft-wysiwyg';
-import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-import draftToHtml from 'draftjs-to-html';
-import htmlToDraft from 'html-to-draftjs';
-import { EditorState, convertToRaw, ContentState } from 'draft-js';
 import styles from './styles.sass';
 import axios from 'axios';
 import Helpers from 'Utils/Helpers';
+import MediumEditor from 'medium-editor';
+import mestyles from 'medium-editor/dist/css/medium-editor.css';
 
 
 export default class TextEditor extends React.Component {
@@ -15,41 +12,34 @@ export default class TextEditor extends React.Component {
   };
 
   render() {
-    const toolbar = {
-      options: ['inline', 'blockType', 'list', 'link', 'embedded', 'emoji', 'image', 'history'],
-      image: {
-        uploadCallback: this.uploadImageCallBack,
-        alignmentEnabled: false
-      },
-    };
-
     return (
-      <Editor
-        editorState={this.state.editor}
-        onEditorStateChange={this.onEditorStateChange.bind(this)}
-        uploadCallback={this.uploadImageCallBack.bind(this)}
-        toolbar={toolbar}
-      />
+      <textarea ref="ta" name="" id="" cols="30" rows="10">
+      </textarea>
     );
   }
 
-  componentWillReceiveProps(nextProps) {
-    const html = nextProps.content;
-    const blocksFromHtml = htmlToDraft(html);
-    const state = ContentState.createFromBlockArray( blocksFromHtml.contentBlocks );
-    this.setState({
-      editor: EditorState.createWithContent(state),
-    });
+  componentDidUpdate(prevProps, prevState) {
+    this.me = new MediumEditor(this.refs.ta)
+    this.me.setContent('<p class="classy"><strong>Some Custom HTML</strong></p>');
   }
 
-  onEditorStateChange(editorState) {
-    const html = this.getHtml(editorState);
-    this.props.receiver(html);
+  // componentWillReceiveProps(nextProps) {
+  //   const html = nextProps.content;
+  //   const blocksFromHtml = htmlToDraft(html);
+  //   const state = ContentState.createFromBlockArray( blocksFromHtml.contentBlocks );
+  //   this.setState({
+  //     editor: EditorState.createWithContent(state),
+  //   });
+  // }
 
-    this.setState({
-      editor: editorState,
-    });
-  }
+  // onEditorStateChange(editorState) {
+  //   const html = this.getHtml(editorState);
+  //   this.props.receiver(html);
+
+  //   this.setState({
+  //     editor: editorState,
+  //   });
+  // }
 
   uploadImageCallBack(file) {
     const form = new FormData();
@@ -72,9 +62,7 @@ export default class TextEditor extends React.Component {
   }
 
   getHtml(editorState) {
-    const rawContentState = convertToRaw( editorState.getCurrentContent() );
-    const html = draftToHtml(rawContentState)
-    return html;
+    return this.me.getContent()
   }
 
 }

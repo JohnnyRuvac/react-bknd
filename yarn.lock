@@ -1857,23 +1857,9 @@ download@^4.0.0, download@^4.1.2:
     vinyl-fs "^2.2.0"
     ware "^1.2.0"
 
-draft-js@^0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.10.0.tgz#29d16191012b932fdab28a9b37ec1538f421abf6"
-  dependencies:
-    fbjs "^0.8.7"
-    immutable "~3.7.4"
-    object-assign "^4.1.0"
-
 draftjs-to-html@^0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/draftjs-to-html/-/draftjs-to-html-0.6.3.tgz#80c7ade1517d17b1c65417811f1d16a751fe1a70"
-
-draftjs-utils@^0.6.3:
-  version "0.6.3"
-  resolved "https://registry.yarnpkg.com/draftjs-utils/-/draftjs-utils-0.6.3.tgz#8c53e01bc28a9d3f622f4fcbf0c34cc472fe481a"
-  dependencies:
-    immutable "^3.x.x"
 
 dropzone@^4.3.0:
   version "4.3.0"
@@ -2178,7 +2164,7 @@ faye-websocket@~0.11.0:
   dependencies:
     websocket-driver ">=0.5.1"
 
-fbjs@^0.8.1, fbjs@^0.8.4, fbjs@^0.8.7:
+fbjs@^0.8.1, fbjs@^0.8.4:
   version "0.8.9"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.9.tgz#180247fbd347dcc9004517b904f865400a0c8f14"
   dependencies:
@@ -2834,14 +2820,6 @@ imagemin@^5.2.2:
     pify "^2.3.0"
     promise.pipe "^3.0.0"
     replace-ext "0.0.1"
-
-immutable@^3.8.1, immutable@^3.x.x:
-  version "3.8.1"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
-
-immutable@~3.7.4:
-  version "3.7.6"
-  resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.7.6.tgz#13b4d3cb12befa15482a26fe1b2ebae640071e4b"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -3541,6 +3519,10 @@ math-expression-evaluator@^1.2.14:
 media-typer@0.3.0:
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
+
+medium-editor@^5.22.2:
+  version "5.22.2"
+  resolved "https://registry.yarnpkg.com/medium-editor/-/medium-editor-5.22.2.tgz#31f274d0b0a259bc358818bb1373b40d3130ace3"
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
@@ -4572,14 +4554,6 @@ react-dom@^15.4.2:
     fbjs "^0.8.1"
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
-
-react-draft-wysiwyg@^1.7.6:
-  version "1.7.6"
-  resolved "https://registry.yarnpkg.com/react-draft-wysiwyg/-/react-draft-wysiwyg-1.7.6.tgz#ac38ac63eda4c746e393b2f1c95018b7f43be12e"
-  dependencies:
-    classnames "^2.2.5"
-    draftjs-utils "^0.6.3"
-    immutable "^3.8.1"
 
 react-hot-loader@^3.0.0-beta.6:
   version "3.0.0-beta.6"
