@@ -2,6 +2,7 @@
 
 
 .uploader-wrapper
+  position: relative
   padding-top: 20px
 
 .images-headline
@@ -27,6 +28,7 @@
     display: block
 
 .images-list
+  background-color: $white
   padding: 0
   list-style: none
   
@@ -58,9 +60,18 @@
       transform: translate(0, -50%)
 
 .desktop-uploader
-  height: 200px
+  position: absolute
+  top: 56px
+  left: 0
+  width: 100%
+  height: 80%
+  z-index: -1
+  margin: 0 15px
   .dz-success
     display: none !important
+
+.draggedover .desktop-uploader
+  z-index: 1
 
 
 // Mobile only
