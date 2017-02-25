@@ -84,6 +84,11 @@ export default class ListItems extends React.Component {
     if (nextProps.categorySlug !== this.props.categorySlug) {
       this.fetchItems(this.state.slug);
     }
+
+    // don't list uncategorized items in categories
+    if (nextState.slug === 'categories') {
+      nextState.items = nextState.items.filter(item => item.slug !== '_uncategorized');
+    }
   }
 
   deleteItem(slug) {

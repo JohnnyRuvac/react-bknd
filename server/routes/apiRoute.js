@@ -81,6 +81,16 @@ const apiRoute = (jwtCheck, db) => {
     })
     // delete
     .delete(jwtCheck, (req, res) => {
+
+      // after deleting category, move it's children to _uncategorized
+      if (req.params.type === 'categories') {
+        db.collection('items')
+          .update(
+            {categorySlug: req.params.slug},
+            {$set: {categorySlug: '_uncategorized'}},
+            {multi: true},
+          );
+      }
       
       db.collection(req.params.type).remove({slug: req.params.slug}, {justOne: true})
         .then(result => {
