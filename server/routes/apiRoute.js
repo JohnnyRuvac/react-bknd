@@ -30,7 +30,11 @@ const apiRoute = (jwtCheck, db) => {
       if (req.params.type === 'items') {
         
         db.collection(req.params.type)
-          .find({categorySlug: req.params.slug})
+          .find({
+            categorySlug: {
+              $in: [req.params.slug]
+            }
+          })
           .sort({index: 1})
           .toArray( (err, result) => {
             if (err) return console.log(err);
