@@ -4,6 +4,7 @@ import axios from 'axios';
 import Helpers from 'Utils/Helpers';
 import MediumEditor from 'medium-editor';
 import mestyles from 'medium-editor/dist/css/medium-editor.css';
+import metheme from 'medium-editor/dist/css/themes/default.css';
 
 
 export default class TextEditor extends React.Component {
