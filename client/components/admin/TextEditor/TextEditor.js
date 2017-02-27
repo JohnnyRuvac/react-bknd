@@ -18,8 +18,11 @@ export default class TextEditor extends React.Component {
     );
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidMount() {
     this.me = new MediumEditor(this.refs.ta);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
     const html = this.props.content;
     this.me.setContent(html);
   }

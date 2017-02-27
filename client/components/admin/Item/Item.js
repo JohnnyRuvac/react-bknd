@@ -93,6 +93,10 @@ export default class Item extends ContentType {
   }
 
   fetchItemData() {
+    if (!this.props.params.slug) {
+      return;
+    }
+
     const url = this.serverUrl + '/api/items/single/' + this.props.params.slug;
     
     axios.get(url)

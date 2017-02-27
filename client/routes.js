@@ -45,8 +45,9 @@ const makeMainRoutes = (
       <Route path="/admin/categories/edit/:slug" component={Category} title="Edit category" />
       
       <Route path="/admin/items" component={ListItems} title="Category Items" />
-      <Route path="/admin/items/:categorySlug/add" component={Item} />
+      <Route path="/admin/items/add" component={Item} />
       <Route path="/admin/items/edit/:slug" component={Item} />
+      <Route path="/admin/items/:categorySlug/add" component={Item} />
 
       <Route path="/admin/image-tests" component={ListItems} title="Image tests" />
       <Route path="/admin/image-tests/add" component={ImageTest} title="New Image test" />
