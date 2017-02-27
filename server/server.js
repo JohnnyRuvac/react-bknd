@@ -8,6 +8,7 @@ import jwt from 'express-jwt';
 import uploadRoute from './routes/uploadRoute';
 import deleteUploadRoute from './routes/deleteUploadRoute';
 import apiRoute from './routes/apiRoute';
+import categoryRoute from './routes/categoryRoute';
 
 
 
@@ -41,6 +42,7 @@ const initApp = (db) => {
   app.use('/api', apiRoute(jwtCheck, db));
   app.use('/upload', uploadRoute(jwtCheck));
   app.use('/upload/delete', deleteUploadRoute(jwtCheck));
+  app.use('/api/categories', categoryRoute(jwtCheck, db));
 
   // redirect all requests except api to index.html for client side routing
   app.get('*', (req, res) => {

@@ -2,7 +2,7 @@ import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import { Link } from 'react-router';
 import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import ListItems from '../ListItems/ListItems';
+import ListCategoryItems from './ListCategoryItems';
 
 
 export default class Category extends ContentType {
@@ -70,7 +70,7 @@ export default class Category extends ContentType {
 
         <Row>
           <Col xs={12}>
-            <ListItems
+            <ListCategoryItems
               slug="items"
               categorySlug={this.props.params.slug}
               addLink={'/admin/items/' + this.state.contentData.slug + '/add'}
