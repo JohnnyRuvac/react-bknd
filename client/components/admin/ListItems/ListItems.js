@@ -92,8 +92,13 @@ export default class ListItems extends React.Component {
   }
 
   deleteItem(slug) {
-    axios.delete( this.serverUrl + '/api/' + this.state.slug + '/' + slug,
-      { headers: { Authorization: 'Bearer ' + localStorage.getItem('id_token') } })
+    const deleteUrl = this.serverUrl + '/api/' + this.state.slug + '/' + slug;
+    axios
+      .delete( deleteUrl, { 
+        headers: { 
+          Authorization: 'Bearer ' + localStorage.getItem('id_token') 
+        }
+      })
       .then(res => {
         const updated = this.state.items.filter(p => p.slug !== slug);
         this.setState({items: updated});
