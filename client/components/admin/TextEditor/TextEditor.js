@@ -14,13 +14,14 @@ export default class TextEditor extends React.Component {
 
   render() {
     return (
-      <textarea ref="ta" name="" id="" cols="30" rows="10">
-      </textarea>
+      <textarea ref="ta"></textarea>
     );
   }
 
   componentDidMount() {
-    this.me = new MediumEditor(this.refs.ta);
+    this.me = new MediumEditor(this.refs.ta, {
+      imageDragging: false,
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
