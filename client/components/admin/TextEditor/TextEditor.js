@@ -19,27 +19,10 @@ export default class TextEditor extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this.me = new MediumEditor(this.refs.ta)
-    this.me.setContent('<p class="classy"><strong>Some Custom HTML</strong></p>');
+    this.me = new MediumEditor(this.refs.ta);
+    const html = this.props.content;
+    this.me.setContent(html);
   }
-
-  // componentWillReceiveProps(nextProps) {
-  //   const html = nextProps.content;
-  //   const blocksFromHtml = htmlToDraft(html);
-  //   const state = ContentState.createFromBlockArray( blocksFromHtml.contentBlocks );
-  //   this.setState({
-  //     editor: EditorState.createWithContent(state),
-  //   });
-  // }
-
-  // onEditorStateChange(editorState) {
-  //   const html = this.getHtml(editorState);
-  //   this.props.receiver(html);
-
-  //   this.setState({
-  //     editor: editorState,
-  //   });
-  // }
 
   uploadImageCallBack(file) {
     const form = new FormData();
@@ -59,10 +42,6 @@ export default class TextEditor extends React.Component {
         }
       }
     });
-  }
-
-  getHtml(editorState) {
-    return this.me.getContent()
   }
 
 }

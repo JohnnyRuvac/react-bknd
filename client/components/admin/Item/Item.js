@@ -67,8 +67,8 @@ export default class Item extends ContentType {
             <FormGroup controlId="content">
               <ControlLabel>Text</ControlLabel>
               <TextEditor
+                ref="te"
                 content={this.state.contentData.content}
-                receiver={this.getContent.bind(this)}
               />
             </FormGroup>
           </Col>
@@ -108,8 +108,11 @@ export default class Item extends ContentType {
     return null;
   }
 
-  getContent(content) {
-    this.state.contentData.content = content;
+  save() {
+    // get html content from me editor, add to contentData and save
+    const html = this.refs.te.me.getContent()
+    this.state.contentData.content = html;
+    super.save();
   }
 
 }
