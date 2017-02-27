@@ -12,6 +12,7 @@ export default class Uploader extends React.Component {
   serverUrl = Helpers.getServerUrl();
   state = {
     draggedover: false,
+    dropZoneHovered: false,
   };
 
   render() {
@@ -83,22 +84,31 @@ export default class Uploader extends React.Component {
     uploader.on('queuecomplete', () => {
       const form = this.refs.uploadForm;
       form.classList.remove('dz-started');
-    });
-
-    uploader.on('queuecomplete', () => {
       this.setState({'draggedover': false})
     });
 
+    uploader.on('dragenter', () => {
+      this.setState({
+        dropZoneHovered: true,
+      });
+    });
+
+    uploader.on('dragleave', () => {
+      this.setState({
+        dropZoneHovered: false,
+      });
+    });
+
     document.body.addEventListener('dragover', () => {
-      console.log('dragover');
       if (!this.state.draggedover) {
-        // this.setState({'draggedover': true})
+        this.setState({'draggedover': true})
       }
     });
 
     document.body.addEventListener('dragleave', () => {
-      console.log('dragleave');
-      // this.setState({'draggedover': false})
+      if (!this.state.dropZoneHovered) {
+        this.setState({'draggedover': false})
+      }
     });
 
   }
