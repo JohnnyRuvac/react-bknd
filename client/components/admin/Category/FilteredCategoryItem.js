@@ -11,14 +11,22 @@ export default class FilteredCategoryItem extends React.Component {
           <Link to={'/admin/items/edit/' + this.props.slug}>{this.props.title}</Link>
         </Col>
         <Col xs={6} className="link-cell">
-          {this.props.categorySlug.map( (item, index) =>
-            <Link
-              className="category-link" 
-              key={index} 
-              to={'/admin/categories/edit/' + item}
-            >{item}
-            </Link>
-          )}
+          {this.props.categorySlug.map( (item, index) => {
+            
+            if (item !== '_uncategorized') {
+              
+              return <Link
+                className="category-link" 
+                key={index} 
+                to={'/admin/categories/edit/' + item}
+              >{item}
+              </Link>
+
+            } else {
+              return <p className="category-link" key={index}>{item}</p>
+            }
+
+          })}
         </Col>
       </Row>
     );
