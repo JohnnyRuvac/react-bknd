@@ -3,7 +3,7 @@ import { Route, IndexRedirect } from 'react-router';
 import AuthService from './utils/AuthService';
 import Container from './components/Container';
 import { Home, Layout } from './components/public/PublicComponents';
-import { Login, AdminLayout, Home as AdminHome, ListItems, StaticPage, Category, ImageTest, Item } from './components/admin/AdminComponents';
+import { Login, AdminLayout, Home as AdminHome, ListItems, StaticPage, Category, ImageTest, Item, CategoryItemsFilter } from './components/admin/AdminComponents';
 
 
 const auth = new AuthService(
@@ -44,7 +44,7 @@ const makeMainRoutes = (
       <Route path="/admin/categories/add" component={Category} title="New category" />
       <Route path="/admin/categories/edit/:slug" component={Category} title="Edit category" />
       
-      <Route path="/admin/items" component={ListItems} title="Category Items" />
+      <Route path="/admin/items" component={CategoryItemsFilter} title="All Categories Items" />
       <Route path="/admin/items/add" component={Item} />
       <Route path="/admin/items/edit/:slug" component={Item} />
       <Route path="/admin/items/:categorySlug/add" component={Item} />

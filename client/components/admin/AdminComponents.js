@@ -5,7 +5,8 @@ import ListItems from './ListItems/ListItems';
 import StaticPage from './StaticPage/StaticPage';
 import Category from './Category/Category';
 import ImageTest from './ImageTest/ImageTest';
-import Item from './Item/Item'
+import Item from './Item/Item';
+import CategoryItemsFilter from './Category/CategoryItemsFilter';
 
 
 export {
@@ -17,4 +18,5 @@ export {
   Category,
   ImageTest,
   Item,
+  CategoryItemsFilter,
 };
