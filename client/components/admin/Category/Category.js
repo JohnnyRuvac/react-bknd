@@ -3,6 +3,7 @@ import ContentType from '../ContentType/ContentType';
 import { Link } from 'react-router';
 import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 import ItemsInCategory from './ItemsInCategory';
+import styles from './Category.sass';
 
 
 export default class Category extends ContentType {
@@ -28,8 +29,8 @@ export default class Category extends ContentType {
     }
 
     return (
-      <Grid className="static-page">
-        <Row>
+      <Grid>
+        <Row className="category-head">
           <h2 className="col-xs-9">{this.props.route.title}</h2>
           <Col xs={3}>
             <Button bsStyle="success" 
