@@ -15,6 +15,18 @@ export default class Category extends ContentType {
   }
 
   render() {
+    let itemsInThisCategory = null;
+
+    if (this.isEditing) {
+      itemsInThisCategory = 
+        <ItemsInCategory
+          slug="items"
+          categorySlug={this.props.params.slug}
+          addLink={'/admin/items/' + this.state.contentData.slug + '/add'}
+          title="Items in this category"
+        />
+    }
+
     return (
       <Grid className="static-page">
         <Row>
@@ -70,12 +82,7 @@ export default class Category extends ContentType {
 
         <Row>
           <Col xs={12}>
-            <ItemsInCategory
-              slug="items"
-              categorySlug={this.props.params.slug}
-              addLink={'/admin/items/' + this.state.contentData.slug + '/add'}
-              title="Items in this category"
-            />
+            {itemsInThisCategory}
           </Col>
         </Row>
       </Grid>
