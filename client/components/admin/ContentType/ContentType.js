@@ -88,8 +88,19 @@ export default class ContentType extends React.Component {
     return newData;
   }
 
+  saveMediumEditor() {
+    if (this.refs.te) {
+      const html = this.refs.te.me.getContent()
+      this.state.contentData.content = html;
+    }
+  }
+
   save() {
     console.log('saving');
+
+    // save content from medium editor
+    this.saveMediumEditor();
+
     // patch if item already exists, post if doesn't
     const method = ( this.isEditing ) ? 'patch' : 'post';
     // if updating use original slug

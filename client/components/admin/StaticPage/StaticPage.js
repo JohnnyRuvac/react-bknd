@@ -66,7 +66,7 @@ export default class StaticPage extends ContentType {
               <ControlLabel>Text</ControlLabel>
               <TextEditor
                 content={this.state.contentData.content}
-                receiver={this.getContent.bind(this)}
+                ref="te"
               />
             </FormGroup>
           </Col>

@@ -202,10 +202,6 @@ export default class Item extends ContentType {
   }
 
   save() {
-    // get html content from me editor, add to contentData and save
-    const html = this.refs.te.me.getContent()
-    this.state.contentData.content = html;
-
     // after adding uncategorized item to some category,
     // remove it from uncategorized
     this.removeFromUncategorized();
