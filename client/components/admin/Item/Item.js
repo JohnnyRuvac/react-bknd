@@ -3,6 +3,7 @@ import ContentType from '../ContentType/ContentType';
 import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
 import TextEditor from '../TextEditor/TextEditor';
 import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 
 export default class Item extends ContentType {
@@ -20,7 +21,7 @@ export default class Item extends ContentType {
     return (
       <Grid className="static-page">
         <Row>
-          <Col xs={12}>
+          <Col xs={9}>
             <h3>{this.props.route.title}</h3>
           </Col>
         </Row>
@@ -93,12 +94,21 @@ export default class Item extends ContentType {
         </Row>
 
         <Row>
-          <Col xs={12}>
+          <Col xs={3}>
             <Button bsStyle="success"
               bsSize="small" 
               onClick={this.save.bind(this)}
             >
               Save
+            </Button>
+          </Col>
+          <Col xs={3}>
+            <Button 
+              onClick={this.handleRemove.bind(this)}
+              className="delete"
+              bsStyle="danger"
+              bsSize="small" 
+            >Delete
             </Button>
           </Col>
         </Row>
@@ -155,6 +165,25 @@ export default class Item extends ContentType {
 
   getValidationState() {
     return null;
+  }
+
+  handleRemove() {
+    const slug = this.state.contentData.slug;
+    const deleteUrl = this.serverUrl + '/api/items/' + slug;
+
+    axios
+      .delete( deleteUrl, { 
+        headers: { 
+          Authorization: 'Bearer ' + localStorage.getItem('id_token') 
+        }
+      })
+      .then(res => {
+        browserHistory.goBack();
+      })
+      .catch(err => {
+        console.log(this.state.slug + ' delete error: ');
+        console.log(err);
+      });
   }
 
   save() {
