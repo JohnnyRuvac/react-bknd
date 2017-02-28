@@ -3,7 +3,7 @@ import ListItems from '../ListItems/ListItems';
 import axios from 'axios';
 
 
-export default class ListCategoryItems extends ListItems {
+export default class ItemsInCategory extends ListItems {
   deleteItem(slug) {
 
     const url = this.serverUrl + '/api/categories/removeFromCategory/' + this.props.categorySlug + '/' + slug;    
