@@ -99,14 +99,18 @@ export default class Uploader extends React.Component {
       });
     });
 
-    document.body.addEventListener('dragover', () => {
-      if (!this.state.draggedover) {
+    document.body.addEventListener('dragover', (e) => {
+      const isImageReordering = e.target.classList.contains('handle') || e.target.classList.contains('image-wrap');
+
+      if (!this.state.draggedover && !isImageReordering) {
         this.setState({'draggedover': true})
       }
     });
 
-    document.body.addEventListener('dragleave', () => {
-      if (!this.state.dropZoneHovered) {
+    document.body.addEventListener('dragleave', (e) => {
+      const isImageReordering = e.target.classList.contains('handle') || e.target.classList.contains('image-wrap');
+
+      if (!this.state.dropZoneHovered && !isImageReordering) {
         this.setState({'draggedover': false})
       }
     });
