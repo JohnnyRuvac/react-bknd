@@ -12,10 +12,22 @@ const deleteUploadRoute = (jwtCheck, db) => {
       db.collection('items')
         .update({
           slug: req.params.itemSlug,
+          $where : 'this.categorySlug.length > 1',
         },
         {
           $pull: {
             categorySlug: req.params.categorySlug,
+          }
+        });
+
+      db.collection('items')
+        .update({
+          slug: req.params.itemSlug,
+          $where : 'this.categorySlug.length < 2',
+        },
+        {
+          $set: {
+            categorySlug: ['_uncategorized'],
           }
         });
 
