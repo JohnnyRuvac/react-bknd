@@ -105,8 +105,14 @@ export default class ContentType extends React.Component {
       }
     )
     .then(response => {
-      const path = '/admin/' + this._getContentTypeSlug();
-      browserHistory.push(path);
+      const slug = this._getContentTypeSlug();
+      const path = '/admin/' + slug;
+
+      if (slug !== 'items') {
+        browserHistory.push(path);
+      } else {
+        browserHistory.goBack();
+      }
     })
     .catch(error => {
       console.log('page save error');
