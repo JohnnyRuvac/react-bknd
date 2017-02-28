@@ -29,6 +29,10 @@ export default class TextEditor extends React.Component {
     this.me.setContent(html);
   }
 
+  componentWillUnmount() {
+    this.me.destroy();
+  }
+
   uploadImageCallBack(file) {
     const form = new FormData();
     form.append('photo', file);
