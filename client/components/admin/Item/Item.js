@@ -190,7 +190,6 @@ export default class Item extends ContentType {
     const categories = this.state.contentData.categorySlug;
     if (categories.length > 1) {
       this.state.contentData.categorySlug = categories.filter(item => item !== '_uncategorized');
-      console.log(this.state.contentData.categorySlug);
     }
   }
 
