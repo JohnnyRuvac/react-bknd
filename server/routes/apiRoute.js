@@ -75,11 +75,20 @@ const apiRoute = (jwtCheck, db) => {
     .patch(jwtCheck, (req, res) => {
 
       // categories need to update it's children categorySlug after renamting it
-      if (req.params.type === 'categories') {
+      const slugChanged = req.params.slug !== req.body.slug;
+
+      if (req.params.type === 'categories' && slugChanged) {
         db.collection('items')
           .update(
             {categorySlug: req.params.slug},
-            {$set: {categorySlug: req.body.slug}},
+            {$push: {categorySlug: req.body.slug}},
+            {multi: true},
+          );
+
+        db.collection('items')
+          .update(
+            {categorySlug: req.params.slug},
+            {$pull: {categorySlug: req.params.slug}},
             {multi: true},
           );
       }
