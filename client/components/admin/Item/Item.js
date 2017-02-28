@@ -186,10 +186,33 @@ export default class Item extends ContentType {
       });
   }
 
+  removeFromUncategorized() {
+    const categories = this.state.contentData.categorySlug;
+    if (categories.length > 1) {
+      this.state.contentData.categorySlug = categories.filter(item => item !== '_uncategorized');
+      console.log(this.state.contentData.categorySlug);
+    }
+  }
+
+  checkUncategorized() {
+    const categories = this.state.contentData.categorySlug;
+    if (categories.length === 0) {
+      this.state.contentData.categorySlug = ['_uncategorized'];
+    }
+  }
+
   save() {
     // get html content from me editor, add to contentData and save
     const html = this.refs.te.me.getContent()
     this.state.contentData.content = html;
+
+    // after adding uncategorized item to some category,
+    // remove it from uncategorized
+    this.removeFromUncategorized();
+
+    // if item doesn't belong to any category, move it to _uncategorized
+    this.checkUncategorized();
+
     super.save();
   }
 
