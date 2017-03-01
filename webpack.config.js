@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import envHelper from './utils/envHelper';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
 const isProduction = process.argv.indexOf('-p') !== -1;
 const parsedEnvs = envHelper('./.env');
 
@@ -31,7 +32,11 @@ let plugins = [
       'NODE_ENV': (isProduction) ? '"production"' : '""',
       ...parsedEnvs
     }
-  })
+  }),
+  new ExtractTextPlugin({
+    filename: 'style.css',
+    allChunks: true
+  }),
 ];
 
 if (!isProduction) {
@@ -83,12 +88,20 @@ module.exports = {
       },
       {
         test: /\.(sass|scss)$/,
-        use: [
-          'style-loader',
-          'css-loader?importLoaders=1',
-          'postcss-loader',
-          'sass-loader'
-        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader', 
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                // modules: true,
+                // localIdentName: '[path][name]__[local]--[hash:base64:5]',
+              },
+            },
+            'postcss-loader',
+            'sass-loader',
+          ],
+        }),
       },
       {
         test: /\.(css)$/,
