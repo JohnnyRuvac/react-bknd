@@ -2,6 +2,7 @@ import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import { Link } from 'react-router';
 import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { TextInput } from '../Form';
 import ItemsInCategory from './ItemsInCategory';
 import styles from './Category.sass';
 
@@ -45,20 +46,13 @@ export default class Category extends ContentType {
         
         <Row>
           <Col xs={12}>
-            <FormGroup
+            <TextInput 
               controlId="title"
-              validationState={this.getValidationState()}
-            >
-              <ControlLabel>Title</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="Title"
-                value={this.state.contentData.title}
-                onChange={this.handleChange.bind(this)}
-              />
-              <FormControl.Feedback />
-              <HelpBlock>Validation is based on string length.</HelpBlock>
-            </FormGroup>
+              label="Title"
+              placeholder="Title"
+              value={this.state.contentData.title}
+              onChange={this.updateContentDataState.bind(this)}
+            />
           </Col>
         </Row>
 
