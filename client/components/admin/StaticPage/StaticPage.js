@@ -1,8 +1,7 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import { Grid, Col, Row, Button } from 'react-bootstrap';
-import { TextInput, SlugInput } from '../Form';
-import TextEditor from '../TextEditor/TextEditor';
+import { TextInput, SlugInput, TextEditor } from '../Form';
 
 
 export default class StaticPage extends ContentType {

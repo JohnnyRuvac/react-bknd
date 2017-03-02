@@ -1,10 +1,9 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import { Grid, Col, Row, Button } from 'react-bootstrap';
-import TextEditor from '../TextEditor/TextEditor';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { TextInput, SlugInput } from '../Form';
+import { TextInput, SlugInput, TextEditor } from '../Form';
 import { FormGroup, ControlLabel, FormControl, Checkbox } from 'react-bootstrap';
 
 
