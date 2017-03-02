@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import { Link } from 'react-router';
-import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { Grid, Col, Row, Button } from 'react-bootstrap';
 import { TextInput, SlugInput } from '../Form';
 import ItemsInCategory from './ItemsInCategory';
 import styles from './Category.sass';
