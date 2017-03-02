@@ -1,6 +1,6 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
-import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
+import { Grid, Col, Row, Button } from 'react-bootstrap';
 import { TextInput, SlugInput } from '../Form';
 import TextEditor from '../TextEditor/TextEditor';
 
@@ -50,13 +50,11 @@ export default class StaticPage extends ContentType {
 
         <Row>
           <Col xs={12}>
-            <FormGroup controlId="content">
-              <ControlLabel>Text</ControlLabel>
-              <TextEditor
-                content={this.state.contentData.content}
-                ref="te"
-              />
-            </FormGroup>
+            <TextEditor
+              label="Content"
+              content={this.state.contentData.content}
+              ref="te"
+            />
           </Col>
         </Row>
 
