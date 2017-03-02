@@ -1,9 +1,8 @@
 import React from 'react';
-import { Tabs, Tab } from 'react-bootstrap';
-import { TextInput, SlugInput } from './';
+import { TextInput, SlugInput, TextEditor } from './';
 
 
-export default class TranslatableTitleAndSlug extends React.Component {
+export default class TranslatableContent extends React.Component {
   state = {
     key: 1
   }
@@ -18,39 +17,49 @@ export default class TranslatableTitleAndSlug extends React.Component {
         id="translatable-title-and-slug"
       >
         
-        <Tab eventKey={1} title="Tab 1">
+        <Tab eventKey={1} title="SK">
           <TextInput
             controlId="title"
-            label="Title"
-            placeholder="Title"
+            label="Názov"
+            placeholder="Názov"
             value={this.props.titleVal}
             onChange={this.props.onChange.bind(this)}
           />
           <SlugInput 
             controlId="slug"
-            label="Slug"
+            label="Slug SK"
             placeholder="some-name"
             value={this.props.slugVal}
             titleValue={this.props.titleVal}
             onChange={this.props.onChange.bind(this)}
+          />
+          <TextEditor
+            label="Obsah"
+            content={this.props.content}
+            ref="te"
           />
         </Tab>
         
-        <Tab eventKey={2} title="Tab 2">
+        <Tab eventKey={2} title="EN">
           <TextInput
-            controlId="title"
-            label="Title one"
+            controlId="enTitle"
+            label="Title"
             placeholder="Title"
-            value={this.props.titleVal}
+            value={this.props.enTitleVal}
             onChange={this.props.onChange.bind(this)}
           />
           <SlugInput 
-            controlId="slug"
-            label="Slug one"
+            controlId="enSlug"
+            label="Slug EN"
             placeholder="some-name"
-            value={this.props.slugVal}
-            titleValue={this.props.titleVal}
+            value={this.props.enSlugVal}
+            titleValue={this.props.enTitleVal}
             onChange={this.props.onChange.bind(this)}
+          />
+          <TextEditor
+            label="Content"
+            content={this.props.enContent}
+            ref="EnTe"
           />
         </Tab>
 
@@ -61,5 +70,4 @@ export default class TranslatableTitleAndSlug extends React.Component {
   handleSelect(key) {
     this.setState({key: key});
   }
-
 }
