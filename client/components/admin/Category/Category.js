@@ -2,7 +2,7 @@ import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import { Link } from 'react-router';
 import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import { TextInput } from '../Form';
+import { TextInput, SlugInput } from '../Form';
 import ItemsInCategory from './ItemsInCategory';
 import styles from './Category.sass';
 
@@ -58,20 +58,14 @@ export default class Category extends ContentType {
 
         <Row>
           <Col xs={12}>
-            <FormGroup
+            <SlugInput 
               controlId="slug"
-              validationState={this.getValidationState()}
-            >
-              <ControlLabel>{window.location.origin}/{this.state.contentData.slug}/</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="some-name"
-                value={this.state.contentData.slug}
-                onChange={this.handleSlugChange.bind(this)}
-              />
-              <FormControl.Feedback />
-              <HelpBlock>Validation is based on string length.</HelpBlock>
-            </FormGroup>
+              label="Slug"
+              placeholder="some-name"
+              value={this.state.contentData.slug}
+              titleValue={this.state.contentData.title}
+              onChange={this.updateContentDataState.bind(this)}
+            />
           </Col>
         </Row>
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import AuthService from 'Utils/AuthService';
-import getSlug from 'speakingurl';
 import Helpers from 'Utils/Helpers';
 
 
@@ -53,12 +52,6 @@ export default class ContentType extends React.Component {
     const id = e.target.id;
     const changedData = {};
     changedData[id] = e.target.value;
-
-    // update slug after title change
-    if ( id === 'title' && !this.state.slugOverridden ) {
-      changedData.slug = getSlug(e.target.value);
-    }
-
     this.updateContentDataState(changedData);
   }
 

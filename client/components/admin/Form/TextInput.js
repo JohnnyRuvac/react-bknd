@@ -27,11 +27,8 @@ export default class TextInput extends React.Component {
   }
 
   handleChange(e) {
-    console.log(e.target);
-
     const obj = {};
     obj[this.props.controlId] = e.target.value;
-
     this.props.onChange(obj);
   }
 }
