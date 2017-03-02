@@ -43,7 +43,18 @@ export default class ContentType extends React.Component {
   updateContentDataState(changedData) {
     const contentData = Object.assign({}, this.state.contentData);
     for (const key in changedData) {
-      contentData[key] = changedData[key];
+
+      const isNestedObj = typeof(changedData[key]) === 'object';
+      if (isNestedObj) {
+        const nestedObj = changedData[key];
+        for (const nestedKey in nestedObj) {
+          contentData[key][nestedKey] = nestedObj[nestedKey];
+        }
+
+      } else {
+        contentData[key] = changedData[key];
+      }
+
     }
     this.setState({contentData: contentData});
   }

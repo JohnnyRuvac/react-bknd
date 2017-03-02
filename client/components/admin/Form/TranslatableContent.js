@@ -37,8 +37,8 @@ export default class TranslatableContent extends React.Component {
           <TextEditor
             label="Obsah"
             content={this.props.content}
-            receiver={this.updateContentDataState.bind(this)}
-            contentKey="content"
+            receiver={this.props.onChange.bind(this)}
+            contentKey="text"
           />
         </Tab>
         
@@ -61,8 +61,8 @@ export default class TranslatableContent extends React.Component {
           <TextEditor
             label="Content"
             content={this.props.enContent}
-            receiver={this.updateContentDataState.bind(this)}
-            contentKey="en.content"
+            receiver={this.props.onChange.bind(this)}
+            contentKey="en.text"
           />
         </Tab>
 
