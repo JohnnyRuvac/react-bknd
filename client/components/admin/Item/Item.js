@@ -5,6 +5,7 @@ import TextEditor from '../TextEditor/TextEditor';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { TextInput, SlugInput } from '../Form';
+import { FormGroup, ControlLabel, FormControl, Checkbox } from 'react-bootstrap';
 
 
 export default class Item extends ContentType {
