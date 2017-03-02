@@ -26,6 +26,14 @@ export default class TextEditor extends React.Component {
     this.me = new MediumEditor(this.refs.ta, {
       imageDragging: false,
     });
+
+    // save content on every content change
+    this.me.subscribe('editableInput', () => {
+      const html = this.me.getContent();
+      const obj = {};
+      obj[this.props.contentKey] = html;
+      this.props.receiver(obj);
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {

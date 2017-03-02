@@ -1,5 +1,6 @@
 import React from 'react';
 import { TextInput, SlugInput, TextEditor } from './';
+import { Tabs, Tab } from 'react-bootstrap';
 
 
 export default class TranslatableContent extends React.Component {
@@ -36,7 +37,8 @@ export default class TranslatableContent extends React.Component {
           <TextEditor
             label="Obsah"
             content={this.props.content}
-            ref="te"
+            receiver={this.updateContentDataState.bind(this)}
+            contentKey="content"
           />
         </Tab>
         
@@ -59,7 +61,8 @@ export default class TranslatableContent extends React.Component {
           <TextEditor
             label="Content"
             content={this.props.enContent}
-            ref="EnTe"
+            receiver={this.updateContentDataState.bind(this)}
+            contentKey="en.content"
           />
         </Tab>
 
