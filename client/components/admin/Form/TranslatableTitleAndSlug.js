@@ -1,11 +1,3 @@
-// use this to config:
-// const translatableData = [
-//   {
-//     titleVal: this.state.contentData.title,
-//     slugVal: this.state.contentData.slug,
-//   },
-// ];
-
 import React from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import { TextInput, SlugInput } from './';
@@ -17,8 +9,6 @@ export default class TranslatableTitleAndSlug extends React.Component {
   }
 
   render() {
-    const data = this.props.data;
-
     return (
       <Tabs 
         activeKey={this.state.key} 
@@ -33,15 +23,15 @@ export default class TranslatableTitleAndSlug extends React.Component {
             controlId="title"
             label="Title"
             placeholder="Title"
-            value={data[0].title}
+            value={this.props.titleVal}
             onChange={this.props.onChange.bind(this)}
           />
           <SlugInput 
             controlId="slug"
             label="Slug"
             placeholder="some-name"
-            value={data[0].slug}
-            titleValue={data[0].title}
+            value={this.props.slugVal}
+            titleValue={this.props.titleVal}
             onChange={this.props.onChange.bind(this)}
           />
         </Tab>
@@ -51,15 +41,15 @@ export default class TranslatableTitleAndSlug extends React.Component {
             controlId="title"
             label="Title one"
             placeholder="Title"
-            value={data[0].title}
+            value={this.props.titleVal}
             onChange={this.props.onChange.bind(this)}
           />
           <SlugInput 
             controlId="slug"
             label="Slug one"
             placeholder="some-name"
-            value={data[0].slug}
-            titleValue={data[0].title}
+            value={this.props.slugVal}
+            titleValue={this.props.titleVal}
             onChange={this.props.onChange.bind(this)}
           />
         </Tab>
