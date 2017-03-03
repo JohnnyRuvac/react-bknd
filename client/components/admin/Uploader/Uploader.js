@@ -78,7 +78,7 @@ export default class Uploader extends React.Component {
     });
 
     uploader.on('success', (file, response) => {
-      this.props.onSuccess(response);
+      this.onSuccess(response);
     });
 
     uploader.on('queuecomplete', () => {
@@ -128,15 +128,48 @@ export default class Uploader extends React.Component {
       handle: '.handle',
       onEnd: (e) => {
         this.sortable.sort( this.originalOrder );
-        this.props.onReorderImages(e.oldIndex, e.newIndex);
+        const reordered = Helpers.moveItemInArray(this.props.images, e.oldIndex, e.newIndex);
+        this.props.onChange({
+          images: reordered,
+        });
       }
+    });
+  }
+
+  onSuccess(img) {
+    const images = this.props.images;
+    images.push(img);
+
+    this.props.onChange({
+      images: images,
     });
   }
 
   handleRemove(e) {
     e.preventDefault();
-    const name = e.target.getAttribute('data-src');
-    this.props.onRemovedFile(name);
+    const fileName = e.target.getAttribute('data-src');
+
+    const url = this.props.deleteUrl + fileName;
+    axios.delete(url, 
+      {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem('id_token')
+        },
+      })
+      .then(response => {
+        const images = this.props.images;
+        const index = images.indexOf(response.data);
+        images.splice(index, 1);
+
+        this.props.onChange({
+          images: images,
+        });
+      })
+      .catch(err => {
+        console.log('error deleting');
+        console.log(err);
+      });
+
   }
 
   editImages(e) {
@@ -158,7 +191,7 @@ export default class Uploader extends React.Component {
       }
     )
     .then(response => {
-      this.props.onSuccess(response.data);
+      this.onSuccess(response.data);
       console.log('response');
       console.log(response);
     });

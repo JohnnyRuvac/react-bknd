@@ -56,10 +56,9 @@ export default class ImageTest extends ContentType {
         <Row>
           <Col xs={12}>
             <Uploader 
-              onSuccess={this.onSuccess.bind(this)}
-              onRemovedFile={this.onRemovedFile.bind(this)}
-              onReorderImages={this.onReorderImages.bind(this)}
               images={this.state.contentData.images}
+              onChange={this.updateContentDataState.bind(this)}
+              deleteUrl={this.serverUrl + '/upload/delete/'}
             />
           </Col>
         </Row>
@@ -78,47 +77,7 @@ export default class ImageTest extends ContentType {
     );
   }
 
-  onSuccess(file) {
-    const images = this.state.contentData.images;
-    images.push(file);
-
-    this.updateContentDataState({
-      images: images,
-    });
-  }
-
-  onRemovedFile(file) {
-    const url = this.serverUrl + '/upload/delete/' + file;
-    axios.delete(url, 
-      {
-        headers: {
-          "Authorization": "Bearer " + localStorage.getItem('id_token')
-        },
-      })
-      .then(response => {
-        const images = this.state.contentData.images;
-        const index = images.indexOf(response.data);
-        images.splice(index, 1);
-
-        this.updateContentDataState({
-          images: images,
-        });
-      })
-      .catch(err => {
-        console.log('error deleting :/');
-        console.log(err);
-      });
-
-  }
-
-  onReorderImages(fromIndex, toIndex) {
-    const images = this.state.contentData.images;
-    const reordered = Helpers.moveItemInArray(images, fromIndex, toIndex);
-
-    this.updateContentDataState({
-      images: reordered,
-    });
-  }
+  
 
   getValidationState() {
     return null;
