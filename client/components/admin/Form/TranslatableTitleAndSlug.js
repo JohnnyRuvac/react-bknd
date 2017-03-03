@@ -38,14 +38,14 @@ export default class TranslatableTitleAndSlug extends React.Component {
         
         <Tab eventKey={2} title="Tab 2">
           <TextInput
-            controlId="title"
+            controlId="en-title"
             label="Title one"
             placeholder="Title"
             value={this.props.titleVal}
             onChange={this.props.onChange.bind(this)}
           />
           <SlugInput 
-            controlId="slug"
+            controlId="en-slug"
             label="Slug one"
             placeholder="some-name"
             value={this.props.slugVal}

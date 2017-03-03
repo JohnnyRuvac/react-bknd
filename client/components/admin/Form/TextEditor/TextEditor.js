@@ -30,21 +30,8 @@ export default class TextEditor extends React.Component {
     // save content on every content change
     this.me.subscribe('blur', () => {
       const html = this.me.getContent();
-      const obj = {};
-
-      // small hack to store english content that is nested
-      const isNestedObject = this.props.contentKey.indexOf('.') > -1;
-      if (isNestedObject) {
-        const ojb2 = {};
-        const key1 = this.props.contentKey.split('.')[0];
-        const key2 = this.props.contentKey.split('.')[1];
-        ojb2[key2] = html;
-        obj[key1] = ojb2;
-      } else {
-        obj[this.props.contentKey] = html;
-      }
-
-      this.props.receiver(obj);
+      const obj = Helpers.getChangedData( this.props.controlId, html );
+      this.props.onChange(obj);
     });
   }
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import TextInput from './TextInput';
 import getSlug from 'speakingurl';
+import Helpers from 'Utils/Helpers';
 
 
 export default class SlugInput extends React.Component {
@@ -31,8 +32,7 @@ export default class SlugInput extends React.Component {
   }
 
   updateSlug(slug) {
-    const obj = {};
-    obj[this.props.controlId] = slug;
+    const obj = Helpers.getChangedData( this.props.controlId, slug );
     this.props.onChange(obj);
   }
 

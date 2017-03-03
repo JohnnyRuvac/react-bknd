@@ -35,23 +35,24 @@ export default class TranslatableContent extends React.Component {
             onChange={this.props.onChange.bind(this)}
           />
           <TextEditor
+            controlId="text"
             label="Obsah"
             content={this.props.content}
-            receiver={this.props.onChange.bind(this)}
+            onChange={this.props.onChange.bind(this)}
             contentKey="text"
           />
         </Tab>
         
         <Tab eventKey={2} title="EN">
           <TextInput
-            controlId="enTitle"
+            controlId="en-title"
             label="Title"
             placeholder="Title"
             value={this.props.enTitleVal}
             onChange={this.props.onChange.bind(this)}
           />
           <SlugInput 
-            controlId="enSlug"
+            controlId="en-slug"
             label="Slug EN"
             placeholder="some-name"
             value={this.props.enSlugVal}
@@ -59,9 +60,10 @@ export default class TranslatableContent extends React.Component {
             onChange={this.props.onChange.bind(this)}
           />
           <TextEditor
+            controlId="en-text"
             label="Content"
             content={this.props.enContent}
-            receiver={this.props.onChange.bind(this)}
+            onChange={this.props.onChange.bind(this)}
             contentKey="en.text"
           />
         </Tab>

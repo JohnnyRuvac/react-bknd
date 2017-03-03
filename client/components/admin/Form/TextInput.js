@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import Helpers from 'Utils/Helpers';
 
 
 export default class TextInput extends React.Component {
@@ -27,8 +28,7 @@ export default class TextInput extends React.Component {
   }
 
   handleChange(e) {
-    const obj = {};
-    obj[this.props.controlId] = e.target.value;
+    const obj = Helpers.getChangedData( this.props.controlId, e.target.value );
     this.props.onChange(obj);
   }
 }

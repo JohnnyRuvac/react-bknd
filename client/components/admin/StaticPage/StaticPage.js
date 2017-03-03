@@ -52,7 +52,7 @@ export default class StaticPage extends ContentType {
             <TextEditor
               label="Content"
               content={this.state.contentData.content}
-              receiver={this.updateContentDataState.bind(this)}
+              onChange={this.updateContentDataState.bind(this)}
               contentKey="content"
             />
           </Col>
