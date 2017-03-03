@@ -17,6 +17,10 @@ export default class Uploader extends React.Component {
 
   render() {
     Dropzone.autoDiscover = false;
+    let urlStart = this.serverUrl + '/uploads/';
+    if (this.props.folder) {
+      urlStart += this.props.folder + '/';
+    }
 
     return (
       <div className={(this.state.draggedover) ? 'uploader-wrapper draggedover' : 'uploader-wrapper'}>
@@ -43,7 +47,7 @@ export default class Uploader extends React.Component {
               data-id={index}
             >
               <a href="" className="handle"></a>
-              <img src={this.serverUrl + '/uploads/' + src} alt=""/>
+              <img src={urlStart + src} alt=""/>
               <Button 
                 onClick={this.handleRemove.bind(this)}
                 data-src={src}
