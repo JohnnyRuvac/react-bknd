@@ -4,19 +4,22 @@ import path from 'path';
 import multer from 'multer';
 
 
+const checkFolder = (folderPath) => {
+  fs.stat(folderPath, (err, stats) => {
+    if (err) {
+      if (err.code === 'ENOENT') {
+        fs.mkdir(folderPath);
+      } else {
+        console.log('error:');
+        console.log(err);
+      }
+    }
+  });
+}
+
 // make sure that upload folder exists
 const uploadPath = path.resolve(__dirname, '../../dist/uploads');
-
-fs.stat(uploadPath, (err, stats) => {
-  if (err) {
-    if (err.code === 'ENOENT') {
-      fs.mkdir(uploadPath);
-    } else {
-      console.log('error:');
-      console.log(err);
-    }
-  }
-});
+checkFolder(uploadPath);
 
 const getUniqueFilename = (originalName, tryName, attemptIndex, cb) => {
   const url = path.resolve(uploadPath, tryName);
@@ -41,7 +44,9 @@ const getUniqueFilename = (originalName, tryName, attemptIndex, cb) => {
 // define storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, uploadPath);
+    const newPath = path.resolve(uploadPath, req.params.folder);
+    checkFolder(newPath);
+    cb(null, newPath);
   },
   filename: (req, file, cb) => {
     // get unique and call back
@@ -63,7 +68,7 @@ const uploadRoute = (jwtCheck) => {
   const router = express.Router();
 
   router
-    .route('/')
+    .route('/:folder')
     .post(jwtCheck, (req, res) => {
       upload(req, res, (err) => {
         if (err) {

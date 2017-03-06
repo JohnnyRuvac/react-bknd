@@ -5,6 +5,7 @@ import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { TextInput, SlugInput, TextEditor } from '../Form';
 import { FormGroup, ControlLabel, FormControl, Checkbox } from 'react-bootstrap';
+import Uploader from '../Uploader/Uploader';
 
 
 export default class Item extends ContentType {
@@ -14,6 +15,7 @@ export default class Item extends ContentType {
       slug: '',
       content: '',
       categorySlug: (this.props.params.categorySlug) ? [this.props.params.categorySlug] : [],
+      images: [],
     },
     allCategories: [],
   };
@@ -77,6 +79,17 @@ export default class Item extends ContentType {
                 </Checkbox>
               )}
             </FormGroup>
+          </Col>
+        </Row>
+
+        <Row>
+          <Col xs={12}>
+            <Uploader 
+              images={this.state.contentData.images}
+              onChange={this.updateContentDataState.bind(this)}
+              folder="folder"
+              deleteUrl={this.serverUrl + '/upload/delete/'}
+            />
           </Col>
         </Row>
 

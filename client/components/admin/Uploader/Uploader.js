@@ -72,7 +72,7 @@ export default class Uploader extends React.Component {
   componentDidMount() {
     // dropzone uploader
     const uploader = new Dropzone('.uploader', {
-      url: this.serverUrl + '/upload',
+      url: this.serverUrl + '/upload/' + this.props.folder,
       headers: {
         "Authorization": "Bearer " + localStorage.getItem('id_token')
       },
@@ -153,7 +153,7 @@ export default class Uploader extends React.Component {
     e.preventDefault();
     const fileName = e.target.getAttribute('data-src');
 
-    const url = this.props.deleteUrl + fileName;
+    const url = this.props.deleteUrl + this.props.folder + '/' + fileName;
     axios.delete(url, 
       {
         headers: {
@@ -184,7 +184,7 @@ export default class Uploader extends React.Component {
   }
 
   submitMobilePhotos() {
-    const url = this.serverUrl + '/upload';
+    const url = this.serverUrl + '/upload/' + this.props.folder;
     const data = new FormData(this.refs.mobileUploadForm);
 
     axios.post(url, data,
