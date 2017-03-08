@@ -169,6 +169,11 @@ export default class Item extends ContentType {
   }
 
   handleRemove() {
+    const confirm = window.confirm('Delete ' + this.state.contentData.title + '?');
+    if (!confirm) {
+      return;
+    }
+
     const slug = this.state.contentData.slug;
     const deleteUrl = this.serverUrl + '/api/items/' + slug;
 
