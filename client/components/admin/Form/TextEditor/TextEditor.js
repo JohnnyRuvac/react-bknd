@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './styles.sass';
 import axios from 'axios';
 import Helpers from 'Utils/Helpers';
-import { FormGroup, ControlLabel, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, HelpBlock, Checkbox, Panel } from 'react-bootstrap';
 import MediumEditor from 'medium-editor';
 import mestyles from 'medium-editor/dist/css/medium-editor.css';
 import metheme from 'medium-editor/dist/css/themes/default.css';
@@ -14,10 +14,13 @@ export default class TextEditor extends React.Component {
   };
 
   render() {
+    const label = <ControlLabel>{this.props.label}</ControlLabel>;
+
     return (
-      <FormGroup controlId="content">
-        <ControlLabel>{this.props.label}</ControlLabel>
-        <textarea ref="ta"></textarea>
+      <FormGroup controlId="content" className="text-editor">
+        <Panel header={label}>
+          <textarea ref="ta"></textarea>
+        </Panel>
       </FormGroup>
     );
   }
