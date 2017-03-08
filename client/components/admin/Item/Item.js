@@ -6,7 +6,8 @@ import { browserHistory } from 'react-router';
 import { TextInput, SlugInput, TextEditor } from '../Form';
 import { FormGroup, ControlLabel, FormControl, Checkbox } from 'react-bootstrap';
 import Uploader from '../Uploader/Uploader';
-import styles from './Item.sass';
+import styles from '../adminStyles.sass';
+import AdminHead from '../AdminHead/AdminHead';
 
 
 export default class Item extends ContentType {
@@ -26,33 +27,13 @@ export default class Item extends ContentType {
 
     return (
       <Grid className="admin-item">
-        <Row className="underlined">
-          <Col sm={8} smOffset={2}>
-
-            <Row>
-              <Col xs={6}>
-                <h3>{title}</h3>
-              </Col>
-
-              <Col xs={6} className="clearfix">
-                <Button bsStyle="success"
-                  bsSize="small" 
-                  onClick={this.save.bind(this)}
-                >Save
-                </Button>
-
-                <Button 
-                  onClick={this.handleRemove.bind(this)}
-                  className="delete"
-                  bsStyle="link"
-                  bsSize="small" 
-                >Delete
-                </Button>
-              </Col>
-            </Row>
-
-          </Col>
-        </Row>
+        <AdminHead
+          title={title}
+          onSave={this.save.bind(this)}
+          onRemove={this.handleRemove.bind(this)}
+          saveText="Save"
+          deleteText="Delete"
+        />
 
         <Row className="underlined">
           <Col sm={8} smOffset={2}>

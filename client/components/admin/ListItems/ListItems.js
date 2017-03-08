@@ -26,7 +26,7 @@ export default class ListItems extends React.Component {
     return (
       <Grid className="list-items">
         <Row>
-          <Col sm={10} smOffset={1} className="head">
+          <Col sm={8} smOffset={2} className="head">
             <h3 className="title">{this.props.title || this.props.route.title}</h3>
             <Link to={addLink}>
               <Button className="add" bsStyle="success" bsSize="small">Add</Button>
@@ -35,7 +35,7 @@ export default class ListItems extends React.Component {
         </Row>
         
         <Row>
-          <Col sm={10} smOffset={1}>
+          <Col sm={8} smOffset={2}>
             <SortableList
               items={this.state.items}
               handleRemove={this.deleteItem.bind(this)}

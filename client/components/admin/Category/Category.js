@@ -5,6 +5,7 @@ import { Grid, Col, Row, Button } from 'react-bootstrap';
 import { TextInput, SlugInput } from '../Form';
 import ItemsInCategory from './ItemsInCategory';
 import styles from './Category.sass';
+import AdminHead from '../AdminHead/AdminHead';
 
 
 export default class Category extends ContentType {
@@ -25,27 +26,22 @@ export default class Category extends ContentType {
           slug="items"
           categorySlug={this.props.params.slug}
           addLink={'/admin/items/' + this.state.contentData.slug + '/add'}
-          title="Items in this category"
+          title="In this category"
         />
     }
 
     return (
-      <Grid>
-        <Row className="category-head">
-          <h2 className="col-xs-9">{this.props.route.title}</h2>
-          <Col xs={3}>
-            <Button bsStyle="success" 
-              bsSize="small" 
-              type="submit"
-              onClick={this.save.bind(this)}
-            >
-              Save
-            </Button>
-          </Col>
-        </Row>
+      <Grid className="admin-item">
+        <AdminHead
+          title={this.props.route.title}
+          onSave={this.save.bind(this)}
+          onRemove={this.handleRemove.bind(this)}
+          saveText="Save"
+          deleteText="Delete"
+        />
         
-        <Row>
-          <Col xs={12}>
+        <Row className="underlined">
+          <Col sm={8} smOffset={2}>
             <TextInput 
               controlId="title"
               label="Title"
@@ -53,11 +49,7 @@ export default class Category extends ContentType {
               value={this.state.contentData.title}
               onChange={this.updateContentDataState.bind(this)}
             />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={12}>
+            
             <SlugInput 
               controlId="slug"
               label="Slug"
@@ -69,10 +61,8 @@ export default class Category extends ContentType {
           </Col>
         </Row>
 
-        <Row>
-          <Col xs={12}>
-            {itemsInThisCategory}
-          </Col>
+        <Row className="underlined in-category">
+          {itemsInThisCategory}
         </Row>
       </Grid>
     );
@@ -80,5 +70,9 @@ export default class Category extends ContentType {
 
   getValidationState() {
     return null;
+  }
+
+  handleRemove() {
+    console.log('neni');
   }
 }

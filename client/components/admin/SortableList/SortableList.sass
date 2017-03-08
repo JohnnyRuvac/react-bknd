@@ -10,12 +10,13 @@
 .sortable-list
   list-style: none
   padding: 0
-  border-top: 1px solid $lightGrey
   border-bottom: 1px solid $lightGrey
 
   .list-item
     position: relative
     border-bottom: 1px solid $lightGrey
+    &:first-child
+      border-top: none
     &:last-child
       border-bottom: none
 
