@@ -156,6 +156,12 @@ export default class Item extends ContentType {
       return;
     }
 
+    // for new items, just go back
+    if (!this.isEditing) {
+      browserHistory.goBack();
+      return;
+    }
+
     const slug = this.state.contentData.slug;
     const deleteUrl = this.serverUrl + '/api/items/' + slug;
 
