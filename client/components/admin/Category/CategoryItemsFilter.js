@@ -24,11 +24,11 @@ export default class CategoryItemsFilter extends React.Component {
         <Row>
           <Col sm={8} smOffset={2} className="head">
             <Row>
-              <Col sm={7}>
+              <Col sm={6}>
                 <h3 className="title">{this.props.title || this.props.route.title}</h3>
               </Col>
 
-              <Col xs={10} sm={4} className="category-select">
+              <Col xs={9} sm={4} className="category-select">
                 <FormControl 
                   componentClass="select" 
                   placeholder="select"
@@ -42,7 +42,7 @@ export default class CategoryItemsFilter extends React.Component {
                 </FormControl>
               </Col>
 
-              <Col xs={2} sm={1}>
+              <Col xs={3} sm={2}>
                 <Link className="add-link" to="/admin/items/add">
                   <Button className="add" bsStyle="success" bsSize="small">Add</Button>
                 </Link>
