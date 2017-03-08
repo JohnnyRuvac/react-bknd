@@ -105,7 +105,8 @@ export default class Item extends ContentType {
 
         <Row className="underlined">
           <Col sm={8} smOffset={2}>
-            <Uploader 
+            <Uploader
+              title="Photos" 
               images={this.state.contentData.images}
               onChange={this.updateContentDataState.bind(this)}
               folder="folder"

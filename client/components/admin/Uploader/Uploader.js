@@ -22,12 +22,13 @@ export default class Uploader extends React.Component {
       urlStart += this.props.folder + '/';
     }
 
-    const containerClasses = (this.state.draggedover || this.props.images.length === 0) ?
+    const containerClasses = 
+      (this.state.draggedover || this.props.images.length === 0) ?
       'uploader-wrapper draggedover' : 'uploader-wrapper';
 
     return (
       <div className={containerClasses}>
-        <h3 className="images-headline">Images</h3>
+        <h3 className="images-headline">{this.props.title}</h3>
         <span className="mobile-upload btn btn-sm btn-success">
           Add
           <form encType="multipart/form-data" ref="mobileUploadForm">
