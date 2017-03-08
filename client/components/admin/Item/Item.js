@@ -6,6 +6,7 @@ import { browserHistory } from 'react-router';
 import { TextInput, SlugInput, TextEditor } from '../Form';
 import { FormGroup, ControlLabel, FormControl, Checkbox } from 'react-bootstrap';
 import Uploader from '../Uploader/Uploader';
+import styles from './Item.sass';
 
 
 export default class Item extends ContentType {
@@ -21,16 +22,40 @@ export default class Item extends ContentType {
   };
   
   render() {
+    const title = this.state.contentData.title || "New Item";
+
     return (
-      <Grid className="static-page">
-        <Row>
-          <Col xs={9}>
-            <h3>{this.props.route.title}</h3>
+      <Grid className="admin-item">
+        <Row className="underlined">
+          <Col sm={8} smOffset={2}>
+
+            <Row>
+              <Col xs={6}>
+                <h3>{title}</h3>
+              </Col>
+
+              <Col xs={6} className="clearfix">
+                <Button bsStyle="success"
+                  bsSize="small" 
+                  onClick={this.save.bind(this)}
+                >Save
+                </Button>
+
+                <Button 
+                  onClick={this.handleRemove.bind(this)}
+                  className="delete"
+                  bsStyle="link"
+                  bsSize="small" 
+                >Delete
+                </Button>
+              </Col>
+            </Row>
+
           </Col>
         </Row>
 
-        <Row>
-          <Col xs={12}>
+        <Row className="underlined">
+          <Col sm={8} smOffset={2}>
             <TextInput 
               controlId="title"
               label="Title"
@@ -39,10 +64,8 @@ export default class Item extends ContentType {
               onChange={this.updateContentDataState.bind(this)}
             />
           </Col>
-        </Row>
-
-        <Row>
-          <Col xs={12}>
+          
+          <Col sm={8} smOffset={2}>
             <SlugInput 
               controlId="slug"
               label="Slug"
@@ -52,10 +75,8 @@ export default class Item extends ContentType {
               onChange={this.updateContentDataState.bind(this)}
             />
           </Col>
-        </Row>
 
-        <Row>
-          <Col xs={12}>
+          <Col sm={8} smOffset={2}>
             <TextEditor
               label="Content"
               content={this.state.contentData.content}
@@ -65,10 +86,10 @@ export default class Item extends ContentType {
           </Col>
         </Row>
 
-        <Row>
-          <Col xs={12}>
+        <Row className="underlined">
+          <Col sm={8} smOffset={2}>
             <FormGroup controlId="categories">
-              <ControlLabel>Categories:</ControlLabel>
+              <h3>Categories</h3>
               {this.state.allCategories.map( (cat, index) => 
                 <Checkbox
                   key={index}
@@ -82,34 +103,14 @@ export default class Item extends ContentType {
           </Col>
         </Row>
 
-        <Row>
-          <Col xs={12}>
+        <Row className="underlined">
+          <Col sm={8} smOffset={2}>
             <Uploader 
               images={this.state.contentData.images}
               onChange={this.updateContentDataState.bind(this)}
               folder="folder"
               deleteUrl={this.serverUrl + '/upload/delete/'}
             />
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={3}>
-            <Button bsStyle="success"
-              bsSize="small" 
-              onClick={this.save.bind(this)}
-            >
-              Save
-            </Button>
-          </Col>
-          <Col xs={3}>
-            <Button 
-              onClick={this.handleRemove.bind(this)}
-              className="delete"
-              bsStyle="danger"
-              bsSize="small" 
-            >Delete
-            </Button>
           </Col>
         </Row>
       </Grid>
