@@ -6,16 +6,17 @@ import { TextInput, SlugInput } from '../Form';
 import ItemsInCategory from './ItemsInCategory';
 import styles from './Category.sass';
 import AdminHead from '../AdminHead/AdminHead';
+import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 
 export default class Category extends ContentType {
-  constructor(props) {
-    super(props);
-    this.state.contentData = {
+  state = {
+    contentData: {
       title: '',
       slug: '',
-    };
-  }
+    }
+  };
 
   render() {
     let itemsInThisCategory = null;
@@ -49,7 +50,7 @@ export default class Category extends ContentType {
               value={this.state.contentData.title}
               onChange={this.updateContentDataState.bind(this)}
             />
-            
+
             <SlugInput 
               controlId="slug"
               label="Slug"
@@ -73,6 +74,25 @@ export default class Category extends ContentType {
   }
 
   handleRemove() {
-    console.log('neni');
+    if (!this.isEditing) {
+      browserHistory.goBack();
+      return;
+    }
+
+    const deleteUrl = this.serverUrl + '/api/categories/' + this.originalSlug;
+    axios
+      .delete( deleteUrl, { 
+        headers: { 
+          Authorization: 'Bearer ' + localStorage.getItem('id_token') 
+        }
+      })
+      .then(res => {
+        browserHistory.goBack();
+      })
+      .catch(err => {
+        console.log(this.state.slug + ' delete error: ');
+        console.log(err);
+      });
   }
+
 }
