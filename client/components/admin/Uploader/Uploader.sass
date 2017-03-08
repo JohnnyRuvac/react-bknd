@@ -3,6 +3,7 @@
 
 .uploader-wrapper
   position: relative
+  min-height: 210px
 
 .images-headline
   display: inline-block
@@ -60,14 +61,16 @@
 
 .desktop-uploader
   position: absolute
-  top: 56px
+  top: 36px
   left: 0
   width: 100%
   height: calc(100% - 56px)
   z-index: -1
   display: none
-  .dz-success
+  background: $white url('plus.svg') no-repeat 50% 50%
+  .dz-success, .dz-message
     display: none !important
+
 
 .draggedover .desktop-uploader
   z-index: 1
