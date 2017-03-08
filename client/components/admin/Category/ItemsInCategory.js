@@ -5,6 +5,11 @@ import axios from 'axios';
 
 export default class ItemsInCategory extends ListItems {
   deleteItem(slug) {
+    const confirm = window.confirm('Move this item to uncategorized?');
+
+    if (!confirm) {
+      return;
+    }
 
     const url = this.serverUrl + '/api/categories/removeFromCategory/' + this.props.categorySlug + '/' + slug;    
     axios
