@@ -6,11 +6,16 @@ import { Link } from 'react-router';
 export default class FilteredCategoryItem extends React.Component {
   render() {
     return (
-      <Row className="list-item">
-        <Col xs={6} className="item-cell">
+      <tr>
+        <td>
+          <p>{this.props.index}</p>
+        </td>
+        
+        <td>
           <Link to={'/admin/items/edit/' + this.props.slug}>{this.props.title}</Link>
-        </Col>
-        <Col xs={6} className="link-cell">
+        </td>
+        
+        <td>
           {this.props.categorySlug.map( (item, index) => {
             
             if (item !== '_uncategorized') {
@@ -27,8 +32,8 @@ export default class FilteredCategoryItem extends React.Component {
             }
 
           })}
-        </Col>
-      </Row>
+        </td>
+      </tr>
     );
   }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Helpers from 'Utils/Helpers';
 import { Link } from 'react-router';
-import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Table } from 'react-bootstrap';
 import styles from './ItemsInCategory.sass';
 import FilteredCategoryItem from './FilteredCategoryItem';
 
@@ -20,15 +20,15 @@ export default class CategoryItemsFilter extends React.Component {
     const selected = this.state.selectedCategory;
 
     return (
-      <Grid>
+      <Grid className="category-items-filter">
         <Row>
-          <Col sm={12} className="head">
+          <Col sm={8} smOffset={2} className="head">
             <Row>
-              <Col xs={7}>
+              <Col sm={7}>
                 <h3 className="title">{this.props.title || this.props.route.title}</h3>
               </Col>
 
-              <Col xs={4} className="category-select">
+              <Col xs={10} sm={4} className="category-select">
                 <FormControl 
                   componentClass="select" 
                   placeholder="select"
@@ -42,8 +42,8 @@ export default class CategoryItemsFilter extends React.Component {
                 </FormControl>
               </Col>
 
-              <Col xs={1}>
-                <Link to="/admin/items/add">
+              <Col xs={2} sm={1}>
+                <Link className="add-link" to="/admin/items/add">
                   <Button className="add" bsStyle="success" bsSize="small">Add</Button>
                 </Link>
               </Col>
@@ -51,25 +51,33 @@ export default class CategoryItemsFilter extends React.Component {
           </Col>
         </Row>
         
-        <Row className="table-head">
-          <Col xs={6} className="item-cell">
-            <h4>Item</h4>
-          </Col>
-          <Col xs={6} className="link-cell">
-            <h4>Category</h4>
+        <Row>
+          <Col sm={8} smOffset={2} className="head">
+            <Table striped bordered condensed hover>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Category</th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.items
+                  .filter( item => selected === 'all' || selected.indexOf(item.categorySlug) > -1 )
+                  .map( (item,index) => 
+                    <FilteredCategoryItem 
+                      key={index}
+                      index={index + 1}
+                      title={item.title}
+                      slug={item.slug}
+                      categorySlug={item.categorySlug}
+                    />
+                  )
+                }
+              </tbody>
+            </Table>
           </Col>
         </Row>
-        {this.state.items
-          .filter( item => selected === 'all' || selected.indexOf(item.categorySlug) > -1 )
-          .map( (item,index) => 
-            <FilteredCategoryItem 
-              key={index}
-              title={item.title}
-              slug={item.slug}
-              categorySlug={item.categorySlug}
-            />
-          )
-        }
         
       </Grid>
     );
