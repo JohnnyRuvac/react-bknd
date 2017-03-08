@@ -24,7 +24,7 @@ export default class ListItems extends React.Component {
         ('/admin/' + this.state.slug + '/add');
 
     return (
-      <Grid className="static-page">
+      <Grid className="list-items">
         <Row>
           <Col sm={10} smOffset={1} className="head">
             <h3 className="title">{this.props.title || this.props.route.title}</h3>
