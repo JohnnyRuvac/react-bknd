@@ -1,19 +1,22 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
 import { Link } from 'react-router';
-import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
+import { Grid, Col, Row, Button } from 'react-bootstrap';
+import { TextInput, SlugInput } from '../Form';
 import ItemsInCategory from './ItemsInCategory';
 import styles from './Category.sass';
+import AdminHead from '../AdminHead/AdminHead';
+import axios from 'axios';
+import { browserHistory } from 'react-router';
 
 
 export default class Category extends ContentType {
-  constructor(props) {
-    super(props);
-    this.state.contentData = {
+  state = {
+    contentData: {
       title: '',
       slug: '',
-    };
-  }
+    }
+  };
 
   render() {
     let itemsInThisCategory = null;
@@ -24,67 +27,43 @@ export default class Category extends ContentType {
           slug="items"
           categorySlug={this.props.params.slug}
           addLink={'/admin/items/' + this.state.contentData.slug + '/add'}
-          title="Items in this category"
+          title="In this category"
         />
     }
 
     return (
-      <Grid>
-        <Row className="category-head">
-          <h2 className="col-xs-9">{this.props.route.title}</h2>
-          <Col xs={3}>
-            <Button bsStyle="success" 
-              bsSize="small" 
-              type="submit"
-              onClick={this.save.bind(this)}
-            >
-              Save
-            </Button>
-          </Col>
-        </Row>
+      <Grid className="admin-item">
+        <AdminHead
+          title={this.props.route.title}
+          onSave={this.save.bind(this)}
+          onRemove={this.handleRemove.bind(this)}
+          saveText="Save"
+          deleteText="Delete"
+        />
         
-        <Row>
-          <Col xs={12}>
-            <FormGroup
+        <Row className="underlined">
+          <Col sm={8} smOffset={2}>
+            <TextInput 
               controlId="title"
-              validationState={this.getValidationState()}
-            >
-              <ControlLabel>Title</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="Title"
-                value={this.state.contentData.title}
-                onChange={this.handleChange.bind(this)}
-              />
-              <FormControl.Feedback />
-              <HelpBlock>Validation is based on string length.</HelpBlock>
-            </FormGroup>
-          </Col>
-        </Row>
+              label="Title"
+              placeholder="Title"
+              value={this.state.contentData.title}
+              onChange={this.updateContentDataState.bind(this)}
+            />
 
-        <Row>
-          <Col xs={12}>
-            <FormGroup
+            <SlugInput 
               controlId="slug"
-              validationState={this.getValidationState()}
-            >
-              <ControlLabel>{window.location.origin}/{this.state.contentData.slug}/</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="some-name"
-                value={this.state.contentData.slug}
-                onChange={this.handleSlugChange.bind(this)}
-              />
-              <FormControl.Feedback />
-              <HelpBlock>Validation is based on string length.</HelpBlock>
-            </FormGroup>
+              label="Slug"
+              placeholder="some-name"
+              value={this.state.contentData.slug}
+              titleValue={this.state.contentData.title}
+              onChange={this.updateContentDataState.bind(this)}
+            />
           </Col>
         </Row>
 
-        <Row>
-          <Col xs={12}>
-            {itemsInThisCategory}
-          </Col>
+        <Row className="underlined in-category">
+          {itemsInThisCategory}
         </Row>
       </Grid>
     );
@@ -93,4 +72,27 @@ export default class Category extends ContentType {
   getValidationState() {
     return null;
   }
+
+  handleRemove() {
+    if (!this.isEditing) {
+      browserHistory.goBack();
+      return;
+    }
+
+    const deleteUrl = this.serverUrl + '/api/categories/' + this.originalSlug;
+    axios
+      .delete( deleteUrl, { 
+        headers: { 
+          Authorization: 'Bearer ' + localStorage.getItem('id_token') 
+        }
+      })
+      .then(res => {
+        browserHistory.goBack();
+      })
+      .catch(err => {
+        console.log(this.state.slug + ' delete error: ');
+        console.log(err);
+      });
+  }
+
 }

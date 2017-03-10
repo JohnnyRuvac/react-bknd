@@ -1,6 +1,9 @@
 import path from 'path';
 import webpack from 'webpack';
 import envHelper from './utils/envHelper';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
 const isProduction = process.argv.indexOf('-p') !== -1;
 const parsedEnvs = envHelper('./.env');
 
@@ -31,7 +34,14 @@ let plugins = [
       'NODE_ENV': (isProduction) ? '"production"' : '""',
       ...parsedEnvs
     }
-  })
+  }),
+  new HtmlWebpackPlugin({
+    title: 'React BKND',
+    template: 'index.html',
+    filename: '../index.html',
+    alwaysWriteToDisk: true,
+  }),
+  new HtmlWebpackHarddiskPlugin(),
 ];
 
 if (!isProduction) {
@@ -40,10 +50,46 @@ if (!isProduction) {
     new webpack.NamedModulesPlugin(),
     ...plugins,
   ];
+} else {
+  plugins = [
+    new ExtractTextPlugin({
+      filename: 'style.css',
+      allChunks: true
+    }),
+    ...plugins,
+  ]
+}
+
+const sassProdConfig = {
+  test: /\.(sass|scss|css)$/,
+  use: ExtractTextPlugin.extract({
+    fallback: 'style-loader', 
+    use: [
+      {
+        loader: 'css-loader',
+        options: {
+          // modules: true,
+          // localIdentName: '[path][name]__[local]--[hash:base64:5]',
+        },
+      },
+      'postcss-loader',
+      'sass-loader',
+    ],
+  }),
+};
+
+const sassDevConfig = {
+  test: /\.(sass|scss|css)$/,
+  use: [
+    'style-loader',
+    'css-loader?importLoaders=1',
+    'postcss-loader',
+    'sass-loader'
+  ],
 }
 
 
-module.exports = {
+const config = {
   context: path.resolve(__dirname, 'client'),
   
   devtool: (isProduction) ? false : 'source-map',
@@ -82,19 +128,6 @@ module.exports = {
         }],
       },
       {
-        test: /\.(sass|scss)$/,
-        use: [
-          'style-loader',
-          'css-loader?importLoaders=1',
-          'postcss-loader',
-          'sass-loader'
-        ],
-      },
-      {
-        test: /\.(css)$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
         test: /\.(jpe?g|png|gif)$/i,
         loaders: ['file-loader?context=src/images&name=images/[path][name].[ext]', {
           loader: 'image-webpack-loader',
@@ -127,3 +160,8 @@ module.exports = {
   plugins: plugins,
 
 };
+
+const sassConfig = (isProduction) ? sassProdConfig : sassDevConfig;
+config.module.rules.push(sassConfig);
+
+module.exports = config;

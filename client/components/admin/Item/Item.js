@@ -1,9 +1,13 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
-import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock, Checkbox } from 'react-bootstrap';
-import TextEditor from '../TextEditor/TextEditor';
+import { Grid, Col, Row, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { browserHistory } from 'react-router';
+import { TextInput, SlugInput, TextEditor } from '../Form';
+import { FormGroup, ControlLabel, FormControl, Checkbox } from 'react-bootstrap';
+import Uploader from '../Uploader/Uploader';
+import styles from '../adminStyles.sass';
+import AdminHead from '../AdminHead/AdminHead';
 
 
 export default class Item extends ContentType {
@@ -13,73 +17,60 @@ export default class Item extends ContentType {
       slug: '',
       content: '',
       categorySlug: (this.props.params.categorySlug) ? [this.props.params.categorySlug] : [],
+      images: [],
     },
     allCategories: [],
   };
   
   render() {
+    const title = this.state.contentData.title || "New Item";
+
     return (
-      <Grid className="static-page">
-        <Row>
-          <Col xs={9}>
-            <h3>{this.props.route.title}</h3>
-          </Col>
-        </Row>
+      <Grid className="admin-item">
+        <AdminHead
+          title={title}
+          onSave={this.save.bind(this)}
+          onRemove={this.handleRemove.bind(this)}
+          saveText="Save"
+          deleteText="Delete"
+        />
 
-        <Row>
-          <Col xs={12}>
-            <FormGroup
+        <Row className="underlined">
+          <Col sm={8} smOffset={2}>
+            <TextInput 
               controlId="title"
-              validationState={this.getValidationState()}
-            >
-              <ControlLabel>Title</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="Title"
-                value={this.state.contentData.title}
-                onChange={this.handleChange.bind(this)}
-              />
-              <FormControl.Feedback />
-              <HelpBlock>Validation is based on string length.</HelpBlock>
-            </FormGroup>
+              label="Title"
+              placeholder="Title"
+              value={this.state.contentData.title}
+              onChange={this.updateContentDataState.bind(this)}
+            />
           </Col>
-        </Row>
-
-        <Row>
-          <Col xs={12}>
-            <FormGroup
+          
+          <Col sm={8} smOffset={2}>
+            <SlugInput 
               controlId="slug"
-              validationState={this.getValidationState()}
-            >
-              <ControlLabel>{window.location.origin}/pages/</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="some-name"
-                value={this.state.contentData.slug}
-                onChange={this.handleSlugChange.bind(this)}
-              />
-              <FormControl.Feedback />
-              <HelpBlock>Validation is based on string length.</HelpBlock>
-            </FormGroup>
+              label="Slug"
+              placeholder="some-name"
+              value={this.state.contentData.slug}
+              titleValue={this.state.contentData.title}
+              onChange={this.updateContentDataState.bind(this)}
+            />
+          </Col>
+
+          <Col sm={8} smOffset={2}>
+            <TextEditor
+              label="Content"
+              content={this.state.contentData.content}
+              receiver={this.updateContentDataState.bind(this)}
+              contentKey="content"
+            />
           </Col>
         </Row>
 
-        <Row>
-          <Col xs={12}>
-            <FormGroup controlId="content">
-              <ControlLabel>Text</ControlLabel>
-              <TextEditor
-                ref="te"
-                content={this.state.contentData.content}
-              />
-            </FormGroup>
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs={12}>
+        <Row className="underlined">
+          <Col sm={8} smOffset={2}>
             <FormGroup controlId="categories">
-              <ControlLabel>Categories:</ControlLabel>
+              <h3>Categories</h3>
               {this.state.allCategories.map( (cat, index) => 
                 <Checkbox
                   key={index}
@@ -93,23 +84,15 @@ export default class Item extends ContentType {
           </Col>
         </Row>
 
-        <Row>
-          <Col xs={3}>
-            <Button bsStyle="success"
-              bsSize="small" 
-              onClick={this.save.bind(this)}
-            >
-              Save
-            </Button>
-          </Col>
-          <Col xs={3}>
-            <Button 
-              onClick={this.handleRemove.bind(this)}
-              className="delete"
-              bsStyle="danger"
-              bsSize="small" 
-            >Delete
-            </Button>
+        <Row className="underlined">
+          <Col sm={8} smOffset={2}>
+            <Uploader
+              title="Photos" 
+              images={this.state.contentData.images}
+              onChange={this.updateContentDataState.bind(this)}
+              folder="folder"
+              deleteUrl={this.serverUrl + '/upload/delete/'}
+            />
           </Col>
         </Row>
       </Grid>
@@ -168,6 +151,17 @@ export default class Item extends ContentType {
   }
 
   handleRemove() {
+    const confirm = window.confirm('Delete ' + this.state.contentData.title + '?');
+    if (!confirm) {
+      return;
+    }
+
+    // for new items, just go back
+    if (!this.isEditing) {
+      browserHistory.goBack();
+      return;
+    }
+
     const slug = this.state.contentData.slug;
     const deleteUrl = this.serverUrl + '/api/items/' + slug;
 

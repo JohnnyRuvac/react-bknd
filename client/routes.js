@@ -2,8 +2,8 @@ import React from 'react';
 import { Route, IndexRedirect } from 'react-router';
 import AuthService from './utils/AuthService';
 import Container from './components/Container';
-import { Home, Layout } from './components/public/PublicComponents';
-import { Login, AdminLayout, Home as AdminHome, ListItems, StaticPage, Category, ImageTest, Item, CategoryItemsFilter } from './components/admin/AdminComponents';
+import { Home, Layout, Page } from './components/public/PublicComponents';
+import { Login, AdminLayout, Home as AdminHome, ListItems, StaticPage, Category, Item, CategoryItemsFilter } from './components/admin/AdminComponents';
 
 
 const auth = new AuthService(
@@ -32,6 +32,7 @@ const makeMainRoutes = (
 
     <Route component={Layout}>
       <Route path="/" component={Home} />
+      <Route path="/p1" component={Page} />
     </Route>
       
     <Route component={AdminLayout} onEnter={requireAuth}>
@@ -44,14 +45,10 @@ const makeMainRoutes = (
       <Route path="/admin/categories/add" component={Category} title="New category" />
       <Route path="/admin/categories/edit/:slug" component={Category} title="Edit category" />
       
-      <Route path="/admin/items" component={CategoryItemsFilter} title="All Categories Items" />
+      <Route path="/admin/items" component={CategoryItemsFilter} title="Categories Items" />
       <Route path="/admin/items/add" component={Item} />
       <Route path="/admin/items/edit/:slug" component={Item} />
       <Route path="/admin/items/:categorySlug/add" component={Item} />
-
-      <Route path="/admin/image-tests" component={ListItems} title="Image tests" />
-      <Route path="/admin/image-tests/add" component={ImageTest} title="New Image test" />
-      <Route path="/admin/image-tests/edit/:slug" component={ImageTest} title="Edit image test"/>
     </Route>
   </Route>
 );

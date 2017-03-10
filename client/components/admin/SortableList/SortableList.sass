@@ -2,20 +2,19 @@
 
 
 .add
-  float: right
-
-.add
   margin-top: 20px
+  float: right
 
 .sortable-list
   list-style: none
   padding: 0
-  border-top: 1px solid $lightGrey
   border-bottom: 1px solid $lightGrey
 
   .list-item
     position: relative
     border-bottom: 1px solid $lightGrey
+    &:first-child
+      border-top: none
     &:last-child
       border-bottom: none
 
@@ -36,7 +35,7 @@
     top: 50%
     left: 0
     transform: translate(0, -50%)
-    background: url('move-icon.svg') no-repeat 50% 50%
+    background: url('./move-icon.svg') no-repeat 50% 50%
 
   .delete
     position: absolute

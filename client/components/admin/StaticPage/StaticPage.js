@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentType from '../ContentType/ContentType';
-import { Grid, Col, Row, Button, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
-import TextEditor from '../TextEditor/TextEditor';
+import { Grid, Col, Row, Button } from 'react-bootstrap';
+import { TextInput, SlugInput, TextEditor } from '../Form';
 
 
 export default class StaticPage extends ContentType {
@@ -24,51 +24,37 @@ export default class StaticPage extends ContentType {
 
         <Row>
           <Col xs={12}>
-            <FormGroup
+            <TextInput 
               controlId="title"
-              validationState={this.getValidationState()}
-            >
-              <ControlLabel>Title</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="Title"
-                value={this.state.contentData.title}
-                onChange={this.handleChange.bind(this)}
-              />
-              <FormControl.Feedback />
-              <HelpBlock>Validation is based on string length.</HelpBlock>
-            </FormGroup>
+              label="Title"
+              placeholder="Title"
+              value={this.state.contentData.title}
+              onChange={this.updateContentDataState.bind(this)}
+            />
           </Col>
         </Row>
 
         <Row>
           <Col xs={12}>
-            <FormGroup
+            <SlugInput 
               controlId="slug"
-              validationState={this.getValidationState()}
-            >
-              <ControlLabel>{window.location.origin}/pages/</ControlLabel>
-              <FormControl
-                type="text"
-                placeholder="some-name"
-                value={this.state.contentData.slug}
-                onChange={this.handleSlugChange.bind(this)}
-              />
-              <FormControl.Feedback />
-              <HelpBlock>Validation is based on string length.</HelpBlock>
-            </FormGroup>
+              label="Slug"
+              placeholder="some-name"
+              value={this.state.contentData.slug}
+              titleValue={this.state.contentData.title}
+              onChange={this.updateContentDataState.bind(this)}
+            />
           </Col>
         </Row>
 
         <Row>
           <Col xs={12}>
-            <FormGroup controlId="content">
-              <ControlLabel>Text</ControlLabel>
-              <TextEditor
-                content={this.state.contentData.content}
-                ref="te"
-              />
-            </FormGroup>
+            <TextEditor
+              label="Content"
+              content={this.state.contentData.content}
+              onChange={this.updateContentDataState.bind(this)}
+              contentKey="content"
+            />
           </Col>
         </Row>
 
