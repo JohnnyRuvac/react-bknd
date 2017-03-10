@@ -2,6 +2,8 @@ import path from 'path';
 import webpack from 'webpack';
 import envHelper from './utils/envHelper';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
 const isProduction = process.argv.indexOf('-p') !== -1;
 const parsedEnvs = envHelper('./.env');
 
@@ -33,6 +35,13 @@ let plugins = [
       ...parsedEnvs
     }
   }),
+  new HtmlWebpackPlugin({
+    title: 'React BKND',
+    template: 'index.html',
+    filename: '../index.html',
+    alwaysWriteToDisk: true,
+  }),
+  new HtmlWebpackHarddiskPlugin(),
 ];
 
 if (!isProduction) {
