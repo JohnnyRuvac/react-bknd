@@ -17,10 +17,18 @@ export default class Uploader extends React.Component {
 
   render() {
     Dropzone.autoDiscover = false;
+    let urlStart = this.serverUrl + '/uploads/';
+    if (this.props.folder) {
+      urlStart += this.props.folder + '/';
+    }
+
+    const containerClasses = 
+      (this.state.draggedover || this.props.images.length === 0) ?
+      'uploader-wrapper draggedover' : 'uploader-wrapper';
 
     return (
-      <div className={(this.state.draggedover) ? 'uploader-wrapper draggedover' : 'uploader-wrapper'}>
-        <h3 className="images-headline">Images</h3>
+      <div className={containerClasses}>
+        <h3 className="images-headline">{this.props.title}</h3>
         <span className="mobile-upload btn btn-sm btn-success">
           Add
           <form encType="multipart/form-data" ref="mobileUploadForm">
@@ -43,7 +51,7 @@ export default class Uploader extends React.Component {
               data-id={index}
             >
               <a href="" className="handle"></a>
-              <img src={this.serverUrl + '/uploads/' + src} alt=""/>
+              <img src={urlStart + src} alt=""/>
               <Button 
                 onClick={this.handleRemove.bind(this)}
                 data-src={src}
@@ -68,7 +76,7 @@ export default class Uploader extends React.Component {
   componentDidMount() {
     // dropzone uploader
     const uploader = new Dropzone('.uploader', {
-      url: this.serverUrl + '/upload',
+      url: this.serverUrl + '/upload/' + this.props.folder,
       headers: {
         "Authorization": "Bearer " + localStorage.getItem('id_token')
       },
@@ -78,7 +86,7 @@ export default class Uploader extends React.Component {
     });
 
     uploader.on('success', (file, response) => {
-      this.props.onSuccess(response);
+      this.onSuccess(response);
     });
 
     uploader.on('queuecomplete', () => {
@@ -128,15 +136,48 @@ export default class Uploader extends React.Component {
       handle: '.handle',
       onEnd: (e) => {
         this.sortable.sort( this.originalOrder );
-        this.props.onReorderImages(e.oldIndex, e.newIndex);
+        const reordered = Helpers.moveItemInArray(this.props.images, e.oldIndex, e.newIndex);
+        this.props.onChange({
+          images: reordered,
+        });
       }
+    });
+  }
+
+  onSuccess(img) {
+    const images = this.props.images;
+    images.push(img);
+
+    this.props.onChange({
+      images: images,
     });
   }
 
   handleRemove(e) {
     e.preventDefault();
-    const name = e.target.getAttribute('data-src');
-    this.props.onRemovedFile(name);
+    const fileName = e.target.getAttribute('data-src');
+
+    const url = this.props.deleteUrl + this.props.folder + '/' + fileName;
+    axios.delete(url, 
+      {
+        headers: {
+          "Authorization": "Bearer " + localStorage.getItem('id_token')
+        },
+      })
+      .then(response => {
+        const images = this.props.images;
+        const index = images.indexOf(response.data);
+        images.splice(index, 1);
+
+        this.props.onChange({
+          images: images,
+        });
+      })
+      .catch(err => {
+        console.log('error deleting');
+        console.log(err);
+      });
+
   }
 
   editImages(e) {
@@ -147,7 +188,7 @@ export default class Uploader extends React.Component {
   }
 
   submitMobilePhotos() {
-    const url = this.serverUrl + '/upload';
+    const url = this.serverUrl + '/upload/' + this.props.folder;
     const data = new FormData(this.refs.mobileUploadForm);
 
     axios.post(url, data,
@@ -158,7 +199,7 @@ export default class Uploader extends React.Component {
       }
     )
     .then(response => {
-      this.props.onSuccess(response.data);
+      this.onSuccess(response.data);
       console.log('response');
       console.log(response);
     });

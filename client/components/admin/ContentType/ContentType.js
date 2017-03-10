@@ -2,7 +2,6 @@ import React from 'react';
 import { browserHistory } from 'react-router';
 import axios from 'axios';
 import AuthService from 'Utils/AuthService';
-import getSlug from 'speakingurl';
 import Helpers from 'Utils/Helpers';
 
 
@@ -44,7 +43,18 @@ export default class ContentType extends React.Component {
   updateContentDataState(changedData) {
     const contentData = Object.assign({}, this.state.contentData);
     for (const key in changedData) {
-      contentData[key] = changedData[key];
+
+      const isNestedObj = typeof(changedData[key]) === 'object';
+      if (isNestedObj) {
+        const nestedObj = changedData[key];
+        for (const nestedKey in nestedObj) {
+          contentData[key][nestedKey] = nestedObj[nestedKey];
+        }
+
+      } else {
+        contentData[key] = changedData[key];
+      }
+
     }
     this.setState({contentData: contentData});
   }
@@ -53,12 +63,6 @@ export default class ContentType extends React.Component {
     const id = e.target.id;
     const changedData = {};
     changedData[id] = e.target.value;
-
-    // update slug after title change
-    if ( id === 'title' && !this.state.slugOverridden ) {
-      changedData.slug = getSlug(e.target.value);
-    }
-
     this.updateContentDataState(changedData);
   }
 
@@ -88,18 +92,8 @@ export default class ContentType extends React.Component {
     return newData;
   }
 
-  saveMediumEditor() {
-    if (this.refs.te) {
-      const html = this.refs.te.me.getContent()
-      this.state.contentData.content = html;
-    }
-  }
-
   save() {
     console.log('saving');
-
-    // save content from medium editor
-    this.saveMediumEditor();
 
     // patch if item already exists, post if doesn't
     const method = ( this.isEditing ) ? 'patch' : 'post';

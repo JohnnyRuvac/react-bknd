@@ -1,25 +1,31 @@
 @import "~Styles/_colors.sass"
 
+.list-items
+  .title
+    display: inline-block
 
-.title
-  display: inline-block
+  .add, .delete
+    float: right
 
-.add, .delete
-  float: right
+  .add
+    margin-top: 20px
 
-.add
-  margin-top: 20px
+  .delete
+    margin-bottom: 5px
 
-.delete
-  margin-bottom: 5px
+  .items
+    list-style: none
 
-.items
-  list-style: none
+  .row:first
+    border-bottom: 1px solid $lightGrey
 
-.row:first
-  border-bottom: 1px solid $lightGrey
+  .page-title
+    color: $darkGrey
+    text-decoration: none
+    line-height: 30px
 
-.page-title
-  color: $darkGrey
-  text-decoration: none
-  line-height: 30px
+  .col-sm-8
+    border-bottom: none !important
+
+  .head.col-sm-8
+    border-bottom: 1px solid $lightGrey !important

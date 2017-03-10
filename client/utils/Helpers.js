@@ -25,4 +25,22 @@ module.exports = {
     return array;
   },
 
+  getChangedData: (key, value) => {
+    // small hack to store english content that is nested
+    const shouldBeNested = key.indexOf('-') > -1;
+    const obj = {}
+
+    if (shouldBeNested) {
+      const ojb2 = {};
+      const key1 = key.split('-')[0];
+      const key2 = key.split('-')[1];
+      ojb2[key2] = value;
+      obj[key1] = ojb2;
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
 };
