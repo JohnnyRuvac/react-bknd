@@ -2,3 +2,5 @@ webpack.config.compiled.js
 .env
 config
 dist/index.html
+dist/uploads
+_todo.txt
